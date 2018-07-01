@@ -177,8 +177,10 @@ void run(parameters* param) {
     } else if(param->mode == "inter") {
 
        // process data
-       merger.read_apta(input_stream);
-       input_stream.close();
+       id.add_data_to_apta(the_apta);
+       the_apta-> alp = id.alphabet;
+       //merger.read_apta(input_stream);
+       //input_stream.close();
 
        cout << "reading data finished, processing:" << endl;
  
