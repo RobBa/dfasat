@@ -28,5 +28,9 @@ flexfringe.dSYM/*
 # data files
 PAutomaC-competition_sets/*
 
+# ignore private files
+*.log
+ICC.log
+CTLS.log
 # other files
 processidentification/
