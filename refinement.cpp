@@ -84,3 +84,4 @@ inline void extend_refinement::doref(state_merger* m){
 inline void extend_refinement::undo(state_merger* m){
     m->undo_extend(right);
 };
+

@@ -8,6 +8,8 @@
 #include "random_greedy.h"
 #include "parameters.h"
 
+bool print_all_models = false;
+
 refinement_list* random_greedy_bounded_run(state_merger* merger){
     cerr << "starting greedy merging" << endl;
     int num = 1;
@@ -18,6 +20,7 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
         while( true ){
             cout << " ";
             
+            if(print_all_models){
             // output: dot legacy format
             merger->todot();
             std::ostringstream oss2;
@@ -33,6 +36,7 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
             ofstream output2(oss3.str().c_str());
             output2 << merger->json_output;
             output2.close();
+            }
 
             // if(EXTEND_ANY_RED) while(merger->extend_red() != 0) cerr << "+ ";
             // leak here, too

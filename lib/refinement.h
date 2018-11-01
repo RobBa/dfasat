@@ -64,9 +64,9 @@ public:
  *
  */
 class merge_refinement : public refinement {
-	apta_node* left;
-	
 public:
+	apta_node* left;
+
 	merge_refinement(double s, apta_node* l, apta_node* r);
 
 	virtual inline void print() const;
@@ -91,10 +91,10 @@ public:
 };
 
 class split_refinement : public refinement {
+public:
     tail* split_point;
     int attribute;
-	
-public:
+
 	split_refinement(double s, apta_node* l, tail* t, int a);
 
 	virtual inline void print() const;

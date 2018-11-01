@@ -5,7 +5,6 @@
 
 function execute() {
     eval "dot -Tpdf $@ > $@.pdf"
-    echo "fuck you "
 }
 
 

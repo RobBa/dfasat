@@ -19,10 +19,10 @@ using namespace std;
 
 bool apta_guard::bounds_satisfy(tail* t){
     for(bound_map::iterator it = min_attribute_values.begin(); it != min_attribute_values.end(); ++it){
-        if(inputdata::get_value(t, (*it).first) <= (*it).second) return false;
+        if(inputdata::get_value(t, (*it).first) < (*it).second) return false;
     }
-    for(bound_map::iterator it = max_attribute_values.begin(); it !=max_attribute_values.end(); ++it){
-        if(inputdata::get_value(t, (*it).first) > (*it).second) return false;
+    for(bound_map::iterator it = max_attribute_values.begin(); it != max_attribute_values.end(); ++it){
+        if(inputdata::get_value(t, (*it).first) >= (*it).second) return false;
     }
     return true;
 };
@@ -46,7 +46,7 @@ void apta::read_file(istream &input_stream){
     int num_words;
     int num_alph = 0;
     map<string, int> seen;
-    int node_number = 1;
+    //apta::node_number = 1;
     input_stream >> num_words >> alphabet_size;
 
     for(int line = 0; line < num_words; line++){
@@ -88,7 +88,7 @@ void apta::read_file(istream &input_stream){
                 node->set_child(c,next_node);
                 next_node->source = node;
                 next_node->label  = c;
-                next_node->number = node_number++;
+                //next_node->number = apta::node_number++;
                 next_node->depth = depth;
             }
             node->size = node->size + 1;
@@ -117,12 +117,27 @@ void apta::print_dot(iostream& output){
     output << "digraph DFA {\n";
     output << "\t" << root->find()->number << " [label=\"root\" shape=box];\n";
     output << "\t\tI -> " << root->find()->number << ";\n";
-    for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
-    //for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
+    int ncounter = 1;
+    //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
+    //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
+    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
+        apta_node* n = *Ait;
+        n->number = ncounter++;
+    }
+    //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
+    //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
+    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
         output << "\t" << n->number << " [ label=\"";
+        output << n->number << ":#" << n->size << "\n";
+        if(inputdata::num_attributes > 0){
+            for(tail_iterator it = tail_iterator(n); *it != 0; ++it){
+                tail* t = *it;
+                if(t->past_tail != 0) output << " " << inputdata::get_value(t->past_tail, 0);
+            }
+        }
+        output << "\n";
         n->data->print_state_label(output, this);
-        output << "#" << n->size;
         output << "\" ";
         n->data->print_state_style(output, this);
         if(n->red == false) output << " style=dotted";
@@ -133,7 +148,7 @@ void apta::print_dot(iostream& output){
         map<int, set<int>> sinklabels;
 
         for(guard_map::iterator it = n->guards.begin(); it != n->guards.end(); ++it){
-            if((*it).second->target == 0) continue;
+/*            if((*it).second->target == 0) continue;
             apta_node* child = (*it).second->target->find();
             if(sink_type(child) != -1){
                 if(sinklabels.find(sink_type(child)) == sinklabels.end())
@@ -148,19 +163,30 @@ void apta::print_dot(iostream& output){
         for(map<apta_node*, set<int>>::iterator it2 = childlabels.begin(); it2 != childlabels.end(); ++it2){
             apta_node* child = (*it2).first;
             set<int> labels  = (*it2).second;
-            
+            */
+            if((*it).second->target == 0) continue;
+            int symbol = (*it).first;
+            apta_guard* g = (*it).second;
+            apta_node* child = (*it).second->target->find();
             output << "\t\t" << n->number << " -> " << child->number << " [label=\"";
-            
-            for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
+            output << " " << inputdata::alphabet[symbol];
+            for(bound_map::iterator it2 = g->min_attribute_values.begin(); it2 != g->min_attribute_values.end(); ++it2){
+                output << " " << (*it2).first << " >= " << (*it2).second;
+            }
+            for(bound_map::iterator it2 = g->max_attribute_values.begin(); it2 != g->max_attribute_values.end(); ++it2){
+                output << " " << (*it2).first << " < " << (*it2).second;
+            }
+            /*for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
                 output << alph_str(*it3) << ":";
                 n->data->print_transition_label(output, *it3, this);
                 if(std::next(it3) != labels.end()) output << ",";
-            }
+            }*/
 
             output << "\" ";
-            n->data->print_transition_style(output, labels, this);
+            //n->data->print_transition_style(output, labels, this);
             output << " ];\n";
         }
+        /*
         for(map<int, set<int>>::iterator it2 = sinklabels.begin(); it2 != sinklabels.end(); ++it2){
             int stype = (*it2).first;
             set<int> labels  = (*it2).second;
@@ -172,7 +198,7 @@ void apta::print_dot(iostream& output){
             }
             output << "\"\n ";
             n->get_child(*(labels.begin()))->data->print_state_style(output, this);
-            if(n->red == false) output << " style=dotted";
+            if(n->red == false) output << " shape=box";
             output << " ];\n";
 
             output << "\t\t" << n->number << " -> S" << n->number << "t" << stype << " [ label=\"";
@@ -187,6 +213,7 @@ void apta::print_dot(iostream& output){
             n->data->print_transition_style(output, labels, this);
             output << " ];\n";
         }
+        */
     }
     output << "}\n";
 };
@@ -344,27 +371,28 @@ apta_guard::apta_guard(apta_guard* g){
     target = 0;
     undo = 0;
     
-    min_attribute_values = g->min_attribute_values;
-    max_attribute_values = g->max_attribute_values;
+    min_attribute_values = bound_map(g->min_attribute_values);
+    max_attribute_values = bound_map(g->max_attribute_values);
 }
 
 void apta_node::add_tail(tail* t){
     t->next_in_list = tails_head;
     tails_head = t;
-    size++;
 };
 
 apta_node::apta_node(apta *context) {
     this->context = context;
     source = 0;
     representative = 0;
-
+    next_merged_node = 0;
+    representative_of = 0;
+    
     //children = child_map();
     //det_undo = child_map();
     tails_head = 0;
 
     label = 0;
-    number = 0;
+    //number = apta::node_number++;
     satnumber = 0;
     colour = 0;
     size = 0;
@@ -387,13 +415,15 @@ apta_node::apta_node(apta *context) {
 apta_node::apta_node(){
     source = 0;
     representative = 0;
-
+    next_merged_node = 0;
+    representative_of = 0;
+    
     //children = child_map();
     //det_undo = child_map();
     tails_head = 0;
     
     label = 0;
-    number = 0;
+    //number = apta::node_number++;
     satnumber = 0;
     colour = 0;
     size = 1;
@@ -412,8 +442,7 @@ apta_node::apta_node(){
 
 apta_node* apta_node::child(tail* t){
         int symbol = inputdata::get_symbol(t);
-        guard_map::iterator it = guards.lower_bound(symbol);
-        while(it != guards.end()){
+        for(guard_map::iterator it = guards.lower_bound(symbol); it != guards.upper_bound(symbol); ++it){
             if((*it).first != symbol) break;
             apta_guard* g = (*it).second;
             bool outside_range = false;
@@ -432,6 +461,32 @@ apta_node* apta_node::child(tail* t){
             }
             if(outside_range) continue;
             return g->target;
+        }
+        return 0;
+};
+
+apta_guard* apta_node::guard(int symbol, apta_guard* g){
+        for(guard_map::iterator it = guards.lower_bound(symbol); it != guards.upper_bound(symbol); ++it){
+            if((*it).first != symbol) break;
+            apta_guard* g2 = (*it).second;
+            bool outside_range = false;
+            for(bound_map::iterator it2 = g->min_attribute_values.begin(); it2 != g->min_attribute_values.end(); ++it2){
+                bound_map::iterator it3 = g2->min_attribute_values.find((*it2).first);
+                if(it3 == g2->min_attribute_values.end() || (*it3).second != (*it2).second){
+                    outside_range = true;
+                    break;
+                }
+            }
+            if(outside_range) continue;
+            for(bound_map::iterator it2 = g->max_attribute_values.begin(); it2 != g->max_attribute_values.end(); ++it2){
+                bound_map::iterator it3 = g2->max_attribute_values.find((*it2).first);
+                if(it3 == g2->max_attribute_values.end() || (*it3).second != (*it2).second){
+                    outside_range = true;
+                    break;
+                }
+            }
+            if(outside_range) continue;
+            return g2;
         }
         return 0;
 };
@@ -471,11 +526,12 @@ apta_node* APTA_iterator::next_backward() {
     while(source != base){
         current = source;
         source = source->source;
-        it = source->guards.find(current->label);
+        it = source->guards.begin();//source->guards.find(current->label);
+        while((*it).second->target != current) ++it;
         ++it;
         for(; it != source->guards.end(); ++it){
             apta_node* target = (*it).second->target;
-            if(target->source == current){
+            if(target->source == source){
                 return target;
             }
         }
@@ -511,9 +567,11 @@ apta_node* merged_APTA_iterator::next_backward() {
     guard_map::iterator it;
     apta_node* source = current;
     while(source != base){
-        current = source;
+        current = source->find();
         source = source->source->find();
         it = source->guards.find(current->label);
+        it = source->guards.begin();
+        while((*it).second->target != current) ++it;
         ++it;
         for(; it != source->guards.end(); ++it){
             apta_node* target = (*it).second->target;
@@ -601,27 +659,36 @@ merged_APTA_iterator_func::merged_APTA_iterator_func(apta_node* start, bool(*nod
 tail_iterator::tail_iterator(apta_node* start){
     base = start;
     current = start;
-    current_tail = start->tails_head;
+    current_tail = current->tails_head;
+    while(current_tail == 0){
+        if(current == 0) return;
+        next_node();
+        if(current == 0) return;
+        current_tail = current->tails_head;
+    }
+    if(current_tail != 0 && current_tail->split_to != 0) increment();
+}
+
+void tail_iterator::next_node(){
+    if(current->representative_of != 0) current = current->representative_of;
+    else if (current->next_merged_node != 0) current = current->next_merged_node;
+    else {
+        while(current != 0 && current->next_merged_node == 0) current = current->representative;
+        if(current != 0) current = current->next_merged_node;
+    }
 }
 
 void tail_iterator::increment() {
     current_tail = current_tail->next_in_list;
-    while(current_tail != 0 && current_tail->split_to != 0) current_tail = current_tail->next_in_list;
-    if(current_tail != 0) return;
+    if(current_tail != 0 && current_tail->split_to != 0) increment();
     
-    apta_node* next = current->representative_of;
-    if(next != 0){ current = next; current_tail = current->tails_head; return; }
-    
-    next = current->next_merged_node;
-    if(next != 0){ current = next; current_tail = current->tails_head; return; }
-    
-    next = current->representative;
-    while(next != 0){
-        if(next->next_merged_node != 0){ current = next->next_merged_node; current_tail = current->tails_head; return; }
-        next = next->representative;
-        if(next == base) next = 0;
+    while(current_tail == 0){
+        if(current == 0) return;
+        next_node();
+        if(current == 0) return;
+        current_tail = current->tails_head;
     }
-    current = 0;
+    if(current_tail != 0 && current_tail->split_to != 0) increment();
 }
 
 /*apta_node::add_target(int symbol){

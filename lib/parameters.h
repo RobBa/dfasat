@@ -29,6 +29,7 @@ extern bool SYMMETRY_BREAKING;
 extern bool FORCING;
 extern bool MERGE_SINKS_DSOLVE;
 extern string eval_string;
+extern string OUTPUT;
 extern bool MERGE_MOST_VISITED;
 extern bool MERGE_BLUE_BLUE;
 extern bool RED_FIXED;
@@ -53,6 +54,7 @@ public:
     string sat_program;
     string hName;
     string hData;
+    string output;
     int runs;
     int sinkson;
     int seed;

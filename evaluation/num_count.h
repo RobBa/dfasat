@@ -20,8 +20,8 @@ public:
     virtual void read_from(int type, int index, int length, int symbol, string data);
     virtual void read_to(int type, int index, int length, int symbol, string data);
 
-    virtual void print_transition_label(iostream& output, int symbol);
-    virtual void print_state_label(iostream& output);
+    virtual void print_transition_label(iostream& output, int symbol, apta* aptacontext);
+    virtual void print_state_label(iostream& output, apta* aptacontext);
  
     virtual void update(evaluation_data* right);
     virtual void undo(evaluation_data* right);
@@ -42,7 +42,7 @@ public:
   virtual void update_score(state_merger *merger, apta_node* left, apta_node* right);
   virtual int  compute_score(state_merger*, apta_node* left, apta_node* right);
   virtual void reset(state_merger *merger);
-  virtual bool consistency_check(evaluation_data* l, evaluation_data* r);
+  //virtual bool consistency_check(evaluation_data* l, evaluation_data* r);
   virtual bool consistent(state_merger *merger, apta_node* left, apta_node* right);
 
   //virtual void print_dot(iostream&, state_merger *);

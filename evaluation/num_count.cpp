@@ -21,12 +21,12 @@ count_data::count_data(){
     rejecting_paths = 0;
 };
 
-void count_data::print_transition_label(iostream& output, int symbol){
+void count_data::print_transition_label(iostream& output, int symbol, apta* aptacontext){
     output << "count data"; 
 };
 
-void count_data::print_state_label(iostream& output){
-    output << num_accepting;
+void count_data::print_state_label(iostream& output, apta* aptacontext){
+    output << num_accepting << " - " << num_rejecting;
 };
 
 
@@ -66,7 +66,7 @@ void count_data::undo(evaluation_data* right){
     rejecting_paths -= other->rejecting_paths;
 };
 
-bool count_driven::consistency_check(evaluation_data* left, evaluation_data* right){
+/*bool count_driven::consistency_check(evaluation_data* left, evaluation_data* right){
     count_data* l = reinterpret_cast<count_data*>(left);
     count_data* r = reinterpret_cast<count_data*>(right);
     
@@ -74,7 +74,7 @@ bool count_driven::consistency_check(evaluation_data* left, evaluation_data* rig
     if(l->num_rejecting != 0 && r->num_accepting != 0){ return false; }
     
     return true;
-};
+};*/
 
 /* default evaluation, count number of performed merges */
 bool count_driven::consistent(state_merger *merger, apta_node* left, apta_node* right){

@@ -88,8 +88,12 @@ public:
 
     /* recursive state splitting routines */
     bool split_single(apta_node* red, apta_node* blue, tail* t);
+    void undo_split_single(apta_node* red, apta_node* blue);
     bool split(apta_node* red, apta_node* blue);
     void undo_split(apta_node* red, apta_node* blue);
+    
+    void pre_split(apta_node* red, apta_node* blue);
+    void undo_pre_split(apta_node* red, apta_node* blue);
 
     /* for building the apta  */
     map<string, int> seen;
@@ -132,7 +136,7 @@ public:
     /* update the blue and red states */
     void update_red_blue();
 
-    refinement* test_splits(apta_node* blue);
+    refinement_set* test_splits(apta_node* blue);
     refinement* test_merge(apta_node*,apta_node*);
     refinement* test_local_merge(apta_node* red, apta_node* blue);
 

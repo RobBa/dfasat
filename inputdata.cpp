@@ -13,12 +13,17 @@ tail* tail::split(){
     t->split_from = this;
     t->future_tail = future_tail;
     t->past_tail = past_tail;
+    //if(past_tail != 0) past_tail->future_tail = t;
+    //if(future_tail != 0) future_tail->past_tail = t;
     split_to = t;
     return t;
 };
 
 void tail::undo_split(){
+    //delete split_to;
     split_to = 0;
+    //if(past_tail != 0) past_tail->future_tail = this;
+    //if(future_tail != 0) future_tail->past_tail = this;
 };
 
 tail* tail::next(){
@@ -27,8 +32,14 @@ tail* tail::next(){
     return next_in_list->next();
 };
 
+tail* tail::splitted(){
+    if(split_to == 0) return this;
+    return split_to->splitted();
+};
+
 tail* tail::future(){
-    if(split_to == 0) return future_tail;
+    if(future_tail == 0) return 0;
+    if(split_to == 0) return future_tail->splitted();
     return split_to->future();
 };
 
@@ -41,6 +52,7 @@ tail::tail(int seq, int i, tail* pt){
     future_tail = 0;
     next_in_list = 0;
     split_from = 0;
+    split_to = 0;
 };
 
 inputdata::inputdata() {
@@ -134,7 +146,7 @@ void inputdata::read_abbadingo_sequence(istream &input_stream, int num_attribute
             l3.str(vals);
             for(int i = 0; i < num_attributes-1; ++i){
                 std::getline(l3,val,',');
-cerr << val;
+//cerr << val;
                 values[i][index] = stof(val);
             }
             std::getline(l3,val);

@@ -32,6 +32,7 @@ bool EXCEPTION4OVERLAP = false;
 
 int RANGE = 100;
 string eval_string;
+string OUTPUT;
 
 int STORE_MERGES = 0;
 int STORE_MERGES_KEEP_CONFLICT = 1;
@@ -49,6 +50,7 @@ parameters::parameters(){
     sat_program = "";
     hName = "default";
     hData = "evaluation_data";
+    output = "json";
     runs = 1;
     sinkson = 1;
     seed = 12345678;

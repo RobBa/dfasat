@@ -84,10 +84,16 @@ public:
 
     virtual void read_from(int type, int index, int length, int symbol, string data);
     virtual void read_to(int type, int index, int length, int symbol, string data);
+
 /* Update values when merging */
     virtual void update(evaluation_data* other);
 /* Undo updates when undoing merge */
     virtual void undo(evaluation_data* other);
+/* Update values when splitting */
+    virtual void split_update(evaluation_data* other);
+/* Undo updates when undoing a split */
+    virtual void split_undo(evaluation_data* other);
+    virtual void split_update_single(evaluation_data* other, tail* t);
 
 /* Printing of nodes and transitions in dot output */
     virtual void print_state_label(iostream& output, apta* aptacontext);
@@ -159,10 +165,14 @@ public:
 * compute the local consistency of a merge and update stored data values
 *
 * huge influence on performance, needs to be simple */
-  virtual bool consistency_check(evaluation_data* l, evaluation_data* r);
+  //virtual bool consistency_check(evaluation_data* l, evaluation_data* r);
   virtual bool consistent(state_merger*, apta_node* left, apta_node* right);
   virtual void update_score(state_merger*, apta_node* left, apta_node* right);
-  virtual void undo_update(state_merger*, apta_node* left, apta_node* right);
+  /*virtual void undo_update(state_merger*, apta_node* left, apta_node* right);*/
+
+  //virtual bool split_consistency_check(evaluation_data* l, evaluation_data* r);
+  virtual bool split_consistent(state_merger*, apta_node* left, apta_node* right);
+  virtual void split_update_score(state_merger*, apta_node* left, apta_node* right, tail* t);
 
 /* Called when testing a merge
 * compute the score and consistency of a merge, and reset global counters/structures
@@ -170,6 +180,10 @@ public:
 * influence on performance, needs to be somewhat simple */
   virtual bool compute_consistency(state_merger *, apta_node* left, apta_node* right);
   virtual int  compute_score(state_merger *, apta_node* left, apta_node* right);
+
+  virtual bool split_compute_consistency(state_merger *, apta_node* left, apta_node* right);
+  virtual int  split_compute_score(state_merger *, apta_node* left, apta_node* right);
+
   virtual void reset(state_merger *);
 
 /* Called after an update,

@@ -43,6 +43,7 @@ public:
     void undo_split();
     tail* next();
     tail* future();
+    tail* splitted();
 };
 
 class inputdata{

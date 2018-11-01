@@ -851,13 +851,24 @@ int dfasat(state_merger &merger, string sat_program, const char* dot_output_file
     refinement_list* refs = random_greedy_bounded_run(&merger);
     
     merger.todot();
+    merger.tojson();
 
     if (dot_output_file != NULL) {
       std::ostringstream oss2;
-      oss2 << "pre_" << dot_output_file;
-      ofstream output(oss2.str().c_str());
-      output << merger.dot_output;
-      output.close();
+      if(OUTPUT == "dot" || OUTPUT == "both") {
+        oss2 << "pre_" << dot_output_file << ".dot";
+        ofstream output(oss2.str().c_str());
+        output << merger.dot_output;
+        output.close();
+      }
+      if(OUTPUT == "json" || OUTPUT == "both") {
+        oss2 << "pre_" << dot_output_file << ".json";
+        ofstream output(oss2.str().c_str());
+        output << merger.json_output;
+        output.close();
+ 
+      }
+     
     }
 
     

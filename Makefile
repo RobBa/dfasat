@@ -1,5 +1,5 @@
 CC	=	g++
-CFLAGS	=	-O2 -g 
+CFLAGS	=	-g 
 SOURCES = 	*.cpp 
 SOURCESPYTHON =	apta.cpp dfasat.cpp  refinement.cpp evaluation_factory.cpp random_greedy.cpp  state_merger.cpp parameters.cpp searcher.cpp stream.cpp interactive.cpp 
 LFLAGS 	= 	-std=c++11 -L/opt/local/lib -I/opt/local/include -I./lib -I. -lm -lpopt -lgsl -lgslcblas
@@ -38,10 +38,10 @@ evaluation/%.o: evaluation/%.cpp
 	$(CC) -fPIC -c -o $@ $< -I./lib $(LFLAGS) $(LIBS) $(PYTHON_INC) $(PYTHON_LIBS) $(BOOST_LIBS) 
 
 clean:
-	rm -f flexfringe ./evaluation/*.o generated.cpp named_tuple.py *.dot exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
+	rm -f flexfringe ./evaluation/*.o generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
 	
-gitversion.cpp: .git/HEAD .git/index
-	echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > $@
+gitversion.cpp: 
+	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > $@ || echo "const char *gitversion = \"No commit info available\";" > $@
 
 python: $(EVALOBJS) gitversion.cpp
 	export CPLUS_INCLUDE_PATH=/usr/include/python3.5

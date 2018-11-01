@@ -57,6 +57,15 @@ void evaluation_data::undo(evaluation_data* right){
     }
 };
 
+void evaluation_data::split_update(evaluation_data* right){
+};
+
+void evaluation_data::split_update_single(evaluation_data* right, tail* t){
+};
+
+void evaluation_data::split_undo(evaluation_data* right){
+};
+
 // DOT output functions
 void evaluation_data::print_state_label(iostream& output, apta* aptacontext){
 
@@ -104,11 +113,13 @@ void evaluation_function::set_params(string params) {
 
 
 /* default evaluation, count number of performed merges */
-bool evaluation_function::consistency_check(evaluation_data* l, evaluation_data* r){
+/*
+ bool evaluation_function::consistency_check(evaluation_data* l, evaluation_data* r){
   if(l->node_type != -1 && r->node_type != -1 && l->node_type != r->node_type) return false;
   return true;
 };
-
+*/
+ 
 bool evaluation_function::consistent(state_merger *merger, apta_node* left, apta_node* right){
   if(inconsistency_found) return false;
   
@@ -122,15 +133,32 @@ void evaluation_function::update_score(state_merger *merger, apta_node* left, ap
   merged_left_states.insert(left);
 };
 
-void evaluation_function::undo_update(state_merger *merger, apta_node* left, apta_node* right){
+bool evaluation_function::split_consistent(state_merger *merger, apta_node* left, apta_node* right){
+    return true;
 };
 
+void evaluation_function::split_update_score(state_merger *merger, apta_node* left, apta_node* right, tail* t){
+};
+
+/*
+void evaluation_function::undo_update(state_merger *merger, apta_node* left, apta_node* right){
+};
+*/
+ 
 bool evaluation_function::compute_consistency(state_merger *merger, apta_node* left, apta_node* right){
   return inconsistency_found == false;
 };
 
 int evaluation_function::compute_score(state_merger *merger, apta_node* left, apta_node* right){
   return num_merges;
+};
+
+bool evaluation_function::split_compute_consistency(state_merger *merger, apta_node* left, apta_node* right){
+    return true;
+};
+
+int evaluation_function::split_compute_score(state_merger *merger, apta_node* left, apta_node* right){
+    return 1;
 };
 
 void evaluation_function::reset(state_merger *merger){

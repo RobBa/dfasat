@@ -19,17 +19,11 @@ struct size_compare;
 class evaluation_data;
 class apta_guard;
 
-#include "parameters.h"
-#include "inputdata.h"
-//#include "state_merger.h"
-
 using namespace std;
 
 typedef list<apta_node*> node_list;
 typedef list<int> int_list;
 typedef list<double> double_list;
-
-//typedef map<int, apta_node*> child_map;
 
 typedef pair<bool, double> score_pair;
 typedef pair< pair<int, int>, score_pair > ts_pair;
@@ -50,6 +44,13 @@ typedef map<int, int> num_map;
 
 typedef multimap<int, apta_guard*> guard_map;
 typedef map<int, float> bound_map;
+
+#include "parameters.h"
+#include "inputdata.h"
+//#include "refinement.h"
+//#include "state_merger.h"
+
+typedef list< pair< tail*, int > > split_list;
 
 class apta_guard{
 public:
@@ -83,6 +84,8 @@ public:
     tail* tails_head;
     void add_tail(tail* t);
     
+    split_list performed_splits;
+    
     /** storing all states merged with this state */
     apta_node* next_merged_node;
     apta_node* representative_of;
@@ -94,7 +97,6 @@ public:
         node->representative_of = this;
         
         node->size += this->size;
-        this->representative = node;
     };
     /** undo this gets merged with node, resetting head of list */
     inline void undo_merge_with(apta_node* node){
@@ -103,7 +105,6 @@ public:
         this->next_merged_node = 0;
         
         node->size -= this->size;
-        this->representative = 0;
     };
 
     /* FIND/UNION functions */
@@ -121,6 +122,7 @@ public:
     
     /* guards, children, and undo map access */
     apta_node* child(tail* t);
+    apta_guard* guard(int i, apta_guard* g);
     apta_guard* guard(tail* t);
 
     inline apta_node* child(int i){
@@ -136,8 +138,11 @@ public:
     inline void set_child(int i, apta_node* node){
         guard_map::iterator it = guards.find(i);
         if(it != guards.end()){
-            (*it).second->target = node;
-        } else{
+            if(node != 0)
+                (*it).second->target = node;
+            else
+                guards.erase(it);
+        } else {
             apta_guard* g = new apta_guard();
             guards.insert(pair<int,apta_guard*>(i,g));
             g->target = node;
@@ -310,6 +315,7 @@ public:
     apta_node* next_forward();
     apta_node* next_backward();
     virtual void increment();
+    void next_node();
     
     tail* operator*() const { return current_tail; }
     tail_iterator& operator++() { increment(); return *this; }
@@ -348,6 +354,7 @@ typedef set<apta_node*, size_compare> state_set;
 
 class apta{
 public:
+    static int node_number;
     state_merger *context;
     apta_node* root; /**< root of the tree */
     map<int, string> alphabet; /**< mapping between internal representation and alphabet symbol */

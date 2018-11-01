@@ -82,6 +82,8 @@ void init_with_params(parameters* param) {
     if(param->method == 1) GREEDY_METHOD = RANDOMG;
     if(param->method == 2) GREEDY_METHOD = NORMALG;
 
+    OUTPUT = param->output;
+
     eval_string = param->hData;
 
     try {
@@ -106,9 +108,9 @@ void run(parameters* param) {
 
     evaluation_function *eval;
 
-    for(auto myit = DerivedRegister<evaluation_function>::getMap()->begin(); myit != DerivedRegister<evaluation_function>::getMap()->end(); myit++   ) {
+    for(auto myit = DerivedRegister<evaluation_function>::getMap()->begin(); myit != DerivedRegister<evaluation_function>::getMap()->end() && debugging_enabled; myit++   ) {
        cout << myit->first << " " << myit->second << endl;
-       //DEBUG("test");
+       
     }
 
     try {
@@ -136,7 +138,7 @@ void run(parameters* param) {
 
     cerr << "done parsing" << endl;
     
-    cerr << id.to_json_str();
+    //cerr << id.to_json_str();
     
     if(param->mode == "batch") {
        cout << "batch mode selected" << endl;
@@ -161,7 +163,7 @@ void run(parameters* param) {
           std::ostringstream oss;
           oss << param->dot_file << "dfa" << (i+1) << ".aut";
           std::ostringstream oss2;
-          oss2 << param->dot_file << "dfa" << (i+1) << ".dot";
+          oss2 << param->dot_file << "dfa" << (i+1);
 
          cout << "dfasat running";
 
@@ -192,12 +194,23 @@ void run(parameters* param) {
     }
 
     std::ostringstream oss2;
-    oss2 << param->dot_file << "final"  << ".dot";
-     
-    ofstream output(oss2.str().c_str());
-    merger.todot();
-    output << merger.dot_output;
-    output.close();
+    oss2 << param->dot_file << "final"; 
+    if(OUTPUT == "dot" || OUTPUT == "both") {
+      oss2 << ".dot";
+      ofstream output(oss2.str().c_str());
+      merger.todot();
+      merger.tojson();
+      output << merger.dot_output;
+      output.close();
+    }
+    if(OUTPUT == "json" || OUTPUT == "dot") {
+      oss2 << ".json";
+      ofstream output(oss2.str().c_str());
+      merger.todot();
+      merger.tojson();
+      output << merger.dot_output;
+      output.close();  
+    }
 
 
    /*FILE* output = fopen(oss2.str().c_str(), "w");
@@ -223,6 +236,7 @@ int main(int argc, const char *argv[]){
     char* dot_file = NULL;
     char* sat_program = NULL;
     char* hName = NULL;
+    char* output = NULL;
     char* hData = NULL;
     char* mode = NULL;
     char* evalpar = NULL; 
@@ -235,6 +249,7 @@ int main(int argc, const char *argv[]){
         { "debug", 'V', POPT_ARG_INT, &(param->debugging), 'V', "Debug mode and verbosity evel", "integer" },
         { "output-dir", 'o', POPT_ARG_STRING, &(dot_file), 'o', "Relative path for output files with trailing /, default: \"./\".", "string" },
         { "heuristic-name", 'h', POPT_ARG_STRING, &(hName), 'h', "Name of the merge heurstic to use; default count_driven. Use any heuristic in the evaluation directory. It is often beneficial to write your own, as heuristics are very application specific.", "string" },
+        { "output", 'T', POPT_ARG_STRING, &(output), 'T', "Switch between output in dot, json (default), or both formats" , "string" },
         { "data-name", 'd', POPT_ARG_STRING, &(hData), 'd', "Name of the merge data class to use; default count_data. Use any heuristic in the evaluation directory.", "string" },
         { "mode", 'M', POPT_ARG_STRING, &(mode), 'M', "batch or stream depending on the mode of operation", "string" },
         { "evalpar", 'X', POPT_ARG_STRING, &(evalpar), 'X', "string of key-value pairs", "string" },
