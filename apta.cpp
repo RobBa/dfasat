@@ -130,13 +130,13 @@ void apta::print_dot(iostream& output){
         apta_node* n = *Ait;
         output << "\t" << n->number << " [ label=\"";
         output << n->number << ":#" << n->size << "\n";
-        if(inputdata::num_attributes > 0){
+        /*if(inputdata::num_attributes > 0){
             for(tail_iterator it = tail_iterator(n); *it != 0; ++it){
                 tail* t = *it;
                 if(t->past_tail != 0) output << " " << inputdata::get_value(t->past_tail, 0);
             }
-        }
-        output << "\n";
+        }*/
+        //output << "\n";
         n->data->print_state_label(output, this);
         output << "\" ";
         n->data->print_state_style(output, this);
@@ -148,7 +148,7 @@ void apta::print_dot(iostream& output){
         map<int, set<int>> sinklabels;
 
         for(guard_map::iterator it = n->guards.begin(); it != n->guards.end(); ++it){
-/*            if((*it).second->target == 0) continue;
+            if((*it).second->target == 0) continue;
             apta_node* child = (*it).second->target->find();
             if(sink_type(child) != -1){
                 if(sinklabels.find(sink_type(child)) == sinklabels.end())
@@ -163,19 +163,25 @@ void apta::print_dot(iostream& output){
         for(map<apta_node*, set<int>>::iterator it2 = childlabels.begin(); it2 != childlabels.end(); ++it2){
             apta_node* child = (*it2).first;
             set<int> labels  = (*it2).second;
-            */
-            if((*it).second->target == 0) continue;
-            int symbol = (*it).first;
-            apta_guard* g = (*it).second;
-            apta_node* child = (*it).second->target->find();
+            
+            //if((*it).second->target == 0) continue;
+            //int symbol = (*it).first;
+            //apta_guard* g = (*it).second;
+            //apta_node* child = (*it).second->target->find();
             output << "\t\t" << n->number << " -> " << child->number << " [label=\"";
-            output << " " << inputdata::alphabet[symbol];
+            for(set<int>::iterator its = labels.begin(); its != labels.end(); its++){
+                output << " " << inputdata::alphabet[*its];
+            }
+            
+            /*
             for(bound_map::iterator it2 = g->min_attribute_values.begin(); it2 != g->min_attribute_values.end(); ++it2){
                 output << " " << (*it2).first << " >= " << (*it2).second;
             }
             for(bound_map::iterator it2 = g->max_attribute_values.begin(); it2 != g->max_attribute_values.end(); ++it2){
                 output << " " << (*it2).first << " < " << (*it2).second;
             }
+            */
+             
             /*for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
                 output << alph_str(*it3) << ":";
                 n->data->print_transition_label(output, *it3, this);
