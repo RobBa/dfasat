@@ -1,0 +1,151 @@
+// produced with flexfringe from git commit988bec57950e066a413060d9107687bc7097162b
+// ./flexfringe --heuristic-name alergia --data-name alergia_data --state_count 5 --symbol_count 4 --satdfabound 2000 --sinkson 0 --sinkcount 0 --extrapar 0.0000001 receipt_phase.dat 
+digraph DFA {
+	1 [label="root" shape=box];
+		I -> 1;
+	1 [ label="1:#1477
+
+43 - 0"  ];
+		1 -> 2 [label=" 1"  ];
+	2 [ label="2:#1552
+
+119 - 0"  ];
+		2 -> 3 [label=" 2"  ];
+		2 -> 16 [label=" 4"  ];
+		2 -> 1 [label=" 5"  ];
+		2 -> 4 [label=" 6"  ];
+		2 -> 1 [label=" 15"  ];
+		2 -> 2 [label=" 16"  ];
+		2 -> 3 [label=" 17"  ];
+		2 -> 2 [label=" 18"  ];
+		2 -> 16 [label=" 21"  ];
+		2 -> 2 [label=" 22"  ];
+		2 -> 2 [label=" 23"  ];
+		2 -> 3 [label=" 27"  ];
+	3 [ label="3:#1144
+
+4 - 0"  ];
+		3 -> 2 [label=" 3"  ];
+		3 -> 4 [label=" 4"  ];
+		3 -> 8 [label=" 6"  ];
+		3 -> 2 [label=" 7"  ];
+		3 -> 3 [label=" 13"  ];
+		3 -> 2 [label=" 18"  ];
+		3 -> 2 [label=" 20"  ];
+		3 -> 3 [label=" 23"  ];
+		3 -> 2 [label=" 25"  ];
+	4 [ label="4:#299
+
+6 - 0"  ];
+		4 -> 16 [label=" 3"  ];
+		4 -> 8 [label=" 4"  ];
+		4 -> 5 [label=" 5"  ];
+		4 -> 7 [label=" 6"  ];
+		4 -> 3 [label=" 16"  ];
+		4 -> 3 [label=" 17"  ];
+		4 -> 3 [label=" 19"  ];
+		4 -> 2 [label=" 20"  ];
+		4 -> 2 [label=" 25"  ];
+	5 [ label="5:#172
+
+0 - 0"  ];
+		5 -> 2 [label=" 3"  ];
+		5 -> 6 [label=" 6"  ];
+		5 -> 13 [label=" 9"  ];
+		5 -> 3 [label=" 12"  ];
+	6 [ label="6:#245
+
+0 - 0"  ];
+		6 -> 2 [label=" 3"  ];
+		6 -> 12 [label=" 7"  ];
+		6 -> 5 [label=" 8"  ];
+	7 [ label="7:#114
+
+1 - 0"  ];
+		7 -> 16 [label=" 3"  ];
+		7 -> 6 [label=" 5"  ];
+		7 -> 16 [label=" 7"  ];
+		7 -> 3 [label=" 17"  ];
+	8 [ label="8:#922
+
+0 - 0"  ];
+		8 -> 2 [label=" 3"  ];
+		8 -> 9 [label=" 4"  ];
+		8 -> 10 [label=" 7"  ];
+		8 -> 3 [label=" 14"  ];
+	9 [ label="9:#116
+
+0 - 0"  ];
+		9 -> 6 [label=" 5"  ];
+		9 -> 16 [label=" 7"  ];
+		9 -> 8 [label=" 16"  ];
+		9 -> 8 [label=" 19"  ];
+		9 -> 8 [label=" 23"  ];
+	10 [ label="10:#823
+
+12 - 0"  ];
+		10 -> 11 [label=" 4"  ];
+		10 -> 14 [label=" 13"  ];
+		10 -> 3 [label=" 17"  ];
+		10 -> 2 [label=" 22"  ];
+		10 -> 10 [label=" 24"  ];
+	11 [ label="11:#806
+
+12 - 0"  ];
+		11 -> 12 [label=" 5"  ];
+		11 -> 10 [label=" 16"  ];
+		11 -> 3 [label=" 17"  ];
+		11 -> 2 [label=" 19"  ];
+		11 -> 11 [label=" 21"  ];
+		11 -> 2 [label=" 22"  ];
+		11 -> 2 [label=" 23"  ];
+	12 [ label="12:#1146
+
+1096 - 0"  ];
+		12 -> 5 [label=" 8"  ];
+		12 -> 13 [label=" 12"  ];
+	13 [ label="13:#68
+
+4 - 0"  ];
+		13 -> 14 [label=" 10"  ];
+		13 -> 14 [label=" 13"  ];
+		13 -> 5 [label=" 26"  ];
+	14 [ label="14:#60
+
+0 - 0"  ];
+		14 -> 3 [label=" 2"  ];
+		14 -> 17 [label=" 11"  ];
+		14 -> 15 [label=" 14"  ];
+	15 [ label="15:#38
+
+0 - 0"  ];
+		15 -> 1 [label=" 15"  ];
+	16 [ label="16:#440
+
+18 - 0"  ];
+		16 -> 4 [label=" 2"  ];
+		16 -> 2 [label=" 4"  ];
+		16 -> 17 [label=" 5"  ];
+		16 -> 2 [label=" 16"  ];
+		16 -> 4 [label=" 17"  ];
+		16 -> 2 [label=" 19"  ];
+		16 -> 2 [label=" 21"  ];
+		16 -> 2 [label=" 22"  ];
+		16 -> 2 [label=" 23"  ];
+	17 [ label="17:#288
+
+117 - 0"  ];
+		17 -> 18 [label=" 2"  ];
+		17 -> 1 [label=" 7"  ];
+		17 -> 5 [label=" 8"  ];
+		17 -> 13 [label=" 12"  ];
+	18 [ label="18:#158
+
+1 - 0"  ];
+		18 -> 16 [label=" 3"  ];
+		18 -> 19 [label=" 6"  ];
+	19 [ label="19:#143
+
+1 - 0"  ];
+		19 -> 12 [label=" 7"  ];
+}

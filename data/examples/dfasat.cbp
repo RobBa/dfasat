@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="dfasat" />
+		<Option makefile_is_custom="1" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="flexfringe" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<MakeCommands>
+					<Build command="$make -f $makefile all" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile clean" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile all &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/dfasat" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="apta.cpp" />
+		<Unit filename="conflict_graph.cpp" />
+		<Unit filename="dfasat.cpp" />
+		<Unit filename="evaluate.cpp" />
+		<Unit filename="evaluation/2refactor/conflict-driven.h" />
+		<Unit filename="evaluation/2refactor/conflict_driven.cpp" />
+		<Unit filename="evaluation/2refactor/fixed_depth_regression.cpp" />
+		<Unit filename="evaluation/2refactor/fixed_depth_regression.h" />
+		<Unit filename="evaluation/2refactor/metric-driven.cpp" />
+		<Unit filename="evaluation/2refactor/metric-driven.h" />
+		<Unit filename="evaluation/2refactor/mse-error.cpp" />
+		<Unit filename="evaluation/2refactor/mse-error.h" />
+		<Unit filename="evaluation/2refactor/series-driven.cpp" />
+		<Unit filename="evaluation/2refactor/series-driven.h" />
+		<Unit filename="evaluation/aike.cpp" />
+		<Unit filename="evaluation/aike.h" />
+		<Unit filename="evaluation/alergia.cpp" />
+		<Unit filename="evaluation/alergia.h" />
+		<Unit filename="evaluation/alergia94.cpp" />
+		<Unit filename="evaluation/alergia94.h" />
+		<Unit filename="evaluation/conflict-driven-edsm.cpp" />
+		<Unit filename="evaluation/conflict-driven-edsm.h" />
+		<Unit filename="evaluation/conflict-driven-overlap.cpp" />
+		<Unit filename="evaluation/conflict-driven-overlap.h" />
+		<Unit filename="evaluation/conflict-driven.cpp" />
+		<Unit filename="evaluation/conflict-driven.h" />
+		<Unit filename="evaluation/depth-driven.cpp" />
+		<Unit filename="evaluation/depth-driven.h" />
+		<Unit filename="evaluation/devel/conflict-driven-bits.cpp" />
+		<Unit filename="evaluation/devel/conflict-driven-bits.h" />
+		<Unit filename="evaluation/devel/metric-driven.cpp" />
+		<Unit filename="evaluation/devel/metric-driven.h" />
+		<Unit filename="evaluation/devel/mse-error.cpp" />
+		<Unit filename="evaluation/devel/mse-error.h" />
+		<Unit filename="evaluation/devel/old_code.cpp" />
+		<Unit filename="evaluation/devel/series-driven.cpp" />
+		<Unit filename="evaluation/devel/series-driven.h" />
+		<Unit filename="evaluation/evidence-driven.cpp" />
+		<Unit filename="evaluation/evidence-driven.h" />
+		<Unit filename="evaluation/fixed_depth_regression.cpp" />
+		<Unit filename="evaluation/fixed_depth_regression.h" />
+		<Unit filename="evaluation/full-overlap-driven.cpp" />
+		<Unit filename="evaluation/full-overlap-driven.h" />
+		<Unit filename="evaluation/kldistance.cpp" />
+		<Unit filename="evaluation/kldistance.h" />
+		<Unit filename="evaluation/likelihood.cpp" />
+		<Unit filename="evaluation/likelihood.h" />
+		<Unit filename="evaluation/mealy.cpp" />
+		<Unit filename="evaluation/mealy.h" />
+		<Unit filename="evaluation/mse-error.cpp" />
+		<Unit filename="evaluation/mse-error.h" />
+		<Unit filename="evaluation/num_count.cpp" />
+		<Unit filename="evaluation/num_count.h" />
+		<Unit filename="evaluation/overlap-driven.cpp" />
+		<Unit filename="evaluation/overlap-driven.h" />
+		<Unit filename="evaluation/overlap4logs.cpp" />
+		<Unit filename="evaluation/overlap4logs.h" />
+		<Unit filename="evaluation/process-mining.cpp" />
+		<Unit filename="evaluation/process-mining.h" />
+		<Unit filename="evaluation_factory.cpp" />
+		<Unit filename="gitversion.cpp" />
+		<Unit filename="inputdata.cpp" />
+		<Unit filename="interactive.cpp" />
+		<Unit filename="lib/apta.h" />
+		<Unit filename="lib/common.h" />
+		<Unit filename="lib/conflict_graph.h" />
+		<Unit filename="lib/dfasat.h" />
+		<Unit filename="lib/evaluate.h" />
+		<Unit filename="lib/evaluation_factory.h" />
+		<Unit filename="lib/evaluators.h" />
+		<Unit filename="lib/inputdata.h" />
+		<Unit filename="lib/interactive.h" />
+		<Unit filename="lib/json.hpp" />
+		<Unit filename="lib/parameters.h" />
+		<Unit filename="lib/random_greedy.h" />
+		<Unit filename="lib/refinement.h" />
+		<Unit filename="lib/searcher.h" />
+		<Unit filename="lib/state_merger.h" />
+		<Unit filename="lib/stream.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="parameters.cpp" />
+		<Unit filename="random_greedy.cpp" />
+		<Unit filename="refinement.cpp" />
+		<Unit filename="searcher.cpp" />
+		<Unit filename="state_merger.cpp" />
+		<Unit filename="stream.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
