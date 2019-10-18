@@ -76,13 +76,17 @@ public:
         return inputdata::all_data[seq_nr]["L"];
     };
     static inline int get_symbol(int seq_nr, int index){
-        return inputdata::all_data[seq_nr]["S"][index];
+        if(index > -1)
+            return inputdata::all_data[seq_nr]["S"][index];
+        return -1;
     };
     static inline int get_value(int seq_nr, int index, int attr){
-        return inputdata::all_data[seq_nr]["V" + to_string(attr)][index];
+        if(index > -1)
+            return inputdata::all_data[seq_nr]["V" + to_string(attr)][index];
+        return -1;
     };
     static inline string get_data(int seq_nr, int index){
-        if(inputdata::all_data[seq_nr].find("D") != inputdata::all_data[seq_nr].end())
+        if(index > 0 && inputdata::all_data[seq_nr].find("D") != inputdata::all_data[seq_nr].end())
             return inputdata::all_data[seq_nr]["D"][index];
         return "";
     };
@@ -94,16 +98,20 @@ public:
         return inputdata::all_data[t->sequence]["L"];
     };
     static inline int get_symbol(tail* t){
-        return inputdata::all_data[t->sequence]["S"][t->index];
+        if(t->index > -1)
+            return inputdata::all_data[t->sequence]["S"][t->index];
+        return -1;
     };
     static inline int get_index(tail* t){
         return t->index;
     };
     static inline int get_value(tail* t, int attr){
-        return inputdata::all_data[t->sequence]["V" + to_string(attr)][t->index];
+        if(t->index > -1)
+            return inputdata::all_data[t->sequence]["V" + to_string(attr)][t->index];
+        return -1;
     };
     static inline string get_data(tail* t){
-        if(inputdata::all_data[t->sequence].find("D") != inputdata::all_data[t->sequence].end())
+        if(t->index > -1 && inputdata::all_data[t->sequence].find("D") != inputdata::all_data[t->sequence].end())
             return inputdata::all_data[t->sequence]["D"][t->index];
         return "";
     };

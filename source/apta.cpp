@@ -54,7 +54,7 @@ void apta::read_file(istream &input_stream){
         int type;
         int length;
         string id;
-
+        
         // I need to refactor this...
         if(EXCEPTION4OVERLAP) {
            input_stream >> id >> type >> length;

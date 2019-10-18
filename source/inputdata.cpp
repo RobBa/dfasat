@@ -94,9 +94,9 @@ void inputdata::read_abbadingo_file(istream &input_stream){
     
     //cerr << "ATTR: " << attr << " " << inputdata::num_attributes << endl;
 	
-	for(int line = 0; line < num_sequences; ++line){
+    for(int line = 0; line < num_sequences; ++line){
         read_abbadingo_sequence(input_stream, inputdata::num_attributes);
-	}
+    }
 };
 
 void inputdata::read_abbadingo_sequence(istream &input_stream, int num_attributes){
@@ -158,7 +158,7 @@ void inputdata::read_abbadingo_sequence(istream &input_stream, int num_attribute
             l3.str(vals);
             for(int i = 0; i < num_attributes-1; ++i){
                 std::getline(l3,val,',');
-//cerr << val;
+                cerr << val;
                 values[i][index] = stof(val);
             }
             std::getline(l3,val);
@@ -187,6 +187,10 @@ void inputdata::add_sequence_to_apta(apta* the_apta, int seq_nr){
     int depth = 0;
     apta_node* node = the_apta->root;
     tail* ot = 0;
+    
+    if(sequence["L"] == 0){
+        node->data->read_to(new tail(seq_nr, -1, ot));
+    }
     
     for(int index = 0; index < sequence["L"]; index++){
         depth++;
