@@ -1,12 +1,12 @@
 CC	=	g++
 CFLAGS	=	-g 
-SOURCES = 	*.cpp 
+SOURCES = 	source/*.cpp 
 SOURCESPYTHON =	apta.cpp dfasat.cpp  refinement.cpp evaluation_factory.cpp random_greedy.cpp  state_merger.cpp parameters.cpp searcher.cpp stream.cpp interactive.cpp 
-LFLAGS 	= 	-std=c++11 -L/opt/local/lib -I/opt/local/include -I./lib -I. -lm -lpopt -lgsl -lgslcblas
-PYTHON_EVAL = evaluation/python.cpp
+LFLAGS 	= 	-g -std=c++11 -L/opt/local/lib -I/opt/local/include -I./source -I./source/evaluation -lm -lpopt -lgsl -lgslcblas
+PYTHON_EVAL = source/evaluation/python.cpp
 
-EVALFILES := $(wildcard evaluation/*.cpp)
-EVALOBJS := $(addprefix evaluation/,$(notdir $(EVALFILES:.cpp=.o)))
+EVALFILES := $(wildcard source/evaluation/*.cpp)
+EVALOBJS := $(addprefix source/evaluation/,$(notdir $(EVALFILES:.cpp=.o)))
 
 ifdef WITH_PYTHON
   PYTHON_VERSION=$(shell python3 -c 'import sys; print("".join([str(v) for v in sys.version_info[:2]]))')
@@ -15,7 +15,7 @@ ifdef WITH_PYTHON
   BOOST_LIBS=-lboost_python-py$(PYTHON_VERSION)
 else
   EVALFILES := $(filter-out $(PYTHON_EVAL), $(EVALFILES))
-  EVALOBJS := $(addprefix evaluation/,$(notdir $(EVALFILES:.cpp=.o)))
+  EVALOBJS := $(addprefix source/evaluation/,$(notdir $(EVALFILES:.cpp=.o)))
 endif
 
 
@@ -34,11 +34,11 @@ debug:
 flexfringe: $(EVALOBJS)
 	$(CC) $(CFLAGS) -o $@ $(SOURCES) $^ -I./ $(LFLAGS) $(LIBS)
 
-evaluation/%.o: evaluation/%.cpp
-	$(CC) -fPIC -c -o $@ $< -I./lib $(LFLAGS) $(LIBS) $(PYTHON_INC) $(PYTHON_LIBS) $(BOOST_LIBS) 
+source/evaluation/%.o: source/evaluation/%.cpp
+	$(CC) -fPIC -c -o $@ $< -I.source $(LFLAGS) $(LIBS) $(PYTHON_INC) $(PYTHON_LIBS) $(BOOST_LIBS) 
 
 clean:
-	rm -f flexfringe ./evaluation/*.o generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
+	rm -f flexfringe ./source/evaluation/*.o source/generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
 	
 gitversion.cpp: 
 	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > $@ || echo "const char *gitversion = \"No commit info available\";" > $@
