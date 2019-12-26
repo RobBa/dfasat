@@ -126,7 +126,7 @@ void apta::print_dot(iostream& output){
     }
     //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
     //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
-    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
+    for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
         output << "\t" << n->number << " [ label=\"";
         output << n->number << ":#" << n->size << "\n";
@@ -331,7 +331,7 @@ void apta::print_json(iostream& output){
            count++;
         }
 
-        for(map<int, set<int>>::iterator it2 = sinklabels.begin(); it2 != sinklabels.end(); ++it2){
+        /*for(map<int, set<int>>::iterator it2 = sinklabels.begin(); it2 != sinklabels.end(); ++it2){
             int stype = (*it2).first;
             set<int> labels  = (*it2).second;
             
@@ -356,7 +356,7 @@ void apta::print_json(iostream& output){
             output << "\" ";
             n->data->print_transition_style(output, labels, this);
             output << " ];\n";
-        }
+        }*/
  
         count++;
     }
