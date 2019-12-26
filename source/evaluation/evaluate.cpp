@@ -58,6 +58,17 @@ void evaluation_data::read_to(tail* t){
                 inputdata::get_data(t)      );
 };
 
+void evaluation_data::add_tail(tail* t){
+    if(t->index == -1){
+        read_to(t->past_tail);
+    } else {
+        read_from(t);
+    }
+};
+
+void evaluation_data::del_tail(tail* t){
+};
+
 void evaluation_data::update(evaluation_data* right){
     //cerr << "read " << endl;
     if(node_type == -1){

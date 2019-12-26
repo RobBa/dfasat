@@ -25,6 +25,8 @@ public:
     virtual void split_update(evaluation_data* other);
     virtual void split_undo(evaluation_data* other);
     
+    virtual void del_tail(tail* t);
+
     virtual void set_loglikelihood();
     
     int num_parameters();

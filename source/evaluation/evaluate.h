@@ -88,7 +88,10 @@ public:
     virtual void read_from(tail* t);
     virtual void read_to(tail* t);
 
-/* Update values when merging */
+    virtual void add_tail(tail* t);
+    virtual void del_tail(tail* t);
+
+    /* Update values when merging */
     virtual void update(evaluation_data* other);
 /* Undo updates when undoing merge */
     virtual void undo(evaluation_data* other);

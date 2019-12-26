@@ -187,11 +187,7 @@ void inputdata::add_sequence_to_apta(apta* the_apta, int seq_nr){
     int depth = 0;
     apta_node* node = the_apta->root;
     tail* ot = 0;
-    
-    if(sequence["L"] == 0){
-        node->data->read_to(new tail(seq_nr, -1, ot));
-    }
-    
+
     for(int index = 0; index < sequence["L"]; index++){
         depth++;
         tail* nt = new tail(seq_nr, index, ot);
@@ -206,16 +202,22 @@ void inputdata::add_sequence_to_apta(apta* the_apta, int seq_nr){
         }
         node->size = node->size + 1;
         node->add_tail(nt);
+        node->data->add_tail(nt);
         //node->data->read_from(seq_nr, index);
-        node->data->read_from(nt);
+        //node->data->read_from(nt);
         apta_node* node2 = node->child(symbol);
         //node2->data->read_to(seq_nr, index);
-        node2->data->read_to(nt);
+        //node2->data->read_to(nt);
         node = node2;
         ot = nt;
     }
+    
+    tail* nt = new tail(seq_nr, -1, ot);
+    //node->data->read_to(nt);
     node->type = sequence["T"];
     node->size = node->size + 1;
+    node->add_tail(nt);
+    node->data->add_tail(nt);
 };
 
 const string inputdata::to_json_str() const{

@@ -61,6 +61,10 @@ void rtiplus_data::read_from(tail* t){
 
 void rtiplus_data::print_state_label(iostream& output, apta* aptacontext){
     for(int i = 0; i < inputdata::types.size(); ++i) {
+        output << "fin(" << i << "):";
+        output << num_final() << endl;
+        output << "" << endl;
+    }    for(int i = 0; i < inputdata::types.size(); ++i) {
         output << "symb(" << i << "):[";
         for(int j = 0; j < inputdata::alphabet.size(); ++j){
             output << count(i,j) << ",";
@@ -126,6 +130,32 @@ void rtiplus_data::split_update_single(evaluation_data* right, tail* t){
         if(!found){
             quantile_counts[i][rtiplus::attribute_quantiles[i].size()] = quantile_counts[i][rtiplus::attribute_quantiles[i].size()] - 1;
             other->quantile_counts[i][rtiplus::attribute_quantiles[i].size()] = other->quantile_counts[i][rtiplus::attribute_quantiles[i].size()] + 1;
+        }
+    }
+};
+
+void rtiplus_data::del_tail(tail* t){
+    int type  = inputdata::get_type(t);
+    int symbol = inputdata::get_symbol(t);
+    
+    if(t->index == -1){
+        final_counts[type]--;
+        total_final--;
+    } else {
+        total_paths -= 1;
+        trans_counts[type][symbol] = trans_counts[type][symbol] - 1;
+        for(int i = 0; i < inputdata::num_attributes; ++i) {
+            bool found = false;
+            for(int j = 0; j < rtiplus::attribute_quantiles[i].size(); ++j){
+                if(inputdata::get_value(t, i) < rtiplus::attribute_quantiles[i][j]){
+                    quantile_counts[i][j] = quantile_counts[i][j] - 1;
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                quantile_counts[i][rtiplus::attribute_quantiles[i].size()] = quantile_counts[i][rtiplus::attribute_quantiles[i].size()] - 1;
+            }
         }
     }
 };
@@ -241,8 +271,9 @@ void rtiplus::split_update_score_before(state_merger* merger, apta_node* left, a
 
     if(l->num_paths() + r->num_paths() < STATE_COUNT) return;
 
-    if(r->num_paths() == 0){
+    if(right->size == 0){
         extra_parameters += l->num_parameters();    
+        //extra_parameters += 5;    
         loglikelihood_merged += l->loglikelihood;
     } else {
         //cerr << "before1 " << loglikelihood_orig << endl;
@@ -266,12 +297,14 @@ void rtiplus::split_update_score_after(state_merger* merger, apta_node* left, ap
     
     if(l->num_paths() + r->num_paths() < STATE_COUNT) return;
 
-    if(l->num_paths() == 0){
+    if(left->size == 0){
+        //extra_parameters -= 5;    
         extra_parameters -= r->num_parameters();    
-        loglikelihood_merged -= l->loglikelihood;
+        loglikelihood_merged -= r->loglikelihood;
     }
 
-    /*cerr << "splitting left: " << left->size << endl;
+    /*
+     * cerr << "splitting left: " << left->size << endl;
     for(int a = 0; a < inputdata::alphabet.size(); ++a){
         cerr << l->pos(a) << " ";
     }
@@ -292,7 +325,8 @@ void rtiplus::split_update_score_after(state_merger* merger, apta_node* left, ap
             cerr << r->quantile_counts[i][j] << " ";
         }
         cerr << endl;
-    }*/
+    }
+     * */
     
     //cerr << "after1 " << loglikelihood_orig << endl;
     loglikelihood_orig += l->loglikelihood;
@@ -463,6 +497,8 @@ bool rtiplus::split_compute_consistency(state_merger *, apta_node* left, apta_no
     
     cerr << "split score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
 
+    if(left->size < STATE_COUNT || right->size < STATE_COUNT) return false;
+
     if (p_value > CHECK_PARAMETER) { inconsistency_found = true; return false; }
     
     return true;
@@ -475,6 +511,8 @@ double  rtiplus::split_compute_score(state_merger *, apta_node* left, apta_node*
     cerr << "split score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
 
     //if (inconsistency_found) return -1;
+    
+    if(left->size < STATE_COUNT || right->size < STATE_COUNT) return 0.0;
 
     return 1.0 + CHECK_PARAMETER - p_value;
 };

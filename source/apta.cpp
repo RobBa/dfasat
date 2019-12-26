@@ -125,9 +125,9 @@ void apta::print_dot(iostream& output){
         apta_node* n = *Ait;
         n->number = ncounter++;
     }
-    for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
+    //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
     //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
-    //for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
+    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
         output << "\t" << n->number << " [ label=\"";
         output << n->number << ":#" << n->size << "\n";
@@ -389,6 +389,7 @@ apta_guard::apta_guard(apta_guard* g){
 void apta_node::add_tail(tail* t){
     t->next_in_list = tails_head;
     tails_head = t;
+    //data->add_tail(t);
 };
 
 apta_node::apta_node(apta *context) {
