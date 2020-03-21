@@ -9,8 +9,8 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
-          - apt install libgsl0ldbl libgsl0-dev
-          - apt install libpopt-dev
+          - apt update && apt install -y libgsl-dev
+          - apt install -y libpopt-dev
           - make clean
           - make all
           - make test
