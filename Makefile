@@ -21,7 +21,7 @@ endif
 
 OUTDIR ?= .
 
-.PHONY: all clean
+.PHONY: all clean regen test debug python
 
 all: regen gitversion.cpp flexfringe
 
@@ -39,6 +39,9 @@ evaluation/%.o: evaluation/%.cpp
 
 clean:
 	rm -f flexfringe ./evaluation/*.o generated.cpp named_tuple.py *.dot exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
+
+test:
+	test/final.sh
 	
 gitversion.cpp: .git/HEAD .git/index
 	echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > $@
