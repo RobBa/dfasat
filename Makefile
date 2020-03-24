@@ -40,7 +40,7 @@ evaluation/%.o: evaluation/%.cpp
 clean:
 	rm -f flexfringe ./evaluation/*.o generated.cpp named_tuple.py *.dot exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
 
-test:
+test: all
 	test/final.sh
 	
 gitversion.cpp: .git/HEAD .git/index
