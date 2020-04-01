@@ -20,8 +20,8 @@ bool likelihoodratio::consistent(state_merger *merger, apta_node* left, apta_nod
     //if(merger->aut->root == left) {inconsistency_found = true; return false;};
     //if(left->depth != right->depth) {inconsistency_found = true; return false;};
 
-    //if(l->pos_final() != 0 && r->pos_final() == 0) {inconsistency_found = true; return false;};
-    //if(l->pos_final() == 0 && r->pos_final() != 0) {inconsistency_found = true; return false;};
+    //if(l->num_final() != 0 && r->num_final() == 0) {inconsistency_found = true; return false;};
+    //if(l->num_final() == 0 && r->num_final() != 0) {inconsistency_found = true; return false;};
 
     return count_driven::consistent(merger, left, right);
 };
@@ -116,8 +116,8 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
     if(left_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT)
         update_likelihood(left_count, right_count, left_divider, right_divider);
     
-    //left_count = (double)l->pos_final();
-    //right_count = (double)r->pos_final();
+    left_count = (double)l->pos_final();
+    right_count = (double)r->pos_final();
     
     //if(right_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT)
     //    update_likelihood(left_count, right_count, left_divider, right_divider);

@@ -490,16 +490,17 @@ void rtiplus::split_update_score_after(state_merger* merger, apta_node* left, ap
 };*/
 
 bool rtiplus::split_compute_consistency(state_merger *, apta_node* left, apta_node* right){
-    if (inconsistency_found) return false;
-    
     double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
     double p_value = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
     
-    cerr << "split score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
+    //cerr << "split score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
 
     if(left->size < STATE_COUNT || right->size < STATE_COUNT) return false;
 
-    if (p_value > CHECK_PARAMETER) { inconsistency_found = true; return false; }
+    if (p_value > CHECK_PARAMETER) { return false; }
+    
+    //cerr << "true " << inconsistency_found << endl;
+    if (inconsistency_found) return false;
     
     return true;
 };
@@ -508,11 +509,13 @@ double  rtiplus::split_compute_score(state_merger *, apta_node* left, apta_node*
     double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
     double p_value = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
     
-    cerr << "split score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
+    //cerr << "split score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
 
     //if (inconsistency_found) return -1;
     
     if(left->size < STATE_COUNT || right->size < STATE_COUNT) return 0.0;
+    
+    //cerr << "score " << 1.0 + CHECK_PARAMETER - p_value << endl;
 
     return 1.0 + CHECK_PARAMETER - p_value;
 };

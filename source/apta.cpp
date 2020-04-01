@@ -125,14 +125,14 @@ void apta::print_dot(iostream& output){
         apta_node* n = *Ait;
         n->number = ncounter++;
     }
-    //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
+    for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
     //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
-    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
+    //for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
         output << "\t" << n->number << " [ label=\"";
         output << n->number << ":#" << n->size << "\n";
-        output << n << "\n";
-        output << n->representative << "\n";
+        //output << n << "\n";
+        //output << n->representative << "\n";
         /*if(inputdata::num_attributes > 0){
             for(tail_iterator it = tail_iterator(n); *it != 0; ++it){
                 tail* t = *it;
@@ -176,7 +176,9 @@ void apta::print_dot(iostream& output){
                 output << " " << inputdata::alphabet[*its];
             }*/
             
-            output << g << endl;
+            output << alph_str((*it).first) << endl;
+            
+            n->data->print_transition_label(output, (*it).first, this);
             
             
             for(bound_map::iterator it2 = g->min_attribute_values.begin(); it2 != g->min_attribute_values.end(); ++it2){
