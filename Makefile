@@ -1,8 +1,8 @@
 CC	=	g++
-CFLAGS	=	-g 
+CFLAGS	=	-g
 SOURCES = 	source/*.cpp 
 SOURCESPYTHON =	apta.cpp dfasat.cpp  refinement.cpp evaluation_factory.cpp random_greedy.cpp  state_merger.cpp parameters.cpp searcher.cpp stream.cpp interactive.cpp 
-LFLAGS 	= 	-g -std=c++11 -L/opt/local/lib -I/opt/local/include -I./source -I./source/evaluation -lm -lpopt -lgsl -lgslcblas
+LFLAGS 	= -w -std=c++11 -L/opt/local/lib -I/opt/local/include -I./source -I./source/evaluation -lm -lpopt -lgsl -lgslcblas
 PYTHON_EVAL = source/evaluation/python.cpp
 
 EVALFILES := $(wildcard source/evaluation/*.cpp)
