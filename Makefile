@@ -23,7 +23,7 @@ OUTDIR ?= .
 
 .PHONY: all clean
 
-all: regen gitversion.cpp flexfringe
+all: regen source/gitversion.cpp flexfringe
 
 regen:
 	sh collector.sh
@@ -40,10 +40,10 @@ source/evaluation/%.o: source/evaluation/%.cpp
 clean:
 	rm -f flexfringe ./source/evaluation/*.o source/generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
 	
-gitversion.cpp: 
+source/gitversion.cpp: 
 	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > $@ || echo "const char *gitversion = \"No commit info available\";" > $@
 
-python: $(EVALOBJS) gitversion.cpp
+python: $(EVALOBJS) source/gitversion.cpp
 	export CPLUS_INCLUDE_PATH=/usr/include/python3.5
 	$(CC) -fPIC -shared $(CFLAGS)  -o flexfringe.lib.so $(SOURCESPYTHON) $^ -I./ $(LFLAGS) $(LIBS) $(PYTHON_LIBS) $(PYTHON_INC) 
 	python3 generate.py

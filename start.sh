@@ -15,4 +15,4 @@ param=$(grep -v '^#' $1 |{
 })
 #echo $param
 
-./flexfringe $param $2
+./cmake-build-debug/dfasat $param $2

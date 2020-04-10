@@ -82,7 +82,7 @@ public:
     }
 
     inline num_map::iterator pos_end(){
-        return type_counts_begin(1);
+        return type_counts_end(1);
     }
     
     inline num_map::iterator neg_begin(){
@@ -90,7 +90,7 @@ public:
     }
 
     inline num_map::iterator neg_end(){
-        return type_counts_begin(0);
+        return type_counts_end(0);
     }
 
     /*inline int neg(int i){
