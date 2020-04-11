@@ -235,7 +235,7 @@ void run(parameters* param) {
 
 } // end run
 
-
+#ifndef UNIT_TESTING
 int main(int argc, char *argv[]){
 
     loguru::g_stderr_verbosity = loguru::Verbosity_OFF;
@@ -366,3 +366,4 @@ int main(int argc, char *argv[]){
 
     return 0;
 }
+#endif
