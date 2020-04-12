@@ -1,7 +1,7 @@
 CC	=	g++
 CFLAGS	=	-g 
 SOURCES = 	source/*.cpp 
-SOURCESPYTHON =	apta.cpp dfasat.cpp  refinement.cpp evaluation_factory.cpp random_greedy.cpp  state_merger.cpp parameters.cpp searcher.cpp stream.cpp interactive.cpp 
+SOURCESPYTHON =	apta.cpp dfasat.cpp refinement.cpp evaluation_factory.cpp random_greedy.cpp state_merger.cpp parameters.cpp searcher.cpp stream.cpp interactive.cpp 
 LFLAGS 	= 	-g -std=c++11 -L/opt/local/lib -I/opt/local/include -I./source -I./source/evaluation -lm -lpopt -lgsl -lgslcblas -lpthread -ldl
 PYTHON_EVAL = source/evaluation/python.cpp
 
@@ -21,7 +21,7 @@ endif
 
 OUTDIR ?= .
 
-.PHONY: all clean
+.PHONY: all clean test
 
 all: regen source/gitversion.cpp flexfringe
 
@@ -33,6 +33,10 @@ debug:
 
 flexfringe: $(EVALOBJS)
 	$(CC) $(CFLAGS) -o $@ $(SOURCES) $^ -I./ $(LFLAGS) $(LIBS)
+
+test: $(EVALOBJS)
+	$(CC) $(FLAGS) -DUNIT_TESTING=1 -I./ -o runtests tests/tests.cpp tests/tail.cpp $(SOURCES) $^ $(LFLAGS) $(LIBS)
+	./runtests	
 
 source/evaluation/%.o: source/evaluation/%.cpp
 	$(CC) -fPIC -c -o $@ $< -I.source $(LFLAGS) $(LIBS) $(PYTHON_INC) $(PYTHON_LIBS) $(BOOST_LIBS) 
