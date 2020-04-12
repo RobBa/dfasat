@@ -2,7 +2,7 @@
 
 // main() provided by Catch in file tests.cpp file.
 
-#include "/home/chris/Dropbox/dfasat/source/utility/catch.hpp"
+#include "source/utility/catch.hpp"
 #include "source/inputdata.h"
 
 TEST_CASE( "2: Empty tail does not have a future", "[multi-file:2]" ) {
