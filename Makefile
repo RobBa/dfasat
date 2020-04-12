@@ -36,7 +36,7 @@ flexfringe: $(EVALOBJS) source/gitversion.cpp
 
 test: $(EVALOBJS) source/gitversion.cpp
 	$(CC) $(FLAGS) -DUNIT_TESTING=1 -I./ -o runtests tests/tests.cpp tests/tail.cpp $(SOURCES) $(EVALOBJS) $(LFLAGS) $(LIBS)
-	./runtests	
+	./runtests -r xml > test-reports/testresults.xml	
 
 source/evaluation/%.o: source/evaluation/%.cpp
 	$(CC) -fPIC -c -o $@ $< -I.source $(LFLAGS) $(LIBS) $(PYTHON_INC) $(PYTHON_LIBS) $(BOOST_LIBS) 
