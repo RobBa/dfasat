@@ -31,11 +31,11 @@ regen:
 debug:
 	$(CC) -g $(SOURCES) -o flexfringe $(LFLAGS) $(LIBS)
 
-flexfringe: $(EVALOBJS)
+flexfringe: $(EVALOBJS) source/gitversion.cpp
 	$(CC) $(CFLAGS) -o $@ $(SOURCES) $^ -I./ $(LFLAGS) $(LIBS)
 
-test: $(EVALOBJS)
-	$(CC) $(FLAGS) -DUNIT_TESTING=1 -I./ -o runtests tests/tests.cpp tests/tail.cpp $(SOURCES) $^ $(LFLAGS) $(LIBS)
+test: $(EVALOBJS) source/gitversion.cpp
+	$(CC) $(FLAGS) -DUNIT_TESTING=1 -I./ -o runtests tests/tests.cpp tests/tail.cpp $(SOURCES) $(EVALOBJS) $(LFLAGS) $(LIBS)
 	./runtests	
 
 source/evaluation/%.o: source/evaluation/%.cpp
