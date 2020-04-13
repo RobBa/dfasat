@@ -32,7 +32,7 @@ debug:
 	$(CC) -g $(SOURCES) -o flexfringe $(LFLAGS) $(LIBS)
 
 flexfringe: $(EVALOBJS) source/gitversion.cpp
-	$(CC) $(CFLAGS) -o $@ $(SOURCES) $^ -I./ $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) -o $@ $(SOURCES)  $(EVALOBJS) -I./ $(LFLAGS) $(LIBS)
 
 test: $(EVALOBJS) source/gitversion.cpp
 	$(CC) $(FLAGS) -DUNIT_TESTING=1 -I./ -o runtests tests/tests.cpp tests/tail.cpp $(SOURCES) $(EVALOBJS) $(LFLAGS) $(LIBS)
@@ -44,14 +44,9 @@ source/evaluation/%.o: source/evaluation/%.cpp
 
 clean:
 	rm -f flexfringe ./source/evaluation/*.o source/generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
-	
-<<<<<<< HEAD
+
 gitversion.cpp: 
 	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > source/$@ || echo "const char *gitversion = \"No commit info available\";" > source/$@
-=======
-source/gitversion.cpp: 
-	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > $@ || echo "const char *gitversion = \"No commit info available\";" > $@
->>>>>>> 91d9f5a0068067634063de2bd7a93c93faa83c77
 
 python: $(EVALOBJS) source/gitversion.cpp
 	export CPLUS_INCLUDE_PATH=/usr/include/python3.5
