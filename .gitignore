@@ -9,6 +9,7 @@
 *.o
 *.so
 evaluation/*.o
+.idea/
 #ignore temp files
 lib/evaluators.h
 source/evaluation/*.tmp
@@ -37,5 +38,6 @@ CTLS.log
 # other files
 processidentification/
 
-
-.idea/
+#ignore test outputs
+runtests
+test-reports/
