@@ -12,6 +12,7 @@ evaluation/*.o
 #ignore temp files
 lib/evaluators.h
 source/evaluation/*.tmp
+source/gitversion.cpp
 # ignore binaries
 ./dfasat
 ./flexfringe

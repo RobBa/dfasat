@@ -18,6 +18,9 @@
 #include "common.h"
 #include "inputdata.h"
 
+#define LOGURU_WITH_STREAMS 1
+#include "utility/loguru.cpp"
+
 #include "parameters.h"
 
 // this file is generaterated by collector.sh
@@ -147,8 +150,10 @@ void run(parameters* param) {
        cout << "batch mode selected" << endl;
 
        //merger.read_apta(input_stream);
+       LOG_S(INFO) << "Start reading data in batch mode";
        id.add_data_to_apta(the_apta);
        the_apta-> alp = id.alphabet;
+       LOG_S(INFO) << "Finished reading data in batch mode";
 
        cout << "reading data finished, processing:" << endl;
        // run the state merger
@@ -168,7 +173,8 @@ void run(parameters* param) {
           std::ostringstream oss2;
           oss2 << param->dot_file << "dfa" << (i+1);
 
-         cout << "dfasat running";
+	  LOG_S(INFO) << "Starting state-merging in batch mode";
+          cout << "dfasat running";
 
           solution = dfasat(merger, param->sat_program, oss2.str().c_str(), oss.str().c_str());
           //bestfirst(&merger);
@@ -178,8 +184,12 @@ void run(parameters* param) {
 
     } else if(param->mode == "stream") {
        cout << "stream mode selected" << endl;
+       LOG_S(INFO) << "Stream mode selected, starting run";
+
        stream_mode(&merger, param, input_stream);
     } else if(param->mode == "inter") {
+
+       LOG_S(INFO) << "Reading data in interactive mode";
 
        // process data
        id.add_data_to_apta(the_apta);
@@ -187,11 +197,13 @@ void run(parameters* param) {
        //merger.read_apta(input_stream);
        //input_stream.close();
 
-       cout << "reading data finished, processing:" << endl;
+       LOG_S(INFO) << "Finished reading input data, starting state-merging";
+       cout << "Reading data finished, processing:" << endl;
  
        // run interactive loop
        interactive(&merger, param); 
     } else {
+       LOG_S(WARNING) << "Unkown mode of operation selected, please chose batch, stream, or inter. Provided was " << param->mode;
        cerr << "unknown mode of operation selected, valid options are \"batch\", \"stream\", and \"inter\", while the parameter provided was " << param->mode << endl;
        exit(1);
     }
@@ -223,8 +235,13 @@ void run(parameters* param) {
 
 } // end run
 
+#ifndef UNIT_TESTING
+int main(int argc, char *argv[]){
 
-int main(int argc, const char *argv[]){
+    loguru::g_stderr_verbosity = loguru::Verbosity_OFF;
+    loguru::init(argc, argv);
+    loguru::add_file("flexfringe.log", loguru::Append, loguru::Verbosity_MAX);
+    LOG_S(INFO) << "Starting flexfringe run";
 
     char c = 0;
     parameters* param = new parameters();
@@ -293,8 +310,9 @@ int main(int argc, const char *argv[]){
     while ((c = poptGetNextOpt(optCon)) >= 0){
         if(c == 1){
             cout << endl << "flexFringe" << endl;
-            cout << "Copyright 2017 Sicco Verwer, Delft University of Technology" << endl;
-            cout << "with contributions from Christian Hammerschmidt, University of Luxembourg" << endl;
+            cout << "Copyright 2020 Sicco Verwer, Delft University of Technology" << endl;
+            cout << "with contributions from Christian Hammerschmidt, Delft University of Technology, University of Luxembourg" << endl;
+	    cout << "with contribution from APTA Technologies BV" << endl;
             cout << "based on " << endl;
             cout << "DFASAT with random greedy preprocessing" << endl;
             cout << "Copyright 2015 Sicco Verwer and Marijn Heule, Delft University of Technology." << endl;
@@ -344,5 +362,8 @@ int main(int argc, const char *argv[]){
 
     delete param;
 
+    LOG_S(INFO) << "Ending flexfringe run normally";
+
     return 0;
 }
+#endif

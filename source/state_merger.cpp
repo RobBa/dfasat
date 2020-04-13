@@ -188,6 +188,7 @@ void state_merger::undo_pre_split(apta_node* left, apta_node* right){
  */
 
 bool state_merger::merge(apta_node* left, apta_node* right){
+    cerr << "in merge" << endl;
     bool result = true;
     if(left == 0 || right == 0) return true;
     
