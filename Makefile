@@ -46,8 +46,8 @@ source/evaluation/%.o: source/evaluation/%.cpp
 clean:
 	rm -f flexfringe ./source/evaluation/*.o source/generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
 
-gitversion.cpp: 
-	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > source/$@ || echo "const char *gitversion = \"No commit info available\";" > source/$@
+source/gitversion.cpp: 
+	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > $@ || echo "const char *gitversion = \"No commit info available\";" > $@
 
 python: $(EVALOBJS) source/gitversion.cpp
 	export CPLUS_INCLUDE_PATH=/usr/include/python3.5
