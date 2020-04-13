@@ -11,6 +11,7 @@
 evaluation/*.o
 #ignore temp files
 lib/evaluators.h
+source/evaluation/*.tmp
 source/gitversion.cpp
 # ignore binaries
 ./dfasat
@@ -35,3 +36,6 @@ ICC.log
 CTLS.log
 # other files
 processidentification/
+
+
+.idea/

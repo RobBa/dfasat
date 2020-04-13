@@ -1,8 +1,8 @@
 CC	=	g++
-CFLAGS	=	-g 
+CFLAGS	=	-g
 SOURCES = 	source/*.cpp 
-SOURCESPYTHON =	apta.cpp dfasat.cpp refinement.cpp evaluation_factory.cpp random_greedy.cpp state_merger.cpp parameters.cpp searcher.cpp stream.cpp interactive.cpp 
-LFLAGS 	= 	-g -std=c++11 -L/opt/local/lib -I/opt/local/include -I./source -I./source/evaluation -lm -lpopt -lgsl -lgslcblas -lpthread -ldl
+SOURCESPYTHON =	apta.cpp dfasat.cpp  refinement.cpp evaluation_factory.cpp random_greedy.cpp  state_merger.cpp parameters.cpp searcher.cpp stream.cpp interactive.cpp 
+LFLAGS 	= -w -std=c++11 -L/opt/local/lib -I/opt/local/include -I./source -I./source/evaluation -lm -lpopt -lgsl -lgslcblas
 PYTHON_EVAL = source/evaluation/python.cpp
 
 EVALFILES := $(wildcard source/evaluation/*.cpp)
@@ -45,8 +45,13 @@ source/evaluation/%.o: source/evaluation/%.cpp
 clean:
 	rm -f flexfringe ./source/evaluation/*.o source/generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so gitversion.cpp
 	
+<<<<<<< HEAD
+gitversion.cpp: 
+	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > source/$@ || echo "const char *gitversion = \"No commit info available\";" > source/$@
+=======
 source/gitversion.cpp: 
 	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > $@ || echo "const char *gitversion = \"No commit info available\";" > $@
+>>>>>>> 91d9f5a0068067634063de2bd7a93c93faa83c77
 
 python: $(EVALOBJS) source/gitversion.cpp
 	export CPLUS_INCLUDE_PATH=/usr/include/python3.5
