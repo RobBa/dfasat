@@ -34,6 +34,7 @@ debug:
 flexfringe: $(EVALOBJS) source/gitversion.cpp
 	$(CC) $(CFLAGS) -o $@ $(SOURCES)  $(EVALOBJS) -I./ $(LFLAGS) $(LIBS)
 
+
 test: $(EVALOBJS) source/gitversion.cpp
 	$(CC) $(FLAGS) -DUNIT_TESTING=1 -I./ -o runtests tests/tests.cpp tests/tail.cpp $(SOURCES) $(EVALOBJS) $(LFLAGS) $(LIBS)
 	mkdir -p test-reports
