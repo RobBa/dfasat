@@ -35,7 +35,7 @@ flexfringe: $(EVALOBJS) source/gitversion.cpp
 	$(CC) $(CFLAGS) -o $@ $(SOURCES)  $(EVALOBJS) -I./ $(LFLAGS) $(LIBS)
 
 
-test: $(EVALOBJS) source/gitversion.cpp
+test: regen $(EVALOBJS) source/gitversion.cpp
 	$(CC) $(FLAGS) -DUNIT_TESTING=1 -I./ -o runtests tests/tests.cpp tests/tail.cpp $(SOURCES) $(EVALOBJS) $(LFLAGS) $(LIBS)
 	mkdir -p test-reports
 	./runtests -r junit > test-reports/testresults.xml	
@@ -44,7 +44,7 @@ source/evaluation/%.o: source/evaluation/%.cpp
 	$(CC) -fPIC -c -o $@ $< -I.source $(LFLAGS) $(LIBS) $(PYTHON_INC) $(PYTHON_LIBS) $(BOOST_LIBS) 
 
 clean:
-	rm -f flexfringe ./source/evaluation/*.o source/generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so source/gitversion.cpp
+	rm -f flexfringe ./source/evaluation/*.o source/generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so source/gitversion.cpp source/evaluators.h
 
 source/gitversion.cpp: 
 	[ -e .git/HEAD ] && [ -e .git/index ] && echo "const char *gitversion = \"$(shell git rev-parse HEAD)\";" > $@ || echo "const char *gitversion = \"No commit info available\";" > $@
