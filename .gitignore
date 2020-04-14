@@ -11,7 +11,7 @@
 evaluation/*.o
 .idea/
 #ignore temp files
-lib/evaluators.h
+source/evaluators.h
 source/evaluation/*.tmp
 source/gitversion.cpp
 # ignore binaries
