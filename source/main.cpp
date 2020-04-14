@@ -147,25 +147,36 @@ void run(parameters* param) {
     //cerr << id.to_json_str();
     
     if(param->mode == "batch") {
-       cout << "batch mode selected" << endl;
+        cout << "batch mode selected" << endl;
 
-       //merger.read_apta(input_stream);
-       LOG_S(INFO) << "Start reading data in batch mode";
-       id.add_data_to_apta(the_apta);
-       the_apta-> alp = id.alphabet;
-       LOG_S(INFO) << "Finished reading data in batch mode";
+        //merger.read_apta(input_stream);
+        LOG_S(INFO) << "Start reading data in batch mode";
+        id.add_data_to_apta(the_apta);
+        the_apta-> alp = id.alphabet;
+        LOG_S(INFO) << "Finished reading data in batch mode";
 
-       cout << "reading data finished, processing:" << endl;
-       // run the state merger
-       int solution = -1;
+        cout << "reading data finished, processing:" << endl;
+        // run the state merger
+        int solution = -1;
 
-       std::ostringstream oss3;
-       oss3 << param->dot_file  << "init_dfa"<< ".dot";
-       FILE* output = fopen(oss3.str().c_str(), "w");
+        std::ostringstream oss3;
+        oss3 << param->dot_file  << "init_dfa";
 
-       merger.todot();
-       merger.print_dot(output);
-       fclose(output);
+        if(OUTPUT == "dot" || OUTPUT == "both") {
+            oss3 << ".dot";
+            FILE* output = fopen(oss3.str().c_str(), "w");
+            merger.todot();
+            merger.print_dot(output);
+            fclose(output);
+        }
+
+        if(OUTPUT == "json" || OUTPUT == "both") {
+            oss3<< ".json";
+            FILE* output = fopen(oss3.str().c_str(), "w");
+            merger.tojson();
+            merger.print_json(output);
+            fclose(output);
+        }
 
        for(int i = 0; i < param->runs; ++i){
           std::ostringstream oss;
@@ -209,29 +220,23 @@ void run(parameters* param) {
     }
 
     std::ostringstream oss2;
-    oss2 << param->dot_file << "final"; 
+    oss2 << param->dot_file << "final";
+
     if(OUTPUT == "dot" || OUTPUT == "both") {
       oss2 << ".dot";
       ofstream output(oss2.str().c_str());
       merger.todot();
-      merger.tojson();
       output << merger.dot_output;
       output.close();
     }
-    if(OUTPUT == "json" || OUTPUT == "dot") {
-      oss2 << ".json";
-      ofstream output(oss2.str().c_str());
-      merger.todot();
-      merger.tojson();
-      output << merger.dot_output;
-      output.close();  
+
+    if(OUTPUT == "json" || OUTPUT == "both") {
+        oss2 << ".json";
+        ofstream output(oss2.str().c_str());
+        merger.tojson();
+        output << merger.json_output;
+        output.close();
     }
-
-
-   /*FILE* output = fopen(oss2.str().c_str(), "w");
-    merger.todot();
-    merger.print_dot(output);
-    fclose(output);*/
 
 } // end run
 
@@ -273,7 +278,7 @@ int main(int argc, char *argv[]){
         { "data-name", 'd', POPT_ARG_STRING, &(hData), 'd', "Name of the merge data class to use; default count_data. Use any heuristic in the evaluation directory.", "string" },
         { "mode", 'M', POPT_ARG_STRING, &(mode), 'M', "batch or stream depending on the mode of operation", "string" },
         { "evalpar", 'X', POPT_ARG_STRING, &(evalpar), 'X', "string of key-value pairs", "string" },
-       { "method", 'm', POPT_ARG_INT, &(param->method), 'm', "Method to use when merging states, default value 1 is random greedy (used in Stamina winner), 2 is one standard (non-random) greedy.", "integer" },
+        { "method", 'm', POPT_ARG_INT, &(param->method), 'm', "Method to use when merging states, default value 1 is random greedy (used in Stamina winner), 2 is one standard (non-random) greedy.", "integer" },
         { "seed", 's', POPT_ARG_INT, &(param->seed), 's', "Seed for random merge heuristic; default=12345678", "integer" },
         { "runs", 'n', POPT_ARG_INT, &(param->runs), 'n', "Number of random greedy runs/iterations; default=1. Advice: when using random greedy, a higher value is recommended (100 was used in Stamina winner).\n\nSettings that modify the red-blue state-merging framework:", "integer" },
         { "extend", 'x', POPT_ARG_INT, &(param->extend), 'x', "When set to 1, any merge candidate (blue) that cannot be merged with any target (red) is immediately changed into a (red) target; default=1. If set to 0, a merge candidate is only changed into a target when no more merges are possible. Advice: unclear which strategy is best, when using statistical (or count-based) consistency checks, keep in mind that merge consistency between states may change due to other performed merges. This will especially influence low frequency states. When there are a lot of those, we therefore recommend setting x=0.", "integer" },
@@ -312,7 +317,7 @@ int main(int argc, char *argv[]){
             cout << endl << "flexFringe" << endl;
             cout << "Copyright 2020 Sicco Verwer, Delft University of Technology" << endl;
             cout << "with contributions from Christian Hammerschmidt, Delft University of Technology, University of Luxembourg" << endl;
-	    cout << "with contribution from APTA Technologies BV" << endl;
+	        cout << "with contribution from APTA Technologies BV" << endl;
             cout << "based on " << endl;
             cout << "DFASAT with random greedy preprocessing" << endl;
             cout << "Copyright 2015 Sicco Verwer and Marijn Heule, Delft University of Technology." << endl;

@@ -41,3 +41,8 @@ processidentification/
 #ignore test outputs
 runtests
 test-reports/
+
+#Clion files
+CMakeLists.txt
+cmake-build-debug/
+
