@@ -40,7 +40,7 @@ bool overlap_driven::consistent(state_merger *merger, apta_node* left, apta_node
         inconsistency_found = true; return false;
     }*/
 
-    cerr << l->pos_paths() << " " << r->pos_paths() << endl;
+    //cerr << l->pos_paths() << " " << r->pos_paths() << endl;
 
     if(l->pos_paths() >= STATE_COUNT){
         for(num_map::iterator it = r->pos_begin(); it != r->pos_end(); ++it){
@@ -86,7 +86,7 @@ void overlap_driven::update_score(state_merger *merger, apta_node* left, apta_no
     overlap_data* l = (overlap_data*) left->data;
     overlap_data* r = (overlap_data*) right->data;
 
-    cerr << "update score" << endl;
+    //cerr << "update score" << endl;
 
     if (inconsistency_found) return;
     if (consistent(merger, left, right) == false) return;
@@ -136,7 +136,7 @@ void overlap_driven::update_score(state_merger *merger, apta_node* left, apta_no
 
 
 double overlap_driven::compute_score(state_merger *merger, apta_node* left, apta_node* right){
-    cerr << overlap << endl;
+    //cerr << overlap << endl;
   if(overlap > 0) return (int) (overlap);
   return 0;
 };

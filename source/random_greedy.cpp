@@ -43,6 +43,8 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
             //merge_map* possible_merges = merger->get_possible_merges();
             
             refinement_set* refs = merger->get_possible_refinements();
+
+            if(print_all_models){
             merger->todot();
             std::ostringstream oss2;
             oss2 << "pre_refs" << num << ".dot";
@@ -56,7 +58,8 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
                 cerr << " , ";
             }
             cerr << endl;*/
-            
+            }
+
             if(refs->empty()){
                 cerr << "no more possible merges" << endl;
                 break;
@@ -81,18 +84,21 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
                 top_score = (*randomized_merges.rbegin()).first;
                 top_pair = (*randomized_merges.rbegin()).second;
             }*/
+
             best_ref->print_short();
             cout << " ";
             std::cout.flush();
             best_ref->doref(merger);
             all_refs->push_front(best_ref);
             
-            merger->todot();
-            std::ostringstream oss3;
-            oss3 << "post_refs" << num << ".dot";
-            ofstream output2(oss3.str().c_str());
-            output2 << merger->dot_output;
-            output2.close();
+            if(print_all_models) {
+                merger->todot();
+                std::ostringstream oss3;
+                oss3 << "post_refs" << num << ".dot";
+                ofstream output2(oss3.str().c_str());
+                output2 << merger->dot_output;
+                output2.close();
+            }
 
             for(refinement_set::iterator it = refs->begin(); it != refs->end(); ++it){
                 if(*it != best_ref) delete *it;

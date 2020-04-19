@@ -79,9 +79,9 @@ bool alergia::alergia_consistency(double right_count, double left_count, double 
     
     double gamma = (left_count / left_total) - (right_count / right_total);
     
-    cerr << "(" << left_count << "/" << left_total << ") - (" << right_count << "/" << right_total << ")" << endl;
+    //cerr << "(" << left_count << "/" << left_total << ") - (" << right_count << "/" << right_total << ")" << endl;
 
-    cerr << gamma << " " << bound << endl;
+    //cerr << gamma << " " << bound << endl;
 
     if(gamma > bound) return false;
     if(-gamma > bound) return false;

@@ -258,13 +258,13 @@ int main(int argc, char *argv[]){
     cout << "welcome, running git commit " << gitversion <<  " with: "<< param->command << endl;
 
     /* temporary holder for string arguments */
-    char* dot_file = NULL;
-    char* sat_program = NULL;
-    char* hName = NULL;
-    char* output = NULL;
-    char* hData = NULL;
-    char* mode = NULL;
-    char* evalpar = NULL; 
+    char* dot_file = nullptr;
+    char* sat_program = nullptr;
+    char* hName = nullptr;
+    char* output = nullptr;
+    char* hData = nullptr;
+    char* mode = nullptr;
+    char* evalpar = nullptr;
 
 
     /* below parses command-line options, see 'man popt' */

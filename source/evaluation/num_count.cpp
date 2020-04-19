@@ -136,7 +136,6 @@ bool count_driven::consistent(state_merger *merger, apta_node* left, apta_node* 
 
 void count_driven::update_score(state_merger *merger, apta_node* left, apta_node* right){
 
-	cerr << "Numcount update score";	
 	num_merges += 1;
 };
 
