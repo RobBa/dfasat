@@ -257,7 +257,7 @@ void apta::print_json(iostream& output){
     for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
 
         apta_node* n = *Ait;
-        if(counter > 0)
+        if(n->number > 1)
             output << ",\n";
 
         output << "\t\t{\n";
@@ -267,7 +267,7 @@ void apta::print_json(iostream& output){
         n->data->print_state_label(output, this);
         output  << "\",\n";
         output << "\t\t\t\"size\" : " << n->size << ",\n";
-
+        output<< "\t\t\t\"level\" : " << n->depth << ",\n";
         output << "\t\t\t\"style\" : \"";
         n->data->print_state_style(output, this);
         output  << "\",\n";
@@ -337,11 +337,15 @@ void apta::print_json(iostream& output){
             output << "\t\t\t\"labelinfo\" : [\n";
 	        // transition label information
             for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
-                output << "\t\t\t\t { " << "\"symbol\" : \"" << alph_str(*it3) << "\",\n";
+                if (it3!=labels.begin()){
+                    output << ",";
+                    output << "\n";
+                }
+                output << "\t\t\t\t { " << "\"symbol\" : \"" << alph_str(*it3) << "\"}";
                 n->data->print_transition_properties(output, *it3, this);
             }
 	        output << "\t\t\t]\n";
-            output << "\"\n";
+            output << "\n";
 
             // n->data->print_transition_style(output, labels, this);
             output << "\t\t}";
