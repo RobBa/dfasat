@@ -118,7 +118,7 @@ void apta::print_dot(iostream& output){
     output << "digraph DFA {\n";
     output << "\t" << root->find()->number << " [label=\"root\" shape=box];\n";
     output << "\t\tI -> " << root->find()->number << ";\n";
-    int ncounter = 1;
+    int ncounter = 0;
     //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
     //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
     for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
