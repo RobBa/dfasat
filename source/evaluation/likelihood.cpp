@@ -36,8 +36,8 @@ void likelihoodratio::update_likelihood(double left_count, double right_count, d
     if(right_count != 0.0 && left_count != 0.0)
         extra_parameters = extra_parameters + 1;
 
-    cerr << "update: " << left_count << "/" << left_divider << " " << right_count << "/" << right_divider << endl;
-    cerr << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << endl;
+    //cerr << "update: " << left_count << "/" << left_divider << " " << right_count << "/" << right_divider << endl;
+    //cerr << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << endl;
 };
 
 /* Likelihood Ratio (LR), computes an LR-test (used in RTI) and uses the p-value as score and consistency */
@@ -47,7 +47,7 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
     
     CORRECTION = 1.0;
 
-    //if(r->num_paths() < STATE_COUNT || l->num_paths() < STATE_COUNT) return;
+    if(r->num_paths() < STATE_COUNT || l->num_paths() < STATE_COUNT) return;
     
     double left_divider = 1.0;
     double right_divider = 1.0;
@@ -127,7 +127,7 @@ bool likelihoodratio::compute_consistency(state_merger *merger, apta_node* left,
     double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
     double p_value = gsl_cdf_chisq_Q (test_statistic, 1.0 + (double)extra_parameters);
     
-    cerr << loglikelihood_orig << " " << loglikelihood_merged << " " << loglikelihood_orig - loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
+    //cerr << loglikelihood_orig << " " << loglikelihood_merged << " " << loglikelihood_orig - loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
     
     //cerr << "CHECK " << CHECK_PARAMETER << " " << (p_value < CHECK_PARAMETER) << endl;
     

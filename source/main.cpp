@@ -86,6 +86,7 @@ void init_with_params(parameters* param) {
     if(param->method == 2) GREEDY_METHOD = NORMALG;
 
     OUTPUT = param->output;
+    OUTPUT = "both";
 
     eval_string = param->hData;
 
@@ -221,6 +222,8 @@ void run(parameters* param) {
 
     std::ostringstream oss2;
     oss2 << param->dot_file << "final";
+
+    OUTPUT = "both";
 
     if(OUTPUT == "dot" || OUTPUT == "both") {
       oss2 << ".dot";
