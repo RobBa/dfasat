@@ -238,7 +238,12 @@ void apta::print_json(iostream& output){
     output << "{\n";
     output << "\t\"nodes\" : [\n";
 
-    int count = 0; 
+    int count = 0;
+
+    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
+        apta_node* n = *Ait;
+        n->number = count++;
+    }
     // output states
     for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
 
@@ -247,9 +252,6 @@ void apta::print_json(iostream& output){
             output << ",\n";
 
         output << "\t\t{\n";
-        output << "\t\t\t\"x\" : " << "0" << ",\n";
-        output << "\t\t\t\"y\" : " << "0" << ",\n";
-
         output << "\t\t\t\"id\" : " << n->number << ",\n";
         output << "\t\t\t\"label\" : \"";
         n->data->print_state_label(output, this);
