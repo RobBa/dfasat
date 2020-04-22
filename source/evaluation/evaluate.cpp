@@ -135,9 +135,23 @@ evaluation_function::evaluation_function() {
 
 };
 
-
 void evaluation_function::set_params(string params) {   
   this->evalpar = params;
+};
+
+int evaluation_function::apta_depth_score(apta_node* left, apta_node* right){
+    set<apta_node*> path;
+    for(apta_node* n = left; n != 0; n = n->source->find()){
+        path.insert(n);
+        if(n->source == 0) break;
+    }
+    for(apta_node* n = right; n != 0; n = n->source->find()){
+        if(path.find(n) != path.end()){
+            return n->depth;
+        }
+        if(n->source == 0) break;
+    }
+    return 0;
 };
 
 
