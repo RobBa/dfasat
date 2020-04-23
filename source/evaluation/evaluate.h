@@ -219,7 +219,13 @@ public:
   virtual void init(string data, state_merger* merger);
   virtual void add_sample(string data, state_merger* merger);
   //virtual void print_dot(iostream&, state_merger *);
-    int apta_depth_score(apta_node *left, apta_node *right);
+    int merge_depth_score(apta_node *left, apta_node *right);
+
+    bool merge_same_depth(apta_node *left, apta_node *right);
+
+    bool merge_no_root(apta_node *left, apta_node *right);
+
+    bool merge_no_final(apta_node *left, apta_node *right);
 };
 
 

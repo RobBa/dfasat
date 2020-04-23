@@ -139,7 +139,23 @@ void evaluation_function::set_params(string params) {
   this->evalpar = params;
 };
 
-int evaluation_function::apta_depth_score(apta_node* left, apta_node* right){
+bool evaluation_function::merge_no_root(apta_node* left, apta_node* right){
+    if(left->source == 0) {inconsistency_found = true; return false;};
+    return true;
+}
+
+bool evaluation_function::merge_same_depth(apta_node* left, apta_node* right){
+    if(left->depth != right->depth) {inconsistency_found = true; return false;};
+    return true;
+}
+
+bool evaluation_function::merge_no_final(apta_node* left, apta_node* right){
+    if(left->final != 0 && right->final == 0) {inconsistency_found = true; return false;};
+    if(left->final == 0 && right->final != 0) {inconsistency_found = true; return false;};
+    return true;
+}
+
+int evaluation_function::merge_depth_score(apta_node* left, apta_node* right){
     set<apta_node*> path;
     for(apta_node* n = left; n != 0; n = n->source->find()){
         path.insert(n);
@@ -207,7 +223,7 @@ bool evaluation_function::split_compute_consistency(state_merger *merger, apta_n
 };
 
 double evaluation_function::split_compute_score(state_merger *merger, apta_node* left, apta_node* right){
-    return 1;
+    return -1;
 };
 
 void evaluation_function::reset(state_merger *merger){

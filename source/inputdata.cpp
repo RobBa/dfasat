@@ -87,13 +87,12 @@ void inputdata::read_abbadingo_file(istream &input_stream){
     std::getline(lineStream,attr);
 
     alph_size = stoi(alph);
+
     if(!attr.empty())
         inputdata::num_attributes = stoi(attr);
     else
         inputdata::num_attributes = 0;
     
-    //cerr << "ATTR: " << attr << " " << inputdata::num_attributes << endl;
-	
     for(int line = 0; line < num_sequences; ++line){
         read_abbadingo_sequence(input_stream, inputdata::num_attributes);
     }
@@ -146,7 +145,7 @@ void inputdata::read_abbadingo_sequence(istream &input_stream, int num_attribute
         std::getline(l2,symbol,':');
         string vals;
         std::getline(l2,vals);
-        
+
         if(r_alphabet.find(symbol) == r_alphabet.end()){
             r_alphabet[symbol] = alphabet.size();
             alphabet.push_back(symbol);
@@ -219,6 +218,7 @@ void inputdata::add_sequence_to_apta(apta* the_apta, int seq_nr){
     //node->data->read_to(nt);
     node->type = sequence["T"];
     node->size = node->size + 1;
+    node->final = node->final + 1;
     node->add_tail(nt);
     node->data->add_tail(nt);
 };

@@ -99,6 +99,7 @@ public:
         //cerr << "setting representative " << this << " " << node << endl;
         
         node->size += this->size;
+        node->final += this->final;
     };
     /** undo this gets merged with node, resetting head of list */
     inline void undo_merge_with(apta_node* node){
@@ -107,6 +108,7 @@ public:
         this->next_merged_node = 0;
         
         node->size -= this->size;
+        node->final -= this->final;
     };
 
     /* FIND/UNION functions */
@@ -204,6 +206,8 @@ public:
     apta_node();
     apta_node(apta* context);
     ~apta_node();
+
+    int final;
 };
 
 /*

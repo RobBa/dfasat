@@ -44,6 +44,7 @@ extern string COMMAND;
 extern int STREAM_COUNT;
 extern bool EXCEPTION4OVERLAP;
 extern string EVALPAR;
+extern bool FINAL_PROBABILITIES;
 
 class parameters{
 public:

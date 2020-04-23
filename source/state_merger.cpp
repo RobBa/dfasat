@@ -913,7 +913,7 @@ refinement_set* state_merger::get_possible_refinements(){
         if((sink_type(blue) != -1)) continue;
         
         // cerr << inputdata::num_attributes << endl;
-        if(inputdata::num_attributes > 0){
+        if(inputdata::num_attributes > 0 and false){
             //cerr << "testing splits" << endl;
             refinement_set* refs = test_splits(blue);
             if(refs != 0){

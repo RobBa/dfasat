@@ -27,6 +27,7 @@ bool MERGE_BLUE_BLUE = 0;
 bool RED_FIXED = 0;
 bool MERGE_WHEN_TESTING = 0;
 bool DEPTH_FIRST = 0;
+bool FINAL_PROBABILITIES = 1;
 
 bool EXCEPTION4OVERLAP = false;
 

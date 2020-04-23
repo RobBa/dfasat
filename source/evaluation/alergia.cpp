@@ -32,11 +32,6 @@ void alergia_data::read_from(int type, int index, int length, int symbol, string
             trans_counts[type][symbol]++;
         }
     }
-    //if(type >= 1){
-    //    num_pos[symbol] = pos(symbol) + 1;
-    //} else {
-    //    num_neg[symbol] = neg(symbol) + 1;
-    //}
 };
 
 void alergia_data::print_transition_label(iostream& output, int symbol, apta* apta_context){
@@ -45,8 +40,9 @@ void alergia_data::print_transition_label(iostream& output, int symbol, apta* ap
     }
 };
 
-void alergia_data::print_state_label(iostream& output){
-    output << pos_final();
+void alergia_data::print_state_label(iostream& output, apta* aptacontext){
+    count_data::print_state_label(output, aptacontext);
+    output << "\n" << num_paths() << " " << num_final();
 };
 
 void alergia_data::update(evaluation_data* right){
@@ -195,6 +191,7 @@ bool alergia::consistent(state_merger *merger, apta_node* left, apta_node* right
  * rejecting sink = only reject, reject now, reject afterwards 
  * low count sink = frequency smaller than STATE_COUNT */
 bool alergia_data::is_low_count_sink(){
+    //cerr << num_paths() << " " << num_final() << "<" << SINK_COUNT << endl;
     return num_paths() + num_final() < SINK_COUNT;
     //if(EVAL_TYPE == 1) return pos_final() + neg_final() + pos_paths() + neg_paths() < SINK_COUNT;
     //return pos_paths() + neg_paths() < SINK_COUNT;

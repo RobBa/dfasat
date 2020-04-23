@@ -107,7 +107,7 @@ public:
 
     virtual void read_from(int type, int index, int length, int symbol, string data);
     virtual void print_transition_label(iostream& output, int symbol, apta* apta_context);
-    virtual void print_state_label(iostream& output);
+    virtual void print_state_label(iostream& output, apta* aptacontext);
     virtual void update(evaluation_data* right);
     virtual void undo(evaluation_data* right);
     

@@ -177,8 +177,8 @@ void apta::print_dot(iostream& output){
                 output << " " << inputdata::alphabet[*its];
             }*/
             
-            //output << alph_str((*it).first) << endl;
-            output << (*it).first << endl;
+            output << alph_str((*it).first) << endl;
+            //output << (*it).first << endl;
 
             n->data->print_transition_label(output, (*it).first, this);
             
@@ -412,6 +412,7 @@ apta_node::apta_node(apta *context) {
     satnumber = 0;
     colour = 0;
     size = 0;
+    final = 0;
     depth = 0;
     type = -1;
 
@@ -443,6 +444,7 @@ apta_node::apta_node(){
     satnumber = 0;
     colour = 0;
     size = 1;
+    final = 0;
     depth = 0;
     type = -1;
 
