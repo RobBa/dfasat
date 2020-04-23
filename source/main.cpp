@@ -117,18 +117,24 @@ void run(parameters* param) {
        
     }
 
+    // TODO: Add this to Logging
     try {
        eval = (DerivedRegister<evaluation_function>::getMap())->at(param->hName)();
        std::cout << "Using heuristic " << param->hName << std::endl;
-
     } catch(const std::out_of_range& oor ) {
        std::cerr << "No named heuristic found, defaulting back on -h flag" << std::endl;
     }
 
     ifstream input_stream(param->dfa_file);
-    
+
+    // TODO: Add this to logging
+    if(!input_stream) {
+	std::cerr << "Input file not found, aborting" << std::endl;
+	exit(-1);	
+    }
+
     inputdata id;
-    id.read_abbadingo_file(input_stream);
+    id.read_abbadingo_file(input_stream); // TODO: Add error checking & logging to this
     input_stream.close();
 
     apta* the_apta = new apta();
@@ -150,7 +156,7 @@ void run(parameters* param) {
     if(param->mode == "batch") {
         cout << "batch mode selected" << endl;
 
-        //merger.read_apta(input_stream);
+        //merger.read_apta(input_stream); TODO: error checking and logging
         LOG_S(INFO) << "Start reading data in batch mode";
         id.add_data_to_apta(the_apta);
         the_apta-> alp = id.alphabet;
