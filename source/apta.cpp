@@ -118,7 +118,7 @@ void apta::print_dot(iostream& output){
     output << "digraph DFA {\n";
     output << "\t" << root->find()->number << " [label=\"root\" shape=box];\n";
     output << "\t\tI -> " << root->find()->number << ";\n";
-    int ncounter = 1;
+    int ncounter = 0;
     //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
     //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
     for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
@@ -238,29 +238,31 @@ void apta::print_json(iostream& output){
     output << "{\n";
     output << "\t\"nodes\" : [\n";
 
-    int count = 0; 
+    int count = 0;
+
+    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
+        apta_node* n = *Ait;
+        n->number = count++;
+    }
     // output states
     for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
 
         apta_node* n = *Ait;
-
-        if(count > 0)
+        if(n->number > 0)
             output << ",\n";
 
         output << "\t\t{\n";
-        output << "\t\t\t\"x\" : " << "0" << ",\n";
-        output << "\t\t\t\"y\" : " << "0" << ",\n";
-
         output << "\t\t\t\"id\" : " << n->number << ",\n";
         output << "\t\t\t\"label\" : \"";
         n->data->print_state_label(output, this);
         output  << "\",\n"; 
         output << "\t\t\t\"size\" : " << n->size << ",\n";
-
-        //n->data->print_state_style(output, this);
-
+        output<< "\t\t\t\"level\" : " << n->depth << ",\n";
+        output << "\t\t\t\"style\" : \"";
+        n->data->print_state_style(output, this);
+        output  << "\",\n";
         output << "\t\t\t\"isred\" :  ";
-
+        
         if(n->red == false) 
             output << "\"false\"";
         else
@@ -297,12 +299,7 @@ void apta::print_json(iostream& output){
                     childlabels[child] = set<int>();
                 childlabels[child].insert( it->first );
             }
-        }
 
-        for(map<apta_node*, set<int>>::iterator it2 = childlabels.begin(); it2 != childlabels.end(); ++it2){
-            apta_node* child = (*it2).first;
-            set<int> labels  = (*it2).second;
-            
             if(count > 0)
                 output << ",\n";
             else
@@ -312,63 +309,59 @@ void apta::print_json(iostream& output){
             output << "\t\t\t\"id\" : \"" << n->number << "_" << child->number << "\",\n";
             output << "\t\t\t\"source\" : \"" << n->number << "\",\n";
             output << "\t\t\t\"target\" : \"" << child->number << "\",\n";
-            
-            output << "\t\t\t\"label\" : \""; 
-	    // transition label information
-            for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
-                output << alph_str(*it3);
-                //n->data->print_transition_label(output, *it3, this);
-                if(std::next(it3) != labels.end()) output << ",";
-            }
-            output << "\",\n";
 
-            output << "\t\t\t\"labelinfo\" : [\n"; 
-	    // transition label information
-            for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
-                output << "\t\t\t\t { " << "\"symbol\" : \"" << alph_str(*it3) << "\",\n";
-                n->data->print_transition_properties(output, *it3, this); 
-            }
-	    output << "\t\t\t]\n";
-
-
-            output << "\"\n";
-
-           
-            // n->data->print_transition_style(output, labels, this);
-            output << "\t\t}";
-
-           count++;
+            output << "\t\t\t\"name\": \"" << (*it).first << "\",\n";
+            output << "\t\t\t\"appearances\": \"";
+            n->data->print_transition_label(output, (*it).first, this);
+            output << "\"}\n";
+            count++;
         }
 
-        for(map<int, set<int>>::iterator it2 = sinklabels.begin(); it2 != sinklabels.end(); ++it2){
-            int stype = (*it2).first;
-            set<int> labels  = (*it2).second;
-            
-            output << "\tS" << n->number << "t" << stype << " [ label=\"";
-            for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
-                output << n->get_child(*it3)->size << " ";
-                n->get_child(*it3)->data->print_state_label(output, this);
-            }
-            output << "\"\n ";
-            n->get_child(*(labels.begin()))->data->print_state_style(output, this);
-            if(n->red == false) output << " style=dotted";
-            output << " ];\n";
+//        for(map<apta_node*, set<int>>::iterator it2 = childlabels.begin(); it2 != childlabels.end(); ++it2){
+//            apta_node* child = (*it2).first;
+//            set<int> labels  = (*it2).second;
+//
+//            if(count > 0)
+//                output << ",\n";
+//            else
+//                output << "\n";
+//
+//            output << "\t\t{\n";
+//            output << "\t\t\t\"id\" : \"" << n->number << "_" << child->number << "\",\n";
+//            output << "\t\t\t\"source\" : \"" << n->number << "\",\n";
+//            output << "\t\t\t\"target\" : \"" << child->number << "\",\n";
+//
+//
+//            output << "\t\t\t\"label\" : \"";
+//	    // transition label information
+//            for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
+//                output << alph_str(*it3);
+//                //n->data->print_transition_label(output, *it3, this);
+//                if(std::next(it3) != labels.end()) output << ",";
+//            }
+//            output << "\",\n";
+//
+//            output << "\t\t\t\"labelinfo\" : [\n";
+//	    // transition label information
+//            for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
+//                if (it3!=labels.begin()){
+//                    output << ",";
+//                    output << "\n";
+//                }
+//                output << "\t\t\t\t { " << "\"symbol\" : \"" << alph_str(*it3) << "\"}";
+//                n->data->print_transition_properties(output, *it3, this);
+//            }
+//	        output << "\t\t\t]\n";
+//            output << "\n";
+//
+//            // n->data->print_transition_style(output, labels, this);
+//            output << "\t\t}";
+//
+//           count++;
+//        }
 
-            output << "\t\t" << n->number << " -> S" << n->number << "t" << stype << " [ label=\"";
-            
-            for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
-                output << alph_str(*it3) << ":";
-                n->data->print_transition_label(output, *it3, this);
-                output << "\n";
-            }
-
-            output << "\" ";
-            n->data->print_transition_style(output, labels, this);
-            output << " ];\n";
-        }
- 
-        count++;
     }
+    // n->data->print_transition_style(output, labels, this);
     output << "\n\t]\n}\n";
 };
 
