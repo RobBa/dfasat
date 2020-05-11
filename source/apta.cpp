@@ -144,7 +144,8 @@ void apta::print_dot(iostream& output){
         output << "\" ";
         n->data->print_state_style(output, this);
         if(n->red == false) output << " style=dotted";
-        output << " ];\n";
+        output << ", penwidth=" << log(n->size);
+        output << "];\n";
 
         // transition labels for item
         map<apta_node*, set<int>> childlabels;
@@ -198,6 +199,7 @@ void apta::print_dot(iostream& output){
             }*/
 
             output << "\" ";
+            if(alph_str((*it).first) == "13" || alph_str((*it).first) == "31" || alph_str((*it).first) == "9" || alph_str((*it).first) == "10" || alph_str((*it).first) == "32") output << ", color=red";
             //n->data->print_transition_style(output, labels, this);
             output << " ];\n";
         }
@@ -268,6 +270,13 @@ void apta::print_json(iostream& output){
         else
             output << "\"true\"";
 
+        output << "\t\t\t\"traces\" : { ";
+        for(tail_iterator it = tail_iterator(n); *it != 0; ++it) {
+            tail* t = *it;
+            output << t->sequence << ",";
+        }
+        output << "}\" :  ";
+
         output << "\n\t\t}";
  
        count++;
@@ -291,6 +300,7 @@ void apta::print_json(iostream& output){
             if((*it).second->target == 0) continue;
             apta_node* child = (*it).second->target->find();
             if(sink_type(child) != -1){
+                continue;
                 if(sinklabels.find(sink_type(child)) == sinklabels.end())
                     sinklabels[sink_type(child)] = set<int>();
                 sinklabels[sink_type(child)].insert( it->first );
