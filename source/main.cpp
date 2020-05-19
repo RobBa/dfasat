@@ -18,8 +18,9 @@
 #include "common.h"
 #include "inputdata.h"
 
-//define LOGURU_WITH_STREAMS 1
+
 #include "utility/loguru.hpp"
+#include "utility/INIReader.h"
 
 #include "parameters.h"
 
@@ -326,16 +327,16 @@ int main(int argc, char *argv[]){
             cout << endl << "flexFringe" << endl;
             cout << "Copyright 2020 Sicco Verwer, Delft University of Technology" << endl;
             cout << "with contributions from Christian Hammerschmidt, Delft University of Technology, University of Luxembourg" << endl;
-	        cout << "with contribution from APTA Technologies BV" << endl;
+	    cout << "with contributions from APTA Technologies B.V." << endl;
             cout << "based on " << endl;
             cout << "DFASAT with random greedy preprocessing" << endl;
             cout << "Copyright 2015 Sicco Verwer and Marijn Heule, Delft University of Technology." << endl;
-            exit( 1 );
+            exit(1);
         }
     }
     if( c < -1 ){
         cerr << poptBadOption( optCon, POPT_BADOPTION_NOALIAS ) << ": " << poptStrerror(c) << endl;
-        exit( 1 );
+        exit(1);
     }
 
     char* f = const_cast<char*>(poptGetArg(optCon));
@@ -344,6 +345,17 @@ int main(int argc, char *argv[]){
         exit( 1 );
     }
     param->dfa_file = f;
+
+    /* / parsing command linesfrom ini file instead of command line
+    INIReader reader("test.ini");
+
+    if (reader.ParseError() != 0) {
+	LOG_S(FATAL) << "Cannot load ini file, aborting";
+        std::cout << "Can't load 'test.ini'\n";
+        exit(1);
+    }
+    std::cout << "Config loaded from 'test.ini': status=" << reader.Get("main", "status", "failure") <<endl;
+    */
 
     while ((c = poptGetNextOpt(optCon)) >= 0);
     if( c < -1 ){
