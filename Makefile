@@ -36,7 +36,7 @@ flexfringe: $(EVALOBJS) source/gitversion.cpp
 
 
 test: regen $(EVALOBJS) source/gitversion.cpp
-	$(CC) $(FLAGS) -DUNIT_TESTING=1 -I./ -o runtests tests/tests.cpp tests/tail.cpp $(SOURCES) $(EVALOBJS) $(LFLAGS) $(LIBS)
+	$(CC) $(FLAGS) -DLOGURU_WITH_STREAMS=1 -DUNIT_TESTING=1 source/utility/loguru.cpp -I./ -o runtests tests/tests.cpp tests/tail.cpp $(SOURCES) $(EVALOBJS) $(LFLAGS) $(LIBS)
 	mkdir -p test-reports
 	./runtests -r junit > test-reports/testresults.xml	
 
