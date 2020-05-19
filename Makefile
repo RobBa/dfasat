@@ -32,7 +32,7 @@ debug:
 	$(CC) -g $(SOURCES) -o flexfringe $(LFLAGS) $(LIBS)
 
 flexfringe: $(EVALOBJS) source/gitversion.cpp
-	$(CC) $(CFLAGS) -o $@ $(SOURCES)  $(EVALOBJS) -I./ $(LFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) -o $@ -DLOGURU_WITH_STREAMS=1 source/utility/loguru.cpp $(SOURCES)  $(EVALOBJS) -I./ $(LFLAGS) $(LIBS)
 
 
 test: regen $(EVALOBJS) source/gitversion.cpp

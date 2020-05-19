@@ -16,6 +16,8 @@
 #include "parameters.h"
 #include "evaluation_factory.h"
 
+#include "utility/loguru.hpp"
+
 using namespace std;
 
 bool apta_guard::bounds_satisfy(tail* t){
@@ -31,6 +33,8 @@ bool apta_guard::bounds_satisfy(tail* t){
 
 /* constructors and destructors */
 apta::apta(){
+
+    LOG_S(INFO) << "Creating APTA data structure";
     root = new apta_node(this);
     root->red = true;
     max_depth = 0;

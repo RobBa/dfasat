@@ -18,8 +18,8 @@
 #include "common.h"
 #include "inputdata.h"
 
-#define LOGURU_WITH_STREAMS 1
-#include "utility/loguru.cpp"
+//define LOGURU_WITH_STREAMS 1
+#include "utility/loguru.hpp"
 
 #include "parameters.h"
 
