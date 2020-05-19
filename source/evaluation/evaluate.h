@@ -18,6 +18,8 @@ class apta_node;
 #include "state_merger.h"
 #include "inputdata.h"
 
+#include "utility/loguru.hpp"
+
 using json = nlohmann::json;
 using namespace std;
 

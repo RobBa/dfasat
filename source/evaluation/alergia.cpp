@@ -18,6 +18,7 @@ REGISTER_DEF_DATATYPE(alergia_data);
 REGISTER_DEF_TYPE(alergia);
 
 alergia_data::alergia_data() : count_data() {
+	// LOG_S(INFO) << "Creating alergia_data class"; // example; warning, this is created in every APTA node
 };
 
 void alergia_data::read_from(int type, int index, int length, int symbol, string data){

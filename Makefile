@@ -41,7 +41,7 @@ test: regen $(EVALOBJS) source/gitversion.cpp
 	./runtests -r junit > test-reports/testresults.xml	
 
 source/evaluation/%.o: source/evaluation/%.cpp
-	$(CC) -fPIC -c -o $@ $< -I.source $(LFLAGS) $(LIBS) $(PYTHON_INC) $(PYTHON_LIBS) $(BOOST_LIBS) 
+	$(CC) -fPIC -c -DLOGURU_WITH_STREAMS=1 -o $@ $< -I.source $(LFLAGS) $(LIBS) $(PYTHON_INC) $(PYTHON_LIBS) $(BOOST_LIBS) 
 
 clean:
 	rm -f flexfringe ./source/evaluation/*.o source/generated.cpp named_tuple.py *.dot *.json exposed_decl.pypp.txt flexfringe*.so source/gitversion.cpp source/evaluators.h
