@@ -21,7 +21,7 @@
 
 #include "utility/loguru.hpp"
 //include "utility/INIReader.h"
-#include "utility/CLI11.cpp"
+#include "utility/CLI11.hpp"
 
 #include "parameters.h"
 
