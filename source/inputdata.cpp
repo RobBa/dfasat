@@ -68,7 +68,27 @@ inputdata::inputdata() {
 }
 
 void inputdata::read_json_file(istream &input_stream){
-    input_stream >> all_data;
+
+    all_data = json::parse(input_stream);
+
+    //for each json line
+    for (int i = 0; i < all_data.size(); ++i) {
+        //get the objects of each sequence
+        for (auto& el : all_data[i].items()){
+            //the alphabet needs to be identified, thus keep track of unique symbols
+            if (el.key() == "S"){
+                for (int j = 0; j < el.value().size(); ++j) {
+                    int temp_symbol = el.value()[j];
+                    string symbol = std::to_string(temp_symbol);
+                    //if symbol not in alphabet, add it
+                    if (std::find(alphabet.begin(), alphabet.end(), symbol)==alphabet.end()){
+                        alphabet.push_back(symbol);
+                    }
+                }
+            }
+        }
+    }
+
 };
 
 void inputdata::read_abbadingo_file(istream &input_stream){
@@ -96,6 +116,8 @@ void inputdata::read_abbadingo_file(istream &input_stream){
     for(int line = 0; line < num_sequences; ++line){
         read_abbadingo_sequence(input_stream, inputdata::num_attributes);
     }
+//    std::ofstream o("output.json");
+//    o << all_data << std::endl;
 };
 
 void inputdata::read_abbadingo_sequence(istream &input_stream, int num_attributes){
