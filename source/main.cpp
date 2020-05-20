@@ -97,11 +97,12 @@ void init_with_params(parameters* param) {
        std::cout << "valid: " << param->hName << std::endl;
        if(param->hName == "overlap4logs") {
            EXCEPTION4OVERLAP = true;
-           cerr << "overlap4logs backcompatilibity" << endl;
+           LOG_S(ERROR) << "overlap4logs backcompatilibity";
        }
 
     } catch(const std::out_of_range& oor ) {
-       std::cout << "invalid: " << param->hName << std::endl;
+        std::cout << "invalid: " << param->hName << std::endl;
+        LOG_S(ERROR) << "invalid: " << param->hName;
     }
 }
 
@@ -116,21 +117,21 @@ void run(parameters* param) {
 
     for(auto myit = DerivedRegister<evaluation_function>::getMap()->begin(); myit != DerivedRegister<evaluation_function>::getMap()->end() && debugging_enabled; myit++   ) {
        cout << myit->first << " " << myit->second << endl;
-       
     }
 
-    // TODO: Add this to Logging
     try {
        eval = (DerivedRegister<evaluation_function>::getMap())->at(param->hName)();
        std::cout << "Using heuristic " << param->hName << std::endl;
+       LOG_S(INFO) <<  "Using heuristic " << param->hName;
     } catch(const std::out_of_range& oor ) {
-       std::cerr << "No named heuristic found, defaulting back on -h flag" << std::endl;
+        LOG_S(WARNING) << "No named heuristic found, defaulting back on -h flag";
+        std::cerr << "No named heuristic found, defaulting back on -h flag" << std::endl;
     }
 
     ifstream input_stream(param->dfa_file);
 
-    // TODO: Add this to logging
     if(!input_stream) {
+        LOG_S(ERROR) << "Input file not found, aborting";
         std::cerr << "Input file not found, aborting" << std::endl;
         exit(-1);
     }
@@ -139,9 +140,11 @@ void run(parameters* param) {
     string file_name = param->dfa_file;
     // based on the file extension run the corresponding parser
     if (file_name.substr(file_name.find_last_of(".") + 1) == "json") {
+        LOG_S(INFO) << "Parse json input file";
         id.read_json_file(input_stream);
     } else {
-        id.read_abbadingo_file(input_stream); // TODO: Add error checking & logging to this
+        LOG_S(INFO) << "Parse dot input file";
+        id.read_abbadingo_file(input_stream);
     }
     input_stream.close();
 
@@ -199,7 +202,7 @@ void run(parameters* param) {
           std::ostringstream oss2;
           oss2 << param->dot_file << "dfa" << (i+1);
 
-	  LOG_S(INFO) << "Starting state-merging in batch mode";
+          LOG_S(INFO) << "Starting state-merging in batch mode";
           cout << "dfasat running";
 
           solution = dfasat(merger, param->sat_program, oss2.str().c_str(), oss.str().c_str());
@@ -229,7 +232,7 @@ void run(parameters* param) {
        // run interactive loop
        interactive(&merger, param); 
     } else {
-       LOG_S(WARNING) << "Unkown mode of operation selected, please chose batch, stream, or inter. Provided was " << param->mode;
+       LOG_S(ERROR) << "Unkown mode of operation selected, please chose batch, stream, or inter. Provided was " << param->mode;
        cerr << "unknown mode of operation selected, valid options are \"batch\", \"stream\", and \"inter\", while the parameter provided was " << param->mode << endl;
        exit(1);
     }

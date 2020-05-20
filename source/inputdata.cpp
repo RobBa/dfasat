@@ -1,7 +1,9 @@
 /*
  */
+#include "utility/loguru.hpp"
 
 #include "inputdata.h"
+
 
 json inputdata::all_data;
 vector<string> inputdata::alphabet;
@@ -87,6 +89,10 @@ void inputdata::read_json_file(istream &input_stream){
                 }
             }
         }
+        if (alphabet.size()==0){
+            LOG_S(ERROR) << "Json wrongly formatted / no symbol alphabet. Aborting...";
+            exit(-1);
+        }
     }
 
 };
@@ -116,8 +122,6 @@ void inputdata::read_abbadingo_file(istream &input_stream){
     for(int line = 0; line < num_sequences; ++line){
         read_abbadingo_sequence(input_stream, inputdata::num_attributes);
     }
-//    std::ofstream o("output.json");
-//    o << all_data << std::endl;
 };
 
 void inputdata::read_abbadingo_sequence(istream &input_stream, int num_attributes){
