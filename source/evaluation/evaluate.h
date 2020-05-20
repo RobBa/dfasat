@@ -6,7 +6,7 @@
 #include <list>
 #include <map>
 #include <sstream>
-#include <json.hpp>
+#include <utility/json.hpp>
 
 class evaluation_data;
 class evaluation_function;
