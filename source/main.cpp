@@ -131,12 +131,18 @@ void run(parameters* param) {
 
     // TODO: Add this to logging
     if(!input_stream) {
-	std::cerr << "Input file not found, aborting" << std::endl;
-	exit(-1);	
+        std::cerr << "Input file not found, aborting" << std::endl;
+        exit(-1);
     }
 
     inputdata id;
-    id.read_abbadingo_file(input_stream); // TODO: Add error checking & logging to this
+    string file_name = param->dfa_file;
+    // based on the file extension run the corresponding parser
+    if (file_name.substr(file_name.find_last_of(".") + 1) == "json") {
+        id.read_json_file(input_stream);
+    } else {
+        id.read_abbadingo_file(input_stream); // TODO: Add error checking & logging to this
+    }
     input_stream.close();
 
     apta* the_apta = new apta();
