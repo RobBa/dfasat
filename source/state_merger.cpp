@@ -197,8 +197,8 @@ bool state_merger::merge(apta_node* left, apta_node* right){
         for(guard_map::iterator it = right->guards.begin();it != right->guards.end(); ++it) {
             apta_node* child = (*it).second->target;
             if(child == 0) continue;
-            if(left->child((*it).first) == 0 &&
-               !(*it).second->target->data->sink_consistent((*it).second->target, 0)) return false;
+            if(left->child((*it).first) == 0) return false;
+            //&& !(*it).second->target->data->sink_consistent((*it).second->target, 0)) return false;
         }
     }
     
@@ -275,8 +275,8 @@ bool state_merger::merge_test(apta_node* left, apta_node* right){
     
     if(left->red && RED_FIXED){
         for(guard_map::iterator it = right->guards.begin();it != right->guards.end(); ++it)
-            if(left->child((*it).first) == 0 &&
-               !(*it).second->target->data->sink_consistent((*it).second->target, 0)) return false;
+            if(left->child((*it).first) == 0) return false;
+            //&& !(*it).second->target->data->sink_consistent((*it).second->target, 0)) return false;
     }
     eval->update_score(this, left, right);
     eval->update_score_after(this, left, right);
@@ -913,7 +913,7 @@ refinement_set* state_merger::get_possible_refinements(){
         if((sink_type(blue) != -1)) continue;
         
         // cerr << inputdata::num_attributes << endl;
-        if(inputdata::num_attributes > 0 and false){
+        if(inputdata::num_attributes > 0){
             //cerr << "testing splits" << endl;
             refinement_set* refs = test_splits(blue);
             if(refs != 0){

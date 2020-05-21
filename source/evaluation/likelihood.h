@@ -20,7 +20,7 @@ public:
 
   double loglikelihood_orig;
   double loglikelihood_merged;
-  int extra_parameters;
+  double extra_parameters;
 
   virtual bool consistent(state_merger *merger, apta_node* left, apta_node* right);
   virtual void update_score(state_merger *merger, apta_node* left, apta_node* right);

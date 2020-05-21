@@ -64,10 +64,18 @@ void rtiplus_data::print_state_label(iostream& output, apta* aptacontext){
         output << "fin(" << i << "):";
         output << num_final() << endl;
         output << "" << endl;
-    }    for(int i = 0; i < inputdata::types.size(); ++i) {
+    }   for(int i = 0; i < inputdata::types.size(); ++i) {
+        cerr << inputdata::types[i] << endl;
         output << "symb(" << i << "):[";
         for(int j = 0; j < inputdata::alphabet.size(); ++j){
-            output << count(i,j) << ",";
+            type_num_map::iterator it = trans_counts.find(i);
+            if(it != trans_counts.end()){
+                num_map::iterator it2 = it->second.find(j);
+                if(it2 == it->second.end()) output << 0 << ",";
+                else output << it2->second << "," ;
+            }
+            else { output << 0 << "," ; cerr << "*"; }
+            //output << count(i,j) << ",";
         }
         output << "]" << endl;
     }
@@ -78,6 +86,7 @@ void rtiplus_data::print_state_label(iostream& output, apta* aptacontext){
         }
         output << "]" << endl;
     }
+    cerr << "here " << this << endl;
 };
 
 void rtiplus_data::update(evaluation_data* right){

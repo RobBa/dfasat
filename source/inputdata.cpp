@@ -133,8 +133,10 @@ void inputdata::read_abbadingo_sequence(istream &input_stream, int num_attribute
     input_stream >> type;
     input_stream >> length;
 
-    r_types["0"] = 0;
-    types.push_back("0");
+    if(r_types.find("0") == r_types.end()) {
+        r_types["0"] = 0;
+        types.push_back("0");
+    }
 
     if(r_types.find(type) == r_types.end()){
         r_types[type] = types.size();

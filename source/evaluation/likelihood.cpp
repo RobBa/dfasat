@@ -45,13 +45,12 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
     /* we pool low frequency counts (sum them up in a separate bin), decided by input parameter SYMBOL_COUNT
      * we create pools 1 and 2 separately for left and right low counts
      * in this way, we can detect differences in distributions even if all counts are low (i.e. [0,0,1,1] vs [1,1,0,0])
-     * we correct the non-zero counts using a CORRECTION parameter, ensuring pools of size at least CORRECTION */
-    int l1_pool = CORRECTION;
-    int r1_pool = CORRECTION;
-    int l2_pool = CORRECTION;
-    int r2_pool = CORRECTION;
-    left_divider += 2*CORRECTION;
-    right_divider += 2*CORRECTION;
+     * we add correction only to the divider, the correction for counts is in update_likelihood() */
+    double l1_pool = 0.0;
+    double r1_pool = 0.0;
+    double l2_pool = 0.0;
+    double r2_pool = 0.0;
+
     int matching_right = 0;
 
     for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++){
@@ -60,30 +59,36 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
             int symbol = (*it2).first;
             left_count = (*it2).second;
-            right_count = r->count(type,symbol);
-            
-            if(left_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT){
-                left_divider += CORRECTION;
-                right_divider += CORRECTION;
-            }
+            if(left_count == 0) continue;
 
+            right_count = r->count(type,symbol);
             matching_right += right_count;
 
-            if(right_count < SYMBOL_COUNT){
-                l1_pool += left_count;
-                r1_pool += right_count;
-            }
-            if(left_count < SYMBOL_COUNT) {
-                l2_pool += left_count;
-                r2_pool += right_count;
+            if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
+                left_divider += left_count + CORRECTION;
+                right_divider += right_count + CORRECTION;
+            } else {
+                if(right_count < SYMBOL_COUNT){
+                    l1_pool += left_count;
+                    r1_pool += right_count;
+                }
+                if(left_count < SYMBOL_COUNT) {
+                    l2_pool += left_count;
+                    r2_pool += right_count;
+                }
             }
         }
     }
     r2_pool += r->num_paths() - matching_right;
 
-    /* adding the total counts to the dividers */
-    left_divider += (double)l->num_paths();
-    right_divider += (double)r->num_paths();
+    if(l1_pool >= SYMBOL_COUNT || r1_pool >= SYMBOL_COUNT){
+        left_divider += l1_pool + CORRECTION;
+        right_divider += r1_pool + CORRECTION;
+    }
+    if(l2_pool >= SYMBOL_COUNT || r2_pool >= SYMBOL_COUNT){
+        left_divider += l2_pool + CORRECTION;
+        right_divider += r2_pool + CORRECTION;
+    }
 
     /* optionally add final probabilities (input parameter), these are not pooled */
     if(FINAL_PROBABILITIES){
@@ -104,26 +109,19 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
                 update_likelihood(left_count, right_count, left_divider, right_divider);
         }
     }
+    
+    /* count the pools */
+    if(l1_pool >= SYMBOL_COUNT || r1_pool >= SYMBOL_COUNT){
+        update_likelihood(l1_pool, r1_pool, left_divider, right_divider);
+    }
+    if(l2_pool >= SYMBOL_COUNT || r2_pool >= SYMBOL_COUNT){
+        update_likelihood(l2_pool, r2_pool, left_divider, right_divider);
+    }
 
-    r2_pool += r->num_paths() - matching_right;
-    
-    left_count = l1_pool;
-    right_count = r1_pool;
-    
-    if(left_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT)
-        update_likelihood(left_count, right_count, left_divider, right_divider);
-    
-    left_count = l2_pool;
-    right_count = r2_pool;
-    
-    if(left_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT)
-        update_likelihood(left_count, right_count, left_divider, right_divider);
-    
-    left_count = (double)l->pos_final();
-    right_count = (double)r->pos_final();
-    
-    if(right_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT)
-        update_likelihood(left_count, right_count, left_divider, right_divider);
+    /* and always count final probabilities (are be pooled) */
+    if(FINAL_PROBABILITIES){
+        update_likelihood(l->num_final(), r->num_final(), left_divider, right_divider);
+    }
 };
 
 bool likelihoodratio::compute_consistency(state_merger *merger, apta_node* left, apta_node* right){

@@ -21,9 +21,9 @@ public:
     inline int count(int type, int symbol){
         type_num_map::iterator it = trans_counts.find(type);
         if(it != trans_counts.end()){
-            num_map::iterator it2 = (*it).second.find(symbol);
-            if(it2 == (*it).second.end()) return 0;
-            return (*it2).second;
+            num_map::iterator it2 = it->second.find(symbol);
+            if(it2 == it->second.end()) return 0;
+            return it2->second;
         }
         return 0;
     }
@@ -32,8 +32,8 @@ public:
         type_num_map::iterator it = trans_counts.find(type);
         if(it != trans_counts.end()){
             int sum = 0;
-            for(num_map::iterator it2 = (*it).second.begin(); it2 != (*it).second.end(); it2++){
-                sum += (*it2).second;
+            for(num_map::iterator it2 = it->second.begin(); it2 != it->second.end(); it2++){
+                sum += it2->second;
             }
             return sum;
         }
@@ -43,9 +43,9 @@ public:
     inline int count_symbol(int symbol){
         int sum = 0;
         for(type_num_map::iterator it = trans_counts.begin(); it != trans_counts.end(); it++){
-            num_map::iterator it2 = (*it).second.find(symbol);
-            if(it2 != (*it).second.end()){
-                sum += (*it2).second;
+            num_map::iterator it2 = it->second.find(symbol);
+            if(it2 != it->second.end()){
+                sum += it2->second;
             }
         }
         return sum;
