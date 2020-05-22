@@ -33,8 +33,8 @@ void mealy_data::update(evaluation_data* right){
     mealy_data* other = reinterpret_cast<mealy_data*>(right);
     
     for(output_map::iterator it = other->outputs.begin(); it != other->outputs.end(); ++it){
-        int input  = (*it).first;
-        int output = (*it).second;
+        int input  = it->first;
+        int output = it->second;
         
         if(outputs.find(input) == outputs.end()){
             outputs[input] = output;
@@ -47,12 +47,12 @@ void mealy_data::undo(evaluation_data* right){
     mealy_data* other = reinterpret_cast<mealy_data*>(right);
 
     for(output_map::iterator it = other->outputs.begin(); it != other->outputs.end(); ++it){
-        int input  = (*it).first;
-        int output = (*it).second;
+        int input  = it->first;
+        int output = it->second;
         
         undo_map::iterator it2 = undo_info.find(input);
         
-        if(it2 != undo_info.end() && (*it2).second == other){
+        if(it2 != undo_info.end() && it2->second == other){
             outputs.erase(input);
             undo_info.erase(input);
         }
@@ -69,8 +69,8 @@ bool mealy::consistent(state_merger *merger, apta_node* left, apta_node* right){
     int matched = 0;
     
     for(output_map::iterator it = r->outputs.begin(); it != r->outputs.end(); ++it){
-        int input  = (*it).first;
-        int output = (*it).second;
+        int input  = it->first;
+        int output = it->second;
 
         if(l->outputs.find(input) != l->outputs.end()){
             if(l->outputs[input] != output){
@@ -189,8 +189,8 @@ int mealy::num_sink_types(){
         mealy_data* l = reinterpret_cast<mealy_data*>(n->data);
         output << "\t" << n->number << " [shape=circle label=\"" << n->size << "\"];\n";
         for(child_map::iterator it2 = n->children.begin(); it2 != n->children.end(); ++it2){
-            apta_node* child = (*it2).second;
-            int symbol = (*it2).first;
+            apta_node* child = it2->second;
+            int symbol = it2->first;
             output << "\t\t" << n->number << " -> " << child->number << " [style=dotted label=\"" << aut->alph_str(symbol) << "\\\\" << mealy_data::int_output[l->outputs[symbol]] << "\"];\n";
         }
     }

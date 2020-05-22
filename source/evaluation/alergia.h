@@ -96,9 +96,9 @@ public:
     /*inline int neg(int i){
         num_map::iterator it = trans_counts.find(0);
         if(it != trans_counts.end()){
-            num_map::iterator it2 = (*it).find(i);
-            if(it2 == (*it).end()) return 0;
-            return (*it2).second;
+            num_map::iterator it2 = it->find(i);
+            if(it2 == it->end()) return 0;
+            return it2->second;
         }
         return 0;
     }*/

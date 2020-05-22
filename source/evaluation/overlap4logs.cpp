@@ -39,7 +39,7 @@ void overlap4logs_data::print_state_label(iostream& output, apta* aptacontext){
     if(sink_type(node)){
         int sum_types = 0;
         for(num_map::iterator it = num_type.begin(); it != num_type.end(); ++it)
-            sum_types += (*it).second;
+            sum_types += it->second;
         output << "[" << sum_types <<"]\n[ ";
         int largest_type = 0;
         for (int i = 0; i < num_sink_types(); i++)
@@ -56,9 +56,9 @@ void overlap4logs_data::print_state_style(iostream& output, apta* aptacontext){
         int largest_type = 0;
         int count = -1;
         for(num_map::iterator it = num_type.begin(); it != num_type.end(); ++it){
-            if((*it).second > count){
-                largest_type = (*it).first;
-                count = (*it).second;
+            if(it->second > count){
+                largest_type = it->first;
+                count = it->second;
             }
         }
         output << " style=filled fillcolor=" << colors_nodes[largest_type] << " ";
@@ -193,11 +193,11 @@ void overlap4logs_data::update(evaluation_data* right){
     overlap_data::update(right);
     overlap4logs_data* other = (overlap4logs_data*)right;
     for(num_map::iterator it = other->num_type.begin();it != other->num_type.end(); ++it){
-        num_type[(*it).first] = types((*it).first) + (*it).second;
+        num_type[it->first] = types(it->first) + it->second;
     }
 
     for(num_long_map::iterator it2 = other->num_delays.begin(); it2 != other->num_delays.end(); ++it2){
-        int symbol = (*it2).first;
+        int symbol = it2->first;
         if(num_delays.count(symbol) == 0) {
             num_delays[symbol] = other->num_delays[symbol];
             continue;
@@ -221,12 +221,12 @@ void overlap4logs_data::undo(evaluation_data* right){
     overlap_data::undo(right);
     overlap4logs_data* other = (overlap4logs_data*)right;
     for(num_map::iterator it = other->num_type.begin();it != other->num_type.end(); ++it){
-        num_type[(*it).first] = types((*it).first) - (*it).second;
+        num_type[it->first] = types(it->first) - it->second;
     }
 
     // possible memory leak
     for(num_long_map::iterator it2 = other->num_delays.begin(); it2 != other->num_delays.end(); ++it2){
-        int symbol = (*it2).first;
+        int symbol = it2->first;
 
         for(long_map::iterator it3 = other->num_delays[symbol].begin(); it3 != other->num_delays[symbol].end(); ++it3){
             long delay = (*it3).first;

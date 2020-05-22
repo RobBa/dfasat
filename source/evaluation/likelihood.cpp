@@ -54,11 +54,11 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
     int matching_right = 0;
 
     for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++){
-        int type = (*it).first;
-        num_map& nm = (*it).second;
+        int type = it->first;
+        num_map& nm = it->second;
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            int symbol = (*it2).first;
-            left_count = (*it2).second;
+            int symbol = it2->first;
+            left_count = it2->second;
             if(left_count == 0) continue;
 
             right_count = r->count(type,symbol);
@@ -98,11 +98,11 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
 
     /* now we have the dividers and pools, we compute the likelihoods */
     for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++){
-        int type = (*it).first;
-        num_map& nm = (*it).second;
+        int type = it->first;
+        num_map& nm = it->second;
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2) {
-            int symbol = (*it2).first;
-            left_count = (*it2).second;
+            int symbol = it2->first;
+            left_count = it2->second;
             right_count = r->count(type, symbol);
 
             if (left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT)

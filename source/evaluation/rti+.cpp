@@ -65,17 +65,9 @@ void rtiplus_data::print_state_label(iostream& output, apta* aptacontext){
         output << num_final() << endl;
         output << "" << endl;
     }   for(int i = 0; i < inputdata::types.size(); ++i) {
-        cerr << inputdata::types[i] << endl;
         output << "symb(" << i << "):[";
         for(int j = 0; j < inputdata::alphabet.size(); ++j){
-            type_num_map::iterator it = trans_counts.find(i);
-            if(it != trans_counts.end()){
-                num_map::iterator it2 = it->second.find(j);
-                if(it2 == it->second.end()) output << 0 << ",";
-                else output << it2->second << "," ;
-            }
-            else { output << 0 << "," ; cerr << "*"; }
-            //output << count(i,j) << ",";
+            output << count(i,j) << ",";
         }
         output << "]" << endl;
     }
@@ -86,7 +78,6 @@ void rtiplus_data::print_state_label(iostream& output, apta* aptacontext){
         }
         output << "]" << endl;
     }
-    cerr << "here " << this << endl;
 };
 
 void rtiplus_data::update(evaluation_data* right){
@@ -176,9 +167,9 @@ void rtiplus_data::set_loglikelihood(){
     if(divider == 0) return;
     
     for(type_num_map::iterator it = counts_begin(); it != counts_end(); it++){
-        num_map& nm = (*it).second;
+        num_map& nm = it->second;
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            double count = (*it2).second;
+            double count = it2->second;
             if(count != 0) loglikelihood += count * log(count / divider);
         }
     }
@@ -194,9 +185,9 @@ void rtiplus_data::set_loglikelihood(){
 int rtiplus_data::num_parameters(){
     int result = 0;
     for(type_num_map::iterator it = counts_begin(); it != counts_end(); it++){
-        num_map& nm = (*it).second;
+        num_map& nm = it->second;
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            double count = (*it2).second;
+            double count = it2->second;
             if(count != 0) result++;
         }
     }
@@ -600,7 +591,7 @@ void rtiplus::reset_split(state_merger *merger, apta_node* node){
     left_divider += (double)l->pos_paths();
     
     for(num_map::iterator it = l->pos_begin(); it != l->pos_end(); ++it){
-        left_count = (*it).second;
+        left_count = it->second;
         
         if(left_count >= SYMBOL_COUNT) add_merged_likelihood(left_count, left_divider);
         else pool += left_count;
@@ -780,9 +771,9 @@ void rtiplus::add_parameters(rtiplus_data* l){
     double count = 0.0;
     double pool = 0.0;
     for(type_num_map::iterator it = l->trans_counts.begin(); it != l->trans_counts.end(); ++it){
-        num_map& nm = (*it).second;
+        num_map& nm = it->second;
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            count = (*it2).second;
+            count = it2->second;
             if(count >= SYMBOL_COUNT && count > 0) extra_parameters++;
             else pool += count;
         }
@@ -804,9 +795,9 @@ void rtiplus::del_parameters(rtiplus_data* l){
     double count = 0.0;
     double pool = 0.0;
     for(type_num_map::iterator it = l->trans_counts.begin(); it != l->trans_counts.end(); ++it){
-        num_map& nm = (*it).second;
+        num_map& nm = it->second;
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            count = (*it2).second;
+            count = it2->second;
             if(count >= SYMBOL_COUNT && count > 0) extra_parameters--;
             else pool += count;
         }
@@ -826,21 +817,21 @@ void rtiplus::del_parameters(rtiplus_data* l){
 
 void rtiplus::add_merged_likelihood(rtiplus_data* l){
     for(type_num_map::iterator it = l->trans_counts.begin(); it != l->trans_counts.end(); ++it){
-        num_map& nm = (*it).second;
+        num_map& nm = it->second;
         
         
-        //cerr << (*it).first << endl;
+        //cerr << it->first << endl;
 
         double divider = 0.0;
         double count = 0.0;
         double pool = 0.0;
 
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            count = (*it2).second;
+            count = it2->second;
             divider += count + CORRECTION;
         }
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            count = (*it2).second;
+            count = it2->second;
             if(count >= SYMBOL_COUNT) add_merged_likelihood(count, divider);
             else pool += count;
         }
@@ -867,17 +858,17 @@ void rtiplus::add_merged_likelihood(rtiplus_data* l){
 
 void rtiplus::del_merged_likelihood(rtiplus_data* l){
     for(type_num_map::iterator it = l->trans_counts.begin(); it != l->trans_counts.end(); ++it){
-        num_map& nm = (*it).second;
+        num_map& nm = it->second;
 
         double divider = 0.0;
         double count = 0.0;
         double pool = 0.0;
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            count = (*it2).second;
+            count = it2->second;
             divider += count + CORRECTION;
         }
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            count = (*it2).second;
+            count = it2->second;
             if(count >= SYMBOL_COUNT) del_merged_likelihood(count, divider);
             else pool += count;
         }
@@ -907,10 +898,10 @@ void rtiplus::add_split_likelihood(rtiplus_data* l){
     double count = 0.0;
     double pool = 0.0;
     for(num_map::iterator it = l->pos_begin(); it != l->pos_end(); ++it){
-        divider += (*it).second + CORRECTION;
+        divider += it->second + CORRECTION;
     }
     for(num_map::iterator it = l->pos_begin(); it != l->pos_end(); ++it){
-        count = (*it).second;
+        count = it->second;
         if(count >= SYMBOL_COUNT) add_split_likelihood(count, divider);
         else pool += count;
     }
@@ -938,10 +929,10 @@ void rtiplus::del_split_likelihood(rtiplus_data* l){
     double count = 0.0;
     double pool = 0.0;
     for(num_map::iterator it = l->pos_begin(); it != l->pos_end(); ++it){
-        divider += (*it).second + CORRECTION;
+        divider += it->second + CORRECTION;
     }
     for(num_map::iterator it = l->pos_begin(); it != l->pos_end(); ++it){
-        count = (*it).second;
+        count = it->second;
         if(count >= SYMBOL_COUNT) del_split_likelihood(count, divider);
         else pool += count;
     }

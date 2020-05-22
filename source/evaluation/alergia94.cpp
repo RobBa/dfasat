@@ -49,8 +49,8 @@ bool alergia94::data_consistent(alergia94_data* l, alergia94_data* r){
     }
 
     for(type_num_map::iterator it = l->trans_counts.begin(); it != l->trans_counts.end(); it++){
-        num_map& l_nm = (*it).second;
-        num_map& r_nm = r->trans_counts[(*it).first];
+        num_map& l_nm = it->second;
+        num_map& r_nm = r->trans_counts[it->first];
         for(num_map::iterator itnm = l_nm.begin(); itnm != l_nm.end(); ++itnm){
             left_count = (*itnm).second;
             right_count = r_nm[(*itnm).first];

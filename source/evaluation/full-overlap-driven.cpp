@@ -22,13 +22,13 @@ bool full_overlap_driven::consistent(state_merger *merger, apta_node* left, apta
 
     if(l->pos_paths() >= STATE_COUNT){
         for(num_map::iterator it = r->pos_begin(); it != r->pos_end(); ++it){
-            if((*it).second >= SYMBOL_COUNT && l->pos((*it).first) == 0){
+            if(it->second >= SYMBOL_COUNT && l->pos(it->first) == 0){
                 inconsistency_found = true;
                 return false;
             }
         }
         /*for(num_map::iterator it = r->num_neg.begin(); it != r->num_neg.end(); ++it){
-            if((*it).second >= SYMBOL_COUNT & l->neg((*it).first) == 0){
+            if(it->second >= SYMBOL_COUNT & l->neg(it->first) == 0){
                 inconsistency_found = true;
                 return false;
             }
@@ -37,13 +37,13 @@ bool full_overlap_driven::consistent(state_merger *merger, apta_node* left, apta
   
     if(r->pos_paths() >= STATE_COUNT){
         for(num_map::iterator it = l->pos_begin(); it != l->pos_end(); ++it){
-            if((*it).second >= SYMBOL_COUNT && r->pos((*it).first) == 0){
+            if(it->second >= SYMBOL_COUNT && r->pos(it->first) == 0){
                 inconsistency_found = true;
                 return false;
             }
         }
         /*for(num_map::iterator it = l->num_neg.begin();it != l->num_neg.end(); ++it){
-            if((*it).second >= SYMBOL_COUNT & r->neg((*it).first) == 0){
+            if(it->second >= SYMBOL_COUNT & r->neg(it->first) == 0){
                 inconsistency_found = true;
                 return false;
             }

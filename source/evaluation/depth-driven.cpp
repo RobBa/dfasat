@@ -33,7 +33,7 @@ void recur_depth(apta_node* state, state_set& states, int depth){
     reinterpret_cast<depth_data*>(state->data)->depth = depth;
     states.insert(state);
     for(guard_map::iterator it = state->guards.begin();it != state->guards.end(); ++it){
-        apta_node* child = (*it).second->target;
+        apta_node* child = it->second->target;
         if(child != 0) recur_depth(child, states, depth + 1);
     }
 }

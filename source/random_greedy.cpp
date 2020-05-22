@@ -78,8 +78,8 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
             /* if(GREEDY_METHOD == RANDOMG){
                 merge_map randomized_merges;
                 for(merge_map::reverse_iterator it = possible_merges->rbegin(); it != possible_merges->rend(); it++){
-                    //if((*it).first < LOWER_BOUND) break;
-                    randomized_merges.insert(pair<int, merge_pair>((*it).first * (rand() / (double)RAND_MAX), (*it).second));
+                    //if(it->first < LOWER_BOUND) break;
+                    randomized_merges.insert(pair<int, merge_pair>(it->first * (rand() / (double)RAND_MAX), it->second));
                 }
                 top_score = (*randomized_merges.rbegin()).first;
                 top_pair = (*randomized_merges.rbegin()).second;

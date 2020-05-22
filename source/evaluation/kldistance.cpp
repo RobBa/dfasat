@@ -18,8 +18,8 @@ void kl_data::update(evaluation_data* right){
     alergia_data::update(right);
     kl_data* other = (kl_data*)right;
     for(type_prob_map::iterator it = other->original_probability_count.begin(); it != other->original_probability_count.end(); ++it){
-        for(prob_map::iterator it2 = (*it).second.begin(); it2 != (*it).second.end(); ++it2){
-            original_probability_count[(*it).first][(*it2).first] = opc((*it).first, (*it2).first) + (*it2).second;
+        for(prob_map::iterator it2 = it->second.begin(); it2 != it->second.end(); ++it2){
+            original_probability_count[it->first][it2->first] = opc(it->first, it2->first) + it2->second;
         }
     }
 };
@@ -28,8 +28,8 @@ void kl_data::undo(evaluation_data* right){
     alergia_data::undo(right);
     kl_data* other = (kl_data*)right;
     for(type_prob_map::iterator it = other->original_probability_count.begin(); it != other->original_probability_count.end(); ++it){
-        for(prob_map::iterator it2 = (*it).second.begin(); it2 != (*it).second.end(); ++it2){
-            original_probability_count[(*it).first][(*it2).first] = opc((*it).first, (*it2).first) - (*it2).second;
+        for(prob_map::iterator it2 = it->second.begin(); it2 != it->second.end(); ++it2){
+            original_probability_count[it->first][it2->first] = opc(it->first, it2->first) - it2->second;
         }
     }
 };
@@ -76,11 +76,11 @@ void kldistance::update_score(state_merger *merger, apta_node* left, apta_node* 
     float right_divider = (float)r->pos_paths();
     
     for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++){
-        int type = (*it).first;
-        num_map& nm = (*it).second;
+        int type = it->first;
+        num_map& nm = it->second;
         for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            int symbol = (*it2).first;
-            int left_count = (*it2).second;
+            int symbol = it2->first;
+            int left_count = it2->second;
             int right_count = r->count(type, symbol);
             update_perplexity(left, l->opc(type, symbol), r->opc(type, symbol), left_count, right_count, left_divider, right_divider);
         }        
@@ -124,11 +124,11 @@ void kldistance::initialize(state_merger* merger){
         if(l->pos_paths() < STATE_COUNT) continue;
 
         for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++){
-            int type = (*it).first;
-            num_map& nm = (*it).second;
+            int type = it->first;
+            num_map& nm = it->second;
             for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-                int symbol = (*it2).first;
-                float count = (*it2).second;
+                int symbol = it2->first;
+                float count = it2->second;
                 l->original_probability_count[type][symbol] = count * (count / (float)l->pos_paths());
             }
         }

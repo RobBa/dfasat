@@ -17,9 +17,9 @@ public:
     inline double opc(int type, int symbol){
         type_prob_map::iterator it = original_probability_count.find(type);
         if(it == original_probability_count.end()) return 0;
-        prob_map::iterator it2 = (*it).second.find(symbol);
-        if(it2 == (*it).second.end()) return 0;
-        return (*it2).second;
+        prob_map::iterator it2 = it->second.find(symbol);
+        if(it2 == it->second.end()) return 0;
+        return it2->second;
     };
     
     virtual void update(evaluation_data* right);

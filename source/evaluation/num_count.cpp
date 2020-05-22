@@ -24,13 +24,13 @@ count_data::count_data() : evaluation_data() {
 
 void count_data::print_transition_label(iostream& output, int symbol, apta* aptacontext){
     for(num_map::iterator it = path_counts.begin(); it != path_counts.end(); ++it){
-        output << (*it).first << ":" << (*it).second << " - ";
+        output << it->first << ":" << it->second << " - ";
     }
 };
 
 void count_data::print_state_label(iostream& output, apta* aptacontext){
     for(num_map::iterator it = final_counts.begin(); it != final_counts.end(); ++it){
-        output << (*it).first << ":" << (*it).second << " - ";
+        output << it->first << ":" << it->second << " - ";
     }
 };
 
@@ -58,8 +58,8 @@ void count_data::read_to(int type, int index, int length, int symbol, string dat
 void count_data::update(evaluation_data* right){
     count_data* other = reinterpret_cast<count_data*>(right);
     for(num_map::iterator it = other->final_counts.begin(); it != other->final_counts.end(); ++it){
-        int type = (*it).first;
-        int count = (*it).second;
+        int type = it->first;
+        int count = it->second;
         if(final_counts.find(type) != final_counts.end()){
             final_counts[type] += count;
         } else {
@@ -67,8 +67,8 @@ void count_data::update(evaluation_data* right){
         }
     }
     for(num_map::iterator it = other->path_counts.begin(); it != other->path_counts.end(); ++it){
-        int type = (*it).first;
-        int count = (*it).second;
+        int type = it->first;
+        int count = it->second;
         if(path_counts.find(type) != path_counts.end()){
             path_counts[type] += count;
         } else {
@@ -83,13 +83,13 @@ void count_data::undo(evaluation_data* right){
     count_data* other = reinterpret_cast<count_data*>(right);
 
     for(num_map::iterator it = other->final_counts.begin(); it != other->final_counts.end(); ++it){
-        int type = (*it).first;
-        int count = (*it).second;
+        int type = it->first;
+        int count = it->second;
         final_counts[type] -= count;
     }
     for(num_map::iterator it = other->path_counts.begin(); it != other->path_counts.end(); ++it){
-        int type = (*it).first;
-        int count = (*it).second;
+        int type = it->first;
+        int count = it->second;
         path_counts[type] -= count;
     }
     total_paths -= other->total_paths;
@@ -117,12 +117,12 @@ bool count_driven::consistent(state_merger *merger, apta_node* left, apta_node* 
     //if(l->neg_final() != 0 && r->pos_final() != 0){ inconsistency_found = true; return false; }
     
     for(num_map::iterator it = l->final_counts.begin(); it != l->final_counts.end(); ++it){
-        int type = (*it).first;
-        int count = (*it).second;
+        int type = it->first;
+        int count = it->second;
         if(count != 0){
             for(num_map::iterator it2 = r->final_counts.begin(); it2 != r->final_counts.end(); ++it2){
-                int type2 = (*it2).first;
-                int count2 = (*it2).second;
+                int type2 = it2->first;
+                int count2 = it2->second;
                 if(count2 != 0 && type2 != type){
                     inconsistency_found = true;
                     return false;
@@ -166,9 +166,9 @@ int count_data::sink_type(apta_node* node){
     
     int type = -1;
     for(num_map::iterator it = d->final_counts.begin(); it != d->final_counts.end(); ++it){
-        int count = (*it).second;
+        int count = it->second;
         if(count != 0){
-            if(type == -1) type = (*it).second;
+            if(type == -1) type = it->second;
             else return -1;
         }
     }

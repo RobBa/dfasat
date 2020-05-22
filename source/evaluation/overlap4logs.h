@@ -16,7 +16,7 @@ public:
     inline int types(int i){
         num_map::iterator it = num_type.find(i);
         if(it == num_type.end()) return 0;
-        return (*it).second;
+        return it->second;
     }
 
     overlap4logs_data();

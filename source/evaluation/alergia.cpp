@@ -37,7 +37,7 @@ void alergia_data::read_from(int type, int index, int length, int symbol, string
 
 void alergia_data::print_transition_label(iostream& output, int symbol, apta* apta_context){
     for(type_num_map::iterator it = trans_counts.begin(); it != trans_counts.end(); it++){
-        output << (*it).second[symbol] << " ";
+        output << it->second[symbol] << " ";
     }
 };
 
@@ -50,8 +50,8 @@ void alergia_data::update(evaluation_data* right){
     count_data::update(right);
     alergia_data* other = (alergia_data*)right;
     for(type_num_map::iterator it = other->trans_counts.begin(); it != other->trans_counts.end(); it++){
-        num_map& that_nm = (*it).second;
-        num_map& this_nm = trans_counts[(*it).first];
+        num_map& that_nm = it->second;
+        num_map& this_nm = trans_counts[it->first];
         for(num_map::iterator itnm = that_nm.begin(); itnm != that_nm.end(); ++itnm){
             this_nm[(*itnm).first] += (*itnm).second;
         }
@@ -62,8 +62,8 @@ void alergia_data::undo(evaluation_data* right){
     count_data::undo(right);
     alergia_data* other = (alergia_data*)right;
     for(type_num_map::iterator it = other->trans_counts.begin(); it != other->trans_counts.end(); it++){
-        num_map& that_nm = (*it).second;
-        num_map& this_nm = trans_counts[(*it).first];
+        num_map& that_nm = it->second;
+        num_map& this_nm = trans_counts[it->first];
         for(num_map::iterator itnm = that_nm.begin(); itnm != that_nm.end(); ++itnm){
             this_nm[(*itnm).first] -= (*itnm).second;
         }
@@ -108,8 +108,8 @@ bool alergia::data_consistent(alergia_data* l, alergia_data* r){
     double matching_right = 0.0;
 
     for(type_num_map::iterator it = l->trans_counts.begin(); it != l->trans_counts.end(); it++){
-        num_map& l_nm = (*it).second;
-        num_map& r_nm = r->trans_counts[(*it).first];
+        num_map& l_nm = it->second;
+        num_map& r_nm = r->trans_counts[it->first];
         for(num_map::iterator itnm = l_nm.begin(); itnm != l_nm.end(); ++itnm){
             left_count = (*itnm).second;
             right_count = r_nm[(*itnm).first];
@@ -302,8 +302,8 @@ int alergia::num_sink_types(){
             output << "\t" << n->number << " [shape=circle style=dotted label=\"0:0\\n[" << l->pos_paths() << ":" << l->neg_paths() << "]\"];\n";
         }
         for(child_map::iterator it2 = n->children.begin(); it2 != n->children.end(); ++it2){
-            apta_node* child = (*it2).second;
-            int symbol = (*it2).first;
+            apta_node* child = it2->second;
+            int symbol = it2->first;
             output << "\t\t" << n->number << " -> " << child->number << " [style=dotted label=\"" << aut->alph_str(symbol).c_str() << " [" << l->num_pos[symbol] << ":" << l->num_neg[symbol] << "]\"];\n";
         }
     }

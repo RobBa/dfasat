@@ -131,19 +131,19 @@ public:
 
     inline apta_node* child(int i){
         guard_map::iterator it = guards.find(i);
-        if(it != guards.end()) return (*it).second->target;
+        if(it != guards.end()) return it->second->target;
         return 0;
     };
     inline apta_guard* guard(int i){
         guard_map::iterator it = guards.find(i);
-        if(it != guards.end()) return (*it).second;
+        if(it != guards.end()) return it->second;
         return 0;
     };
     inline void set_child(int i, apta_node* node){
         guard_map::iterator it = guards.find(i);
         if(it != guards.end()){
             if(node != 0)
-                (*it).second->target = node;
+                it->second->target = node;
             else
                 guards.erase(it);
         } else {
@@ -154,13 +154,13 @@ public:
     };
     inline apta_node* undo(int i){
         guard_map::iterator it = guards.find(i);
-        if(it != guards.end()) return (*it).second->undo;
+        if(it != guards.end()) return it->second->undo;
         return 0;
     };
     inline void set_undo(int i, apta_node* node){
         guard_map::iterator it = guards.find(i);
         if(it != guards.end()){
-            (*it).second->undo = node;
+            it->second->undo = node;
         } else{
             apta_guard* g = new apta_guard();
             guards.insert(pair<int,apta_guard*>(i,g));
@@ -245,7 +245,7 @@ public:
         if(it1 == 0){
             it2++;
             if(it2 != node->guards.end()){
-                it1 = child_iterator((*it2).second);
+                it1 = child_iterator(it2->second);
             }
         }
         return *this;
