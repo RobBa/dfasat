@@ -10,6 +10,5 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - apt update && apt install -y libgsl-dev
-          - apt install -y libpopt-dev
           - make clean
           - make test
