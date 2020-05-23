@@ -76,6 +76,12 @@ Logging is incomplete. *flexfringe* uses the loguru framework (see the [https://
  
 ### Who do I talk to? ###
 
-* Sicco Verwer (original author; best to reach out to for questions on batch mode and SAT reduction)
-* Christian Hammerschmidt (author of the online/streaming mode and interactive mode)
+* Sicco Verwer (original author; best to reach out to for questions on batch mode, RTI+ implementation, and SAT reduction)
+* Christian Hammerschmidt (author of the online/streaming mode, interactive mode, and the flexible evaluation function mechanism)
 * Sofia Tsoni (scientific programmer, maintainer)
+
+### Credits and Licences
+
+*flexfinge* relies on a number of open source packages and libraries. You can find the respective LICENCE files in the source/utility subdirectory. Most notable, we use
+* CLI11 for command line parsing
+* Catch for unit testing

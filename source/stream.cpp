@@ -1,5 +1,5 @@
-#include <stdlib.h>
-#include <popt.h>
+#include <cstdlib>
+
 #include "random_greedy.h"
 #include "state_merger.h"
 #include "evaluate.h"

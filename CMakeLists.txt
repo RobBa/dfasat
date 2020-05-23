@@ -93,20 +93,7 @@ add_executable(flexfringe
 find_package(GSL REQUIRED)
 target_link_libraries(flexfringe GSL::gsl GSL::gslcblas)
 
-find_path(POPT_INCL popt.h
-        HINTS opt/local
-        )
-find_library(POPT_LIB popt
-        HINTS opt/local
-        )
-
-message (STATUS "POPT_INCL  = ${POPT_INCL}")
-message (STATUS "POPT_LIB = ${POPT_LIB}")
-
-find_package_handle_standard_args (popt DEFAULT_MSG POPT_LIB POPT_INCL)
-
 target_link_libraries(flexfringe m)
-target_link_libraries(flexfringe ${POPT_LIB})
 
 find_package(Threads)
 target_link_libraries(flexfringe ${CMAKE_THREAD_LIBS_INIT}) # For pthreads
