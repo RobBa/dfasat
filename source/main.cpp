@@ -2,7 +2,6 @@
 /// \brief Command line parameter processing and entry point.
 
 #include <cstdlib>
-#include <popt.h>
 #include "random_greedy.h"
 #include "state_merger.h"
 #include "evaluate.h"
