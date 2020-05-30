@@ -771,41 +771,48 @@ void state_merger::undo_perform_merge(apta_node* left, apta_node* right){
     update_red_blue();
 }
 
+refinement* state_merger::get_stored_merge(apta_node* left, apta_node* right){
+    if(!STORE_MERGES) return 0;
+
+    score_map::iterator it = right->eval_store.find(left);
+    if(it != right->eval_store.end()){
+        int merge_time = it->second.first.first;
+        int merge_size = it->second.first.second;
+        score_pair merge_score = it->second.second;
+
+        int size_same = 0;
+        for(size_list::reverse_iterator it2 = left->size_store.rbegin(); it2 != left->size_store.rend(); ++it2){
+            if(it2->first <= merge_time){
+                size_same = it2->second;
+                break;
+            }
+        }
+        int size_change = left->size - size_same;
+
+        if(STORE_MERGES_KEEP_CONFLICT && size_same == merge_size && merge_score.first == false)
+            return new merge_refinement(merge_score, left, right);
+
+        if(size_change < STORE_MERGES_SIZE_THRESHOLD)
+            return new merge_refinement(merge_score, left, right);
+
+        if((double)size_change/(double)left->size < STORE_MERGES_RATIO_THRESHOLD)
+            return new merge_refinement(merge_score, left, right);
+    }
+    return 0;
+}
+
+void state_merger::store_merge(bool merge_consistent, double merge_score, apta_node* left, apta_node* right){
+    if(STORE_MERGES){
+        right->eval_store[left] = ts_pair(pair<int,int>(num_merges,left->size),score_pair(merge_result, score_result));
+    }
+}
+
 /* test a merge, behavior depending on input parameters
  * it performs a merge, computes its consistency and score, and undos the merge
  * returns a <consistency,score> pair */
 refinement* state_merger::test_merge(apta_node* left, apta_node* right){
     eval->reset(this);
-    
-    /*
-     if(STORE_MERGES){
-     score_map::iterator it = right->eval_store.find(left);
-     if(it != right->eval_store.end()){
-     int merge_time = it->second.first.first;
-     int merge_size = it->second.first.second;
-     score_pair merge_score = it->second.second;
-     
-     int size_same = 0;
-     for(size_list::reverse_iterator it2 = left->size_store.rbegin(); it2 != left->size_store.rend(); ++it2){
-     if(it2->first <= merge_time){
-     size_same = it2->second;
-     break;
-     }
-     }
-     int size_change = left->size - size_same;
-     
-     if(STORE_MERGES_KEEP_CONFLICT && size_same == merge_size && merge_score.first == false)
-     return merge_score;
-     
-     if(size_change < STORE_MERGES_SIZE_THRESHOLD)
-     return merge_score;
-     
-     if((double)size_change/(double)left->size < STORE_MERGES_RATIO_THRESHOLD)
-     return merge_score;
-     }
-     }
-     */
-    
+
     double score_result = -1;
     bool   merge_result = false;
     
@@ -821,17 +828,9 @@ refinement* state_merger::test_merge(apta_node* left, apta_node* right){
     
     if((merge_result && eval->compute_consistency(this, left, right) == false)) merge_result = false;
     
-    if(USE_LOWER_BOUND && score_result < LOWER_BOUND) {
-        merge_result = false;
-        //cerr << ( merge_result ? "inconsistent " : "discarding score of ") << score_result << " ";
-    }
+    if(USE_LOWER_BOUND && score_result < LOWER_BOUND) merge_result = false;
     
     if(MERGE_WHEN_TESTING) undo_merge(left,right);
-    
-    
-    if(STORE_MERGES){
-        right->eval_store[left] = ts_pair(pair<int,int>(num_merges,left->size),score_pair(merge_result, score_result));
-    }
     
     if(merge_result == false) return 0;
     return new merge_refinement(score_result, left, right);
