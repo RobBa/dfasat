@@ -166,6 +166,9 @@ public:
 
     string dot_output;
     string json_output;
+
+    void store_merge(bool merge_consistent, double merge_score, apta_node *left, apta_node *right);
+    refinement* get_stored_merge(apta_node *left, apta_node *right);
 };
 
 

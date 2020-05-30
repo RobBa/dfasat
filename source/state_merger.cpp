@@ -790,20 +790,20 @@ refinement* state_merger::get_stored_merge(apta_node* left, apta_node* right){
         int size_change = left->size - size_same;
 
         if(STORE_MERGES_KEEP_CONFLICT && size_same == merge_size && merge_score.first == false)
-            return new merge_refinement(merge_score, left, right);
+            return new merge_refinement(merge_score.second, left, right);
 
         if(size_change < STORE_MERGES_SIZE_THRESHOLD)
-            return new merge_refinement(merge_score, left, right);
+            return new merge_refinement(merge_score.second, left, right);
 
         if((double)size_change/(double)left->size < STORE_MERGES_RATIO_THRESHOLD)
-            return new merge_refinement(merge_score, left, right);
+            return new merge_refinement(merge_score.second, left, right);
     }
     return 0;
 }
 
 void state_merger::store_merge(bool merge_consistent, double merge_score, apta_node* left, apta_node* right){
     if(STORE_MERGES){
-        right->eval_store[left] = ts_pair(pair<int,int>(num_merges,left->size),score_pair(merge_result, score_result));
+        right->eval_store[left] = ts_pair(pair<int,int>(num_merges,left->size),score_pair(merge_consistent, merge_score));
     }
 }
 
