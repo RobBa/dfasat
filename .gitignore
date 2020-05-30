@@ -9,8 +9,8 @@
 *.o
 *.so
 evaluation/*.o
-./idea/workspace.xml
-./idea/dataSources.xml
+.idea/workspace.xml
+.idea/dataSources.xml
 #ignore temp files
 source/evaluators.h
 source/evaluation/*.tmp
