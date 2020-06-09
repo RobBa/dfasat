@@ -14,7 +14,7 @@
 #include "interactive.h"
 #include "common.h"
 #include "inputdata.h"
-
+#include "searcher.h"
 
 #include "utility/loguru.hpp"
 #include "utility/CLI11.hpp"
