@@ -174,6 +174,8 @@ void rtiplus_data::set_loglikelihood(){
         }
     }
 
+    return;
+
     for(int i = 0; i < inputdata::num_attributes; ++i) {
         for(int j = 0; j < rtiplus::attribute_quantiles[i].size() + 1; ++j){
             double count = quantile_counts[i][j];
@@ -513,8 +515,9 @@ double  rtiplus::split_compute_score(state_merger *, apta_node* left, apta_node*
 
     //if (inconsistency_found) return -1;
     
-    if(left->size < STATE_COUNT || right->size < STATE_COUNT) return 0.0;
-    
+    if(left->size <= STATE_COUNT || right->size <= STATE_COUNT) return 0.0;
+    if(USE_SINKS && (left->size <= SINK_COUNT || right->size <= SINK_COUNT)) return 0.0;
+
     //cerr << "score " << 1.0 + CHECK_PARAMETER - p_value << endl;
 
     return 1.0 + CHECK_PARAMETER - p_value;
