@@ -14,6 +14,15 @@ REGISTER_DEF_DATATYPE(overlap_data);
 REGISTER_DEF_TYPE(overlap_driven);
 //DerivedRegister<overlap_driven> overlap_driven::reg("overlap_driven");
 
+void overlap_data::print_transition_label(iostream& output, int symbol, apta* apta_context){
+    output << pos(symbol) << " ";
+};
+
+void overlap_data::print_state_label(iostream& output, apta* aptacontext){
+    count_data::print_state_label(output, aptacontext);
+    output << "\n" << num_paths() << " " << num_final();
+};
+
 /* Overlap driven, count overlap in positive transitions, used in Stamina winner */
 bool overlap_driven::consistent(state_merger *merger, apta_node* left, apta_node* right){
     if(count_driven::consistent(merger, left, right) == false){

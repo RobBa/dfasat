@@ -14,6 +14,8 @@ struct refinement_list_compare{ bool operator()(const pair<double, refinement_li
 priority_queue< pair<double, refinement_list*>, vector< pair<double, refinement_list*> >, refinement_list_compare> Q;
 refinement_list* current_refinements;
 
+int num_gr = 0;
+
 int greedy(state_merger* merger){
     int result = 0;
     
@@ -28,14 +30,34 @@ int greedy(state_merger* merger){
             return result;
         }
     }*/
-    
+
+    merger->todot();
+    std::ostringstream oss2;
+    oss2 << "pre" << num_gr++ << ".dot";
+    ofstream output1(oss2.str().c_str());
+    output1 << merger->dot_output;
+    output1.close();
+
     refinement* top_ref = merger->get_best_refinement();
+    if(top_ref == 0) return merger->compute_global_score();
+    cerr << "d";
+    top_ref->print_short();
+    cerr << " ";
     top_ref->doref(merger);
     result = greedy(merger);
     top_ref->undo(merger);
+    cerr << "u";
+    top_ref->print_short();
+    cerr << " ";
     delete top_ref;
-    
-	return result;
+
+    merger->todot();
+    oss2 << "post" << num_gr++ << ".dot";
+    ofstream output2(oss2.str().c_str());
+    output2 << merger->dot_output;
+    output2.close();
+
+    return result;
 }
 
 double compute_score(state_merger* merger){
@@ -89,7 +111,7 @@ void bestfirst(state_merger* merger){
     int best_solution = -1;
     current_refinements = new refinement_list();
 	add_to_q(merger);
-    
+
     cerr << Q.size() << endl;
 	
 	while(!Q.empty()){

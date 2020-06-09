@@ -194,6 +194,8 @@ void run(parameters* param) {
             fclose(output);
         }
 
+        bestfirst(&merger);
+
        for(int i = 0; i < param->runs; ++i){
           std::ostringstream oss;
           oss << param->dot_file << "dfa" << (i+1) << ".aut";
@@ -204,7 +206,6 @@ void run(parameters* param) {
           cout << "dfasat running";
 
           solution = dfasat(merger, param->sat_program, oss2.str().c_str(), oss.str().c_str());
-          //bestfirst(&merger);
           if(solution != -1)
              CLIQUE_BOUND = min(CLIQUE_BOUND, solution - OFFSET + EXTRA_STATES);
          }

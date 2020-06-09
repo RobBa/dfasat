@@ -124,19 +124,19 @@ void apta::print_dot(iostream& output){
     output << "\t\tI -> " << root->find()->number << ";\n";
     int ncounter = 0;
     //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
-    //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
-    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
+    for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
+    //for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
         n->number = ncounter++;
     }
-    for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
-    //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
+    //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
+    for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
     //for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
         output << "\t" << n->number << " [ label=\"";
         output << n->number << ":#" << n->size << "\n";
-        //output << n << "\n";
-        //output << n->representative << "\n";
+        output << n << "\n";
+        output << n->representative << "\n";
         /*if(inputdata::num_attributes > 0){
             for(tail_iterator it = tail_iterator(n); *it != 0; ++it){
                 tail* t = *it;
@@ -148,7 +148,7 @@ void apta::print_dot(iostream& output){
         output << "\" ";
         n->data->print_state_style(output, this);
         if(n->red == false) output << " style=dotted";
-        output << ", penwidth=" << log(n->size);
+        output << ", penwidth=" << log(1+n->size);
         output << "];\n";
 
         // transition labels for item
@@ -175,7 +175,7 @@ void apta::print_dot(iostream& output){
             if(it->second->target == 0) continue;
             int symbol = it->first;
             apta_guard* g = it->second;
-            apta_node* child = it->second->target->find();
+            apta_node* child = it->second->target;//->find();
             if(sink_type(child) != -1) continue;
             output << "\t\t" << n->number << " -> " << child->number << " [label=\"";
             /*for(set<int>::iterator its = labels.begin(); its != labels.end(); its++){
@@ -203,7 +203,7 @@ void apta::print_dot(iostream& output){
             }*/
 
             output << "\" ";
-            if(alph_str(it->first) == "13" || alph_str(it->first) == "31" || alph_str(it->first) == "9" || alph_str(it->first) == "10" || alph_str(it->first) == "32") output << ", color=red";
+            //if(alph_str(it->first) == "13" || alph_str(it->first) == "31" || alph_str(it->first) == "9" || alph_str(it->first) == "10" || alph_str(it->first) == "32") output << ", color=red";
             //n->data->print_transition_style(output, labels, this);
             output << " ];\n";
         }
