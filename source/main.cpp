@@ -6,11 +6,9 @@
 #include "state_merger.h"
 #include "evaluate.h"
 #include "dfasat.h"
-#include <sstream>
 #include <iostream>
 #include "evaluation_factory.h"
 #include <string>
-#include "searcher.h"
 #include "stream.h"
 #include <vector>
 #include "interactive.h"
@@ -87,7 +85,6 @@ void init_with_params(parameters* param) {
 
     OUTPUT = param->output;
     OUTPUT = "both";
-
     eval_string = param->hData;
 
     try {
@@ -111,7 +108,7 @@ void run(parameters* param) {
 
     init_with_params(param);
 
-    evaluation_function *eval;
+    evaluation_function *eval = nullptr;
 
     for(auto myit = DerivedRegister<evaluation_function>::getMap()->begin(); myit != DerivedRegister<evaluation_function>::getMap()->end() && debugging_enabled; myit++   ) {
        cout << myit->first << " " << myit->second << endl;
@@ -137,7 +134,7 @@ void run(parameters* param) {
     inputdata id;
     string file_name = param->dfa_file;
     // based on the file extension run the corresponding parser
-    if (file_name.substr(file_name.find_last_of(".") + 1) == "json") {
+    if (file_name.substr(file_name.find_last_of('.') + 1) == "json") {
         LOG_S(INFO) << "Parse json input file";
         id.read_json_file(input_stream);
     } else {
@@ -148,7 +145,13 @@ void run(parameters* param) {
 
     apta* the_apta = new apta();
 
-    eval->set_params(param->evalpar);
+    // overwrite evaluation data type if it is set by the user
+    if(param->evalpar != "default") {
+        eval->set_params(param->evalpar);
+        LOG_S(INFO) << "Set heuristic evaulation data type to " << param->evalpar;
+    } else {
+        LOG_S(INFO) << "Using heuristic default evaluation data type";
+    }
 
     cout << "Creating apta " <<  "using evaluation class " << eval_string << endl;
 
@@ -230,7 +233,7 @@ void run(parameters* param) {
        // run interactive loop
        interactive(&merger, param); 
     } else {
-       LOG_S(ERROR) << "Unkown mode of operation selected, please chose batch, stream, or inter. Provided was " << param->mode;
+       LOG_S(ERROR) << "Unknown mode of operation selected, please chose batch, stream, or inter. Provided was " << param->mode;
        cerr << R"(unknown mode of operation selected, valid options are "batch", "stream", and "inter", while the parameter provided was )" << param->mode << endl;
        exit(1);
     }
@@ -309,7 +312,8 @@ int main(int argc, char *argv[]){
     app.add_option("-h,--heuristic-name", param->hName, "Name of the merge heurstic to use; default count_driven. Use any heuristic in the evaluation directory. It is often beneficial to write your own, as heuristics are very application specific.")->required();
 
     // { "data-name", 'd', POPT_ARG_STRING, &(hData), 'd', "Name of the merge data class to use; default count_data. Use any heuristic in the evaluation directory.", "string" },
-    app.add_option("-d,--data-name", param->hData, "Name of the merge data class to use; default count_data. Use any heuristic in the evaluation directory.")->required();
+    param->hData = "default";
+    app.add_option("-d,--data-name", param->hData, "Name of the merge data class to use; default count_data. Use any heuristic in the evaluation directory.");
 
     // { "mode", 'M', POPT_ARG_STRING, &(mode), 'M', "batch or stream depending on the mode of operation", "string" },
     param->mode = "batch";
@@ -408,7 +412,6 @@ int main(int argc, char *argv[]){
     app.add_option("tracefile", param->dfa_file, "Name of the input file containing the traces, either in Abadingo or JSON format.")->required();
 
     CLI11_PARSE(app, argc, argv);
-
 
     run(param);
 
