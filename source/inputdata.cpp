@@ -13,7 +13,7 @@ map<string, int> inputdata::r_types;
 int inputdata::num_attributes;
 
 tail* tail::split(){
-    tail* t = new tail(sequence, index, 0);
+    tail* t = new tail(this);
     t->split_from = this;
     t->future_tail = future_tail;
     t->past_tail = past_tail;
@@ -53,9 +53,31 @@ tail* tail::past(){
     return split_to->past();
 };
 
+tail::tail(tail* ot){
+    td = ot->td;
+
+    past_tail = 0;
+    future_tail = 0;
+    next_in_list = 0;
+    split_from = 0;
+    split_to = 0;
+};
+
 tail::tail(int seq, int i, tail* pt){
-    sequence = seq;
-    index = i;
+    td = new tail_data();
+
+    td->sequence = seq;
+    td->index = i;
+
+    td->type = inputdata::get_type(seq);
+    td->length = inputdata::get_length(seq);
+    td->symbol = inputdata::get_symbol(seq,i);
+    td->attr = new int[inputdata::num_attributes];
+    for(int k = 0; k < inputdata::num_attributes; k++){
+        td->attr[k] = inputdata::get_value(seq, i, k);
+    }
+    td->data = inputdata::get_data(seq, i);
+
     past_tail = pt;
     if(past_tail != 0) past_tail->future_tail = this;
     
@@ -188,11 +210,13 @@ void inputdata::read_abbadingo_sequence(istream &input_stream, int num_attribute
             l3.str(vals);
             for(int i = 0; i < num_attributes-1; ++i){
                 std::getline(l3,val,',');
-                //cerr << val;
+                //cerr << val << endl;
                 values[i][index] = stof(val);
             }
             std::getline(l3,val);
+            //cerr << val << endl;
             values[num_attributes-1][index] = stof(val);
+            //cerr << val << endl;
         }
     }
     sequence["S"] = symbols;

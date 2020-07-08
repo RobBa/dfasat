@@ -194,6 +194,8 @@ void run(parameters* param) {
             fclose(output);
         }
 
+        //bestfirst(&merger);
+
        for(int i = 0; i < param->runs; ++i){
           std::ostringstream oss;
           oss << param->dot_file << "dfa" << (i+1) << ".aut";
@@ -204,7 +206,6 @@ void run(parameters* param) {
           cout << "dfasat running";
 
           solution = dfasat(merger, param->sat_program, oss2.str().c_str(), oss.str().c_str());
-          //bestfirst(&merger);
           if(solution != -1)
              CLIQUE_BOUND = min(CLIQUE_BOUND, solution - OFFSET + EXTRA_STATES);
          }
@@ -237,6 +238,8 @@ void run(parameters* param) {
 
     std::ostringstream oss2;
     oss2 << param->dot_file << "final";
+    std::ostringstream oss3;
+    oss3 << param->dot_file << "sinksfinal";
 
     OUTPUT = "both";
 
@@ -254,6 +257,12 @@ void run(parameters* param) {
         merger.tojson();
         output << merger.json_output;
         output.close();
+
+        oss3 << ".json";
+        ofstream output2(oss3.str().c_str());
+        merger.tojsonsinks();
+        output2 << merger.json_output;
+        output2.close();
     }
 
 } // end run

@@ -59,7 +59,7 @@ void evaluation_data::read_to(tail* t){
 };
 
 void evaluation_data::add_tail(tail* t){
-    if(t->index == -1){
+    if(t->get_index() == -1){
         read_to(t->past_tail);
     } else {
         read_from(t);

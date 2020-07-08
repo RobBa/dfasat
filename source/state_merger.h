@@ -82,6 +82,7 @@ private:
 public:
     /* recursive state merging routines */
     bool merge(apta_node* red, apta_node* blue);
+    bool merge(apta_node* red, apta_node* blue, int depth, bool evaluate, bool perform, bool test);
     void merge_force(apta_node* red, apta_node* blue);
     bool merge_test(apta_node* red, apta_node* blue);
     void undo_merge(apta_node* red, apta_node* blue);
@@ -169,6 +170,8 @@ public:
 
     void store_merge(bool merge_consistent, double merge_score, apta_node *left, apta_node *right);
     refinement* get_stored_merge(apta_node *left, apta_node *right);
+
+    void tojsonsinks();
 };
 
 

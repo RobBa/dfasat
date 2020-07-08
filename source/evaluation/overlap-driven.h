@@ -13,7 +13,9 @@ public:
   virtual void print_transition_label(iostream& output, int symbol);
 
 
+    void print_transition_label(iostream &output, int symbol, apta *apta_context);
 
+    void print_state_label(iostream &output, apta *aptacontext);
 };
 
 class overlap_driven: public alergia {

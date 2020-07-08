@@ -27,7 +27,7 @@ void check_counts(apta_node* node){
             sym_count += dat->count(i,j);
         }
     }
-    assert(sym_count + fin_count == node->size);
+    if(sym_count + fin_count != node->size) cerr << sym_count << " " << fin_count << " " << node->size << endl;
 }
 
 rtiplus_data::rtiplus_data() : likelihood_data::likelihood_data() {
@@ -138,7 +138,7 @@ void rtiplus_data::del_tail(tail* t){
     int type  = inputdata::get_type(t);
     int symbol = inputdata::get_symbol(t);
     
-    if(t->index == -1){
+    if(t->get_index() == -1){
         final_counts[type]--;
         total_final--;
     } else {
@@ -173,6 +173,8 @@ void rtiplus_data::set_loglikelihood(){
             if(count != 0) loglikelihood += count * log(count / divider);
         }
     }
+
+    return;
 
     for(int i = 0; i < inputdata::num_attributes; ++i) {
         for(int j = 0; j < rtiplus::attribute_quantiles[i].size() + 1; ++j){
@@ -209,8 +211,8 @@ void rtiplus::update_score(state_merger *merger, apta_node* left, apta_node* rig
     l->set_loglikelihood();
     r->set_loglikelihood();
 
-    check_counts(left);
-    check_counts(right);
+    //check_counts(left);
+    //check_counts(right);
     
     if(l->num_paths() + r->num_paths() < STATE_COUNT) return;
 
@@ -247,8 +249,8 @@ void rtiplus::update_score_after(state_merger *merger, apta_node* left, apta_nod
     rtiplus_data* l = (rtiplus_data*) left->data;
     rtiplus_data* r = (rtiplus_data*) right->data;
 
-    check_counts(left);
-    check_counts(right);
+    //check_counts(left);
+    //check_counts(right);
 
     l->set_loglikelihood();
     
@@ -263,8 +265,8 @@ void rtiplus::split_update_score_before(state_merger* merger, apta_node* left, a
     rtiplus_data* l = (rtiplus_data*) left->data;
     rtiplus_data* r = (rtiplus_data*) right->data;
 
-    check_counts(left);
-    check_counts(right);
+    //check_counts(left);
+    //check_counts(right);
 
     l->set_loglikelihood();
     r->set_loglikelihood();
@@ -289,8 +291,8 @@ void rtiplus::split_update_score_after(state_merger* merger, apta_node* left, ap
     rtiplus_data* l = (rtiplus_data*) left->data;
     rtiplus_data* r = (rtiplus_data*) right->data;
 
-    check_counts(left);
-    check_counts(right);
+    //check_counts(left);
+    //check_counts(right);
 
     l->set_loglikelihood();
     r->set_loglikelihood();
@@ -513,8 +515,9 @@ double  rtiplus::split_compute_score(state_merger *, apta_node* left, apta_node*
 
     //if (inconsistency_found) return -1;
     
-    if(left->size < STATE_COUNT || right->size < STATE_COUNT) return 0.0;
-    
+    if(left->size <= STATE_COUNT || right->size <= STATE_COUNT) return 0.0;
+    if(USE_SINKS && (left->size <= SINK_COUNT || right->size <= SINK_COUNT)) return 0.0;
+
     //cerr << "score " << 1.0 + CHECK_PARAMETER - p_value << endl;
 
     return 1.0 + CHECK_PARAMETER - p_value;

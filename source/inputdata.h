@@ -26,11 +26,24 @@ using namespace std;
 
 #include "apta.h"
 
-class tail{
+class tail_data{
 public:
     int sequence;
     int index;
-    
+
+    int type;
+    int length;
+    int symbol;
+    int* attr;
+    string data;
+};
+
+class tail{
+public:
+    tail(tail *ot);
+
+    tail_data* td;
+
     tail* future_tail;
     tail* past_tail;
     tail* next_in_list;
@@ -45,6 +58,19 @@ public:
     tail* future();
     tail* past();
     tail* splitted();
+
+    inline int get_index(){
+        return td->index;
+    };
+    inline int get_type(){
+        return td->type;
+    };
+    inline int get_length(){
+        return td->length;
+    };
+    inline int get_sequence(){
+        return td->sequence;
+    };
 };
 
 class inputdata{
@@ -92,28 +118,33 @@ public:
     };
     
     static inline int get_type(tail* t){
-        return inputdata::all_data[t->sequence]["T"];
+        return t->td->type;
+        //return inputdata::all_data[t->sequence]["T"];
     };
     static inline int get_length(tail* t){
-        return inputdata::all_data[t->sequence]["L"];
+        return t->td->length;
+        //return inputdata::all_data[t->sequence]["L"];
     };
     static inline int get_symbol(tail* t){
-        if(t->index > -1)
-            return inputdata::all_data[t->sequence]["S"][t->index];
-        return -1;
+        return t->td->symbol;
+        //if(t->index > -1)
+        //    return inputdata::all_data[t->sequence]["S"][t->index];
+        //return -1;
     };
     static inline int get_index(tail* t){
-        return t->index;
+        return t->td->index;
     };
-    static inline int get_value(tail* t, int attr){
-        if(t->index > -1)
-            return inputdata::all_data[t->sequence]["V" + to_string(attr)][t->index];
-        return -1;
+    static inline int get_value(tail* t, int a){
+        return t->td->attr[a];
+        //if(t->index > -1)
+        //    return inputdata::all_data[t->sequence]["V" + to_string(a)][t->index];
+        //return -1;
     };
     static inline string get_data(tail* t){
-        if(t->index > -1 && inputdata::all_data[t->sequence].find("D") != inputdata::all_data[t->sequence].end())
-            return inputdata::all_data[t->sequence]["D"][t->index];
-        return "";
+        return t->td->data;
+        //if(t->index > -1 && inputdata::all_data[t->sequence].find("D") != inputdata::all_data[t->sequence].end())
+        //    return inputdata::all_data[t->sequence]["D"][t->index];
+        //return "";
     };
 	
     void add_data_to_apta(apta* the_apta);

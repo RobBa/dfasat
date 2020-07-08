@@ -45,6 +45,11 @@ extern int STREAM_COUNT;
 extern bool EXCEPTION4OVERLAP;
 extern string EVALPAR;
 extern bool FINAL_PROBABILITIES;
+extern bool MERGE_LOCAL;
+extern int MERGE_LOCAL_MAXDIST;
+extern int MERGE_LOCAL_COLLECTOR_COUNT;
+extern int KTAIL;
+extern int KSTATE;
 
 class parameters{
 public:

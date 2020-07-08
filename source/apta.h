@@ -85,6 +85,9 @@ public:
     void add_tail(tail* t);
     
     split_list performed_splits;
+
+    /** the source can change due to splitting, this stores the original to undo splits */
+    apta_node* original_source;
     
     /** storing all states merged with this state */
     apta_node* next_merged_node;
@@ -208,6 +211,14 @@ public:
     ~apta_node();
 
     int final;
+
+    int depth_distance(apta_node *right);
+
+    int num_distinct_sources();
+
+    void print_json(iostream &output);
+
+    void print_json_transitions(iostream &output);
 };
 
 /*
@@ -377,6 +388,8 @@ public:
     void print_dot(iostream& output);
     void print_json(iostream& output);
     int sink_type(apta_node* apta);
+
+    void print_sinks_json(iostream &output);
 };
 
 #endif

@@ -69,10 +69,10 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
                break;
             }
             // FIXME
-            if(merger->get_final_apta_size() <= APTA_BOUND){
+            /*if(merger->get_final_apta_size() <= APTA_BOUND){
                cerr << "APTA too small" << endl;
                break;
-            }
+            }*/
 
             refinement* best_ref = *refs->begin();
             /* if(GREEDY_METHOD == RANDOMG){
