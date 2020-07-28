@@ -50,12 +50,16 @@ typedef set<refinement*, score_compare > refinement_set;
 class refinement{
 public:
     double score;
-	apta_node* right;
+	tail* red;
+
+	apta_node* tempnode;
+    apta_node* tempblue;
 
 	virtual void print() const;
 	virtual void print_short() const;
 	virtual void doref(state_merger* m);
 	virtual void undo(state_merger* m);
+    virtual bool testref(state_merger* m);
 };
 
 /**
@@ -65,14 +69,15 @@ public:
  */
 class merge_refinement : public refinement {
 public:
-	apta_node* left;
+	tail* blue;
 
-	merge_refinement(double s, apta_node* l, apta_node* r);
+	merge_refinement(state_merger* m, double s, apta_node* l, apta_node* r);
 
 	virtual inline void print() const;
 	virtual inline void print_short() const;
 	virtual inline void doref(state_merger* m);
 	virtual inline void undo(state_merger* m);
+    virtual inline bool testref(state_merger* m);
 };
 
  /**
@@ -82,12 +87,13 @@ public:
  */
 class extend_refinement : public refinement {
 public:
-	extend_refinement(apta_node* r);
+	extend_refinement(state_merger* m, apta_node* r);
 
 	virtual inline void print() const;
 	virtual inline void print_short() const;
 	virtual inline void doref(state_merger* m);
 	virtual inline void undo(state_merger* m);
+    virtual inline bool testref(state_merger* m);
 };
 
 class split_refinement : public refinement {
@@ -95,12 +101,13 @@ public:
     tail* split_point;
     int attribute;
 
-	split_refinement(double s, apta_node* l, tail* t, int a);
+	split_refinement(state_merger* m, double s, apta_node* l, tail* t, int a);
 
 	virtual inline void print() const;
 	virtual inline void print_short() const;
 	virtual inline void doref(state_merger* m);
 	virtual inline void undo(state_merger* m);
+    virtual inline bool testref(state_merger* m);
 };
 
 
@@ -111,11 +118,14 @@ public:
 struct score_compare {
     inline bool operator()(refinement* r1, refinement* r2) const {
         if(r1->score == r2->score){
+            return r1 < r2;
+            /*
             if(r1->right->size == r2->right->size){
                 return r1 > r2;
             } else {
                 return r1->right->size > r2->right->size;
             }
+             */
         }
         return r1->score > r2->score;
     }

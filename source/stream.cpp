@@ -15,19 +15,91 @@
 #include "parameters.h"
 
 int STREAM_COUNT = 0;
+int batches = 0;
+refinement_list* currentrun;
+refinement_list* nextrun;
 
-int stream_mode(state_merger* merger, parameters* param, ifstream& input_stream) {
+void greedyrun(state_merger* merger){
+    refinement* top_ref;
+    if(currentrun->empty()){
+        top_ref = merger->get_best_refinement();
+    } else {
+        top_ref = currentrun->front();
+        currentrun->pop_front();
+        if(top_ref->testref(merger) == false){
+            delete top_ref;
+            top_ref = merger->get_best_refinement();
+        }
+    }
+    if(top_ref == 0){
+        merger->todot();
+        std::ostringstream oss2;
+        oss2 << "batch" << batches << ".dot";
+        ofstream output1(oss2.str().c_str());
+        output1 << merger->dot_output;
+        output1.close();
+        delete currentrun;
+        currentrun = nextrun;
+        nextrun = new refinement_list();
+    } else {
+        top_ref->print();
+        //cerr << endl;
+        nextrun->push_back(top_ref);
+        //cerr << " d";
+        //top_ref->print_short();
+        //cerr << " ";
+        top_ref->doref(merger);
+        greedyrun(merger);
+        //cerr << " u";
+        //top_ref->print_short();
+        //cerr << " ";
+        top_ref->undo(merger);
+        //delete top_ref;
+        //cerr << "u";
+    }
+}
+
+int stream_mode(state_merger* merger, parameters* param, ifstream& input_stream, inputdata* id) {
+    currentrun = new refinement_list();
+    nextrun = new refinement_list();
        // first line has alphabet size and
        std::string line;
        //std::getline(input_stream, line);
-       merger->init_apta(string("10 1000"));
+       //merger->init_apta(string("10 1000"));
+       //id->abbadingo_init(input_stream);
+
+       int BATCH_SIZE = 100;
+       int seq_nr = 0;
 
        // line by line processing
        // add items
+
+       while(true) {
+           int read_lines = 0;
+           while (read_lines < BATCH_SIZE){
+               if(seq_nr >= inputdata::get_size()){
+                   if(std::getline(input_stream, line)){
+                        id->read_abbadingo_sequence(input_stream, inputdata::num_attributes);
+                        id->add_sequence_to_apta(merger->aut, seq_nr);
+                        read_lines++;
+                        seq_nr++;
+                    }
+               } else {
+                   id->add_sequence_to_apta(merger->aut, seq_nr);
+                   read_lines++;
+                   seq_nr++;
+               }
+           }
+           greedyrun(merger);
+           batches++;
+           cerr << seq_nr << endl;
+       }
+       return 0;
+
+       /*
+
        int i = 0;
        int solution = 0;
-
-       merger->reset();
 
        std::getline(input_stream, line);
        merger->advance_apta(line);
@@ -165,4 +237,5 @@ int stream_mode(state_merger* merger, parameters* param, ifstream& input_stream)
       cout << endl << "found intermediate solution with " << size << " and " << red_size << " red states" << endl;
 
       return 0;
+        */
 }

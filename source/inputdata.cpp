@@ -119,6 +119,29 @@ void inputdata::read_json_file(istream &input_stream){
 
 };
 
+void inputdata::abbadingo_init(istream &input_stream){
+    int num_sequences, alph_size;
+    input_stream >> num_sequences;
+
+    string tuple;
+    input_stream >> tuple;
+
+    std::stringstream lineStream;
+    lineStream.str(tuple);
+
+    string alph;
+    std::getline(lineStream,alph,':');
+    string attr;
+    std::getline(lineStream,attr);
+
+    alph_size = stoi(alph);
+
+    if(!attr.empty())
+        inputdata::num_attributes = stoi(attr);
+    else
+        inputdata::num_attributes = 0;
+};
+
 void inputdata::read_abbadingo_file(istream &input_stream){
     int num_sequences, alph_size;
     input_stream >> num_sequences;

@@ -182,7 +182,7 @@ void apta::print_dot(iostream& output){
                 output << " " << inputdata::alphabet[*its];
             }*/
             
-            output << alph_str(it->first) << endl;
+            output << inputdata::alphabet[it->first] << endl;
             //output << it->first << endl;
 
             n->data->print_transition_label(output, it->first, this);
@@ -472,7 +472,7 @@ apta_node* apta_node::child(tail* t){
             }
             if(outside_range) continue;
             for(bound_map::iterator it2 = g->max_attribute_values.begin(); it2 != g->max_attribute_values.end(); ++it2){
-                if(inputdata::get_value(t,it2->first) > it2->second){
+                if(inputdata::get_value(t,it2->first) >= it2->second){
                     outside_range = true;
                     break;
                 }

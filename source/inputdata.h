@@ -155,6 +155,8 @@ public:
 
     // to init counters etc
     inputdata();
+
+    void abbadingo_init(istream &input_stream);
 };
 
 #endif /* _INPUTDATA_H_*/

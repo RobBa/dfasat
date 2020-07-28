@@ -137,7 +137,7 @@ public:
     /* update the blue and red states */
     void update_red_blue();
 
-    refinement_set* test_splits(apta_node* blue);
+    refinement* test_splits(apta_node* blue);
     refinement* test_merge(apta_node*,apta_node*);
     refinement* test_local_merge(apta_node* red, apta_node* blue);
 
@@ -172,6 +172,12 @@ public:
     refinement* get_stored_merge(apta_node *left, apta_node *right);
 
     void tojsonsinks();
+
+    refinement *test_split(apta_node *red, tail *t, int attr);
+
+    apta_node *get_state_from_tail(tail *t);
+
+    tail *get_tail_from_state(apta_node *n);
 };
 
 
