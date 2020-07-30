@@ -6,7 +6,7 @@
 #include <vector>
 #include <map>
 #include <stdio.h>
-#include <gsl/gsl_cdf.h>
+//#include <gsl/gsl_cdf.h>
 
 #include "parameters.h"
 #include "mealy.h"

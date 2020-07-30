@@ -90,8 +90,6 @@ int stream_mode(state_merger* merger, parameters* param, ifstream& input_stream,
                    seq_nr++;
                }
            }
-           greedyrun(merger);
-           batches++;
            cerr << seq_nr << endl;
        }
        return 0;

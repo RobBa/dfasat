@@ -7,7 +7,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
@@ -90,10 +90,10 @@ add_executable(flexfringe
         source/stream.cpp
         source/stream.h)
 
-find_package(GSL REQUIRED)
-target_link_libraries(flexfringe GSL::gsl GSL::gslcblas)
+#find_package(GSL REQUIRED)
+#target_link_libraries(flexfringe GSL::gsl GSL::gslcblas)
 
-target_link_libraries(flexfringe m)
+#target_link_libraries(flexfringe m)
 
 find_package(Threads)
 target_link_libraries(flexfringe ${CMAKE_THREAD_LIBS_INIT}) # For pthreads

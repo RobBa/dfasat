@@ -1,6 +1,7 @@
 #include <math.h>
 #include <map>
-#include <gsl/gsl_cdf.h>
+//#include <gsl/gsl_cdf.h>
+#include "utility/stats.hpp"
 
 #include "state_merger.h"
 #include "evaluate.h"
@@ -126,8 +127,9 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
 
 bool likelihoodratio::compute_consistency(state_merger *merger, apta_node* left, apta_node* right){
     double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
-    double p_value = gsl_cdf_chisq_Q (test_statistic, 1.0 + (double)extra_parameters);
-    
+    //double p_value = gsl_cdf_chisq_Q (test_statistic, 1.0 + (double)extra_parameters);
+    double p_value = stats::pchisq(test_statistic, extra_parameters, false);
+
     //cerr << loglikelihood_orig << " " << loglikelihood_merged << " " << loglikelihood_orig - loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
     
     //cerr << "CHECK " << CHECK_PARAMETER << " " << (p_value < CHECK_PARAMETER) << endl;
@@ -143,7 +145,8 @@ double likelihoodratio::compute_score(state_merger *merger, apta_node* left, apt
     //if (inconsistency_found) return -1;
 
     double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
-    double p_value = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
+    //double p_value = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
+    double p_value = stats::pchisq(test_statistic, extra_parameters, false);
 
     //cerr << "merge score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
 

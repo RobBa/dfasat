@@ -15,8 +15,8 @@
 #include <string.h>
 #include <set>
 #include <vector>
-#include <unistd.h>
-#include <sys/wait.h>
+//#include <unistd.h>
+//#include <sys/wait.h>
 #include <ctime>
 
 #include "parameters.h"
@@ -970,6 +970,8 @@ int dfasat(state_merger &merger, string sat_program, const char* dot_output_file
     }
     cerr << "header: p cnf " << merger.context.literal_counter - 1 << " " << merger.context.clause_counter << endl;
     merger.context.computing_header = false;
+
+    /* CODE TO RUN SATSOLVER AND CONNECT USING PIPES, ONLY WORKS UNDER LINUX
     
         int pipetosat[2];
         int pipefromsat[2];
@@ -1092,6 +1094,7 @@ int dfasat(state_merger &merger, string sat_program, const char* dot_output_file
             delete refs;
         }
         merger.context.delete_literals();
+        */
     }
     else {
         cout << "No valid solver specified, skipping..." << endl;

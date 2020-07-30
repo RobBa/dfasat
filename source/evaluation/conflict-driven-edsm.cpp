@@ -7,7 +7,7 @@
 #include <vector>
 #include <map>
 #include <stdio.h>
-#include <gsl/gsl_cdf.h>
+//#include <gsl/gsl_cdf.h>
 
 REGISTER_DEF_DATATYPE(conflict_edsm_data);
 REGISTER_DEF_TYPE(conflict_edsm_driven);

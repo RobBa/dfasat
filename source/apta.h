@@ -120,12 +120,26 @@ public:
         while(rep->representative != 0) rep = rep->representative;
         return rep;
     };
+    inline apta_node* find_until(apta_node* node){
+        apta_node* rep = this;
+        while(rep->representative != 0 && rep->representative != node){
+            cerr << rep << " ";
+            rep = rep->representative;
+        }
+        return rep;
+    };
     inline apta_node* find_until(apta_node* node, int i){
         apta_node* rep = this;
-        while(rep->representative != 0 && rep->undo(i) != node) rep = rep->representative;
+        while(rep->representative != 0 && rep->undo(i) != node){
+            cerr << rep << " ";
+            rep = rep->representative;
+        }
+        cerr << endl;
         if(rep->undo(i) == node) return this;
         return 0;
     };
+
+    int count_tails();
     
     /* guards, children, and undo map access */
     apta_node* child(tail* t);

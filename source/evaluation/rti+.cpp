@@ -4,8 +4,9 @@
 #include <map>
 #include <stdio.h>
 #include <cmath>
-#include <gsl/gsl_cdf.h>
+//#include <gsl/gsl_cdf.h>
 #include <cassert>
+#include "utility/stats.hpp"
 
 #include "state_merger.h"
 #include "evaluate.h"
@@ -173,8 +174,6 @@ void rtiplus_data::set_loglikelihood(){
             if(count != 0) loglikelihood += count * log(count / divider);
         }
     }
-
-    return;
 
     for(int i = 0; i < inputdata::num_attributes; ++i) {
         for(int j = 0; j < rtiplus::attribute_quantiles[i].size() + 1; ++j){
@@ -493,8 +492,8 @@ void rtiplus::split_update_score_after(state_merger* merger, apta_node* left, ap
 
 bool rtiplus::split_compute_consistency(state_merger *, apta_node* left, apta_node* right){
     double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
-    double p_value = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
-    
+    //double p_value = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
+    double p_value = stats::pchisq(test_statistic, extra_parameters, false);
     //cerr << "split score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
 
     if(left->size < STATE_COUNT || right->size < STATE_COUNT) return false;
@@ -509,8 +508,8 @@ bool rtiplus::split_compute_consistency(state_merger *, apta_node* left, apta_no
 
 double  rtiplus::split_compute_score(state_merger *, apta_node* left, apta_node* right){
     double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
-    double p_value = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
-    
+    //double p_value = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
+    double p_value = stats::pchisq(test_statistic, extra_parameters, false);
     //cerr << "split score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
 
     //if (inconsistency_found) return -1;

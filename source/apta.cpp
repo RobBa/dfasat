@@ -20,6 +20,19 @@
 
 using namespace std;
 
+int apta_node::count_tails(){
+    int count = 0;
+    int final_count = 0;
+    for(tail_iterator it = tail_iterator(this); *it != 0; ++it) {
+        count++;
+        //cerr << *it << endl;
+        if((*it)->future() == 0) final_count++;
+    }
+    //cerr << this << " " << count << " " << final_count << " " << size << endl;
+    return count;
+};
+
+
 bool apta_guard::bounds_satisfy(tail* t){
     for(bound_map::iterator it = min_attribute_values.begin(); it != min_attribute_values.end(); ++it){
         if(inputdata::get_value(t, it->first) < it->second) return false;
@@ -729,10 +742,11 @@ tail_iterator::tail_iterator(apta_node* start){
 
 void tail_iterator::next_node(){
     if(current->representative_of != 0) current = current->representative_of;
-    else if (current->next_merged_node != 0) current = current->next_merged_node;
+    else if (current->next_merged_node != 0 && base != current) current = current->next_merged_node;
     else {
         while(current != 0 && current->next_merged_node == 0) current = current->representative;
-        if(current != 0) current = current->next_merged_node;
+        if(current != 0 && base != current) current = current->next_merged_node;
+        else current = 0;
     }
 }
 

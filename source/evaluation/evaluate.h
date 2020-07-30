@@ -184,7 +184,10 @@ public:
   virtual void split_update_score_before(state_merger*, apta_node* left, apta_node* right, tail* t);
   virtual void split_update_score_after(state_merger*, apta_node* left, apta_node* right, tail* t);
 
-/* Called when testing a merge
+  virtual void split_update_score_before(state_merger*, apta_node* left, apta_node* right);
+  virtual void split_update_score_after(state_merger*, apta_node* left, apta_node* right);
+
+    /* Called when testing a merge
 * compute the score and consistency of a merge, and reset global counters/structures
 *
 * influence on performance, needs to be somewhat simple */

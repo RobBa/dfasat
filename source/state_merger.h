@@ -178,6 +178,12 @@ public:
     apta_node *get_state_from_tail(tail *t);
 
     tail *get_tail_from_state(apta_node *n);
+
+    void undo_split_init(apta_node *red, tail *t, int attr);
+
+    bool split_init(apta_node *red, tail *t, int attr, int depth, bool evaluate, bool perform, bool test);
+
+    bool split(apta_node *new_node, apta_node *old_node, int depth, bool evaluate, bool perform, bool test);
 };
 
 

@@ -59,15 +59,19 @@ inline void merge_refinement::doref(state_merger* m){
     apta_node* right = m->get_state_from_tail(blue);
     //left = tempnode;
     //right = tempblue;
+    //cerr << "merge " << left << " " << right << endl;
     m->perform_merge(left, right);
 };
 	
 inline void merge_refinement::undo(state_merger* m){
     //cerr << "undo merge" << endl;
     apta_node* left = m->get_state_from_tail(red);
-    apta_node* right = m->get_state_from_tail(blue);
+    apta_node* temp = m->get_state_from_tail(blue->past_tail);
+    apta_node* right =  temp->guard(blue->past_tail)->target;
+    right = right->find_until(left);
     //left = tempnode;
     //right = tempblue;
+    //cerr << "undo merge " << left << " " << right << endl;
     m->undo_perform_merge(left, right);
 };
 
@@ -97,6 +101,7 @@ inline void split_refinement::print_short() const{
 inline void split_refinement::doref(state_merger* m){
     apta_node* right = m->get_state_from_tail(red);
     //right = tempnode;
+    //cerr << "split " << right << endl;
     m->perform_split(right, split_point, attribute);
 };
 	
@@ -104,6 +109,7 @@ inline void split_refinement::undo(state_merger* m){
     //cerr << "undo split" << endl;
     apta_node* right = m->get_state_from_tail(red);
     //right = tempnode;
+    //cerr << "undo split " << right << endl;
     m->undo_perform_split(right, split_point, attribute);
 };
 
@@ -111,8 +117,11 @@ inline bool split_refinement::testref(state_merger* m){
     //return false;
     apta_node* right = m->get_state_from_tail(red);
     //right = tempnode;
-    if(right->red == true || right->source->find()->red == false) return false;
-    if(right->representative != 0) return false;
+    if(right->red == false) return false;
+    if(right->guard(split_point) == 0) return false;
+    if(right->guard(split_point)->target == 0) return false;
+    if(right->guard(split_point)->target->representative != 0) return false;
+    if(right->guard(split_point)->target->red == true) return false;
     refinement* ref = m->test_split(right, split_point, attribute);
     if(ref != 0){
         score = ref->score;

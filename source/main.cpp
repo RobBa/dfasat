@@ -285,7 +285,7 @@ int main(int argc, char *argv[]){
       param->command += string(argv[i]) + string(" ");
     }
 
-    cout << "welcome, running git commit " << gitversion <<  " with: "<< param->command << endl;
+    //cout << "welcome, running git commit " << gitversion <<  " with: "<< param->command << endl;
 
     // CLI11-based parameter parsing to replace libpopt
     // https://cliutils.gitlab.io/CLI11Tutorial/

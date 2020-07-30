@@ -6,7 +6,7 @@
 #include <vector>
 #include <map>
 #include <stdio.h>
-#include <gsl/gsl_cdf.h>
+//#include <gsl/gsl_cdf.h>
 #include <string>
 #include <sstream>
 
@@ -193,6 +193,12 @@ void evaluation_function::update_score(state_merger *merger, apta_node* left, ap
 };
 
 void evaluation_function::update_score_after(state_merger *merger, apta_node* left, apta_node* right){
+};
+
+void evaluation_function::split_update_score_before(state_merger *merger, apta_node* left, apta_node* right){
+};
+
+void evaluation_function::split_update_score_after(state_merger *merger, apta_node* left, apta_node* right){
 };
 
 bool evaluation_function::split_consistent(state_merger *merger, apta_node* left, apta_node* right){
