@@ -791,15 +791,16 @@ apta_node* tail_iterator::next_forward(){
     size = size + 1;
 }*/
 
-std::set<void*> freed;
+//std::set<void*> freed;
 
 apta_node::~apta_node(){
     for(guard_map::iterator it = guards.begin();it != guards.end(); ++it){
-        if (freed.find(it->second->target) != freed.end()) {
-            freed.insert(it->second->target);
-            //delete it->second->target;
-            delete it->second;
-        }
+        //if (freed.find(it->second->target) != freed.end()) {
+        //    freed.insert(it->second->target);
+        if(it->second->target != 0 && it->second->target->source == this)
+            delete it->second->target;
+        delete it->second;
+        //}
     }
     tail* t = tails_head;
     tail* n = 0;

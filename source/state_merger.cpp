@@ -290,6 +290,7 @@ void state_merger::undo_split_single(apta_node* new_node, apta_node* old_node){
         
         undo_split_single(new_child, old_child);
         
+        new_guard->target = 0;
         delete new_child;
     }
     
@@ -336,6 +337,7 @@ bool state_merger::split(apta_node* new_node, apta_node* old_node, int depth, bo
             for (tail *t = new_child->tails_head; t != 0; t = t->next()) {
                 t->split_from->undo_split();
             }
+            new_guard->target = 0;
             delete new_child;
             if(perform) {
                 new_guard->target = old_child;
@@ -363,6 +365,7 @@ bool state_merger::split(apta_node* new_node, apta_node* old_node, int depth, bo
                 for (tail *t = new_child->tails_head; t != 0; t = t->next()) {
                     t->split_from->undo_split();
                 }
+                new_guard->target = 0;
                 delete new_child;
             }
         }
@@ -400,6 +403,7 @@ void state_merger::undo_split(apta_node* new_node, apta_node* old_node){
         for (tail *t = new_child->tails_head; t != 0; t = t->next()) {
             t->split_from->undo_split();
         }
+        new_guard->target = 0;
         delete new_child;
     }
     //assert(old_node->size == old_node->count_tails());
@@ -511,6 +515,7 @@ void state_merger::undo_split_init(apta_node* red, tail* t, int attr){
         for (tail *t = new_child->tails_head; t != 0; t = t->next()) {
             t->split_from->undo_split();
         }
+        new_guard->target = 0;
         delete new_child;
     }
 
@@ -1171,4 +1176,9 @@ int state_merger::num_sink_types(){
 
 int state_merger::compute_global_score(){
     return get_final_apta_size();
+};
+
+state_merger::~state_merger(){
+    delete aut;
+    delete eval;
 };

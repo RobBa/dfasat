@@ -112,6 +112,7 @@ public:
 
     state_merger();
     state_merger(evaluation_function*, apta*);
+    ~state_merger();
 
     void reset();
 

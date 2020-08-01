@@ -104,8 +104,6 @@ void init_with_params(parameters* param) {
 
 void run(parameters* param) {
 
-    state_merger merger;
-
     init_with_params(param);
 
     evaluation_function *eval = nullptr;
@@ -159,7 +157,7 @@ void run(parameters* param) {
 
     cerr << "done parsing" << endl;
     
-    merger = state_merger(eval,the_apta);
+    state_merger merger = state_merger(eval,the_apta);
     the_apta->context = &merger;
 
     //cerr << id.to_json_str();
@@ -312,18 +310,18 @@ int main(int argc, char *argv[]){
 
     // { "output-dir", 'o', POPT_ARG_STRING, &(dot_file), 'o', "Relative path for output files with trailing /, default: \"./\".", "string" },
     param->output = "./";
-    app.add_option("-o,--output-dir", param->dot_file, "Relative path for output files with trailing /, default: \"./\".");
+    app.add_option("-o,--output-dir,--output_dir", param->dot_file, "Relative path for output files with trailing /, default: \"./\".");
 
     //{ "output", 'T', POPT_ARG_STRING, &(output), 'T', "Switch between output in dot, json (default), or both formats" , "string" },
     string output = "both";
     app.add_option("-T,--output", output, "Switch between output in dot, json, or both (default) formats.");
 
     // { "heuristic-name", 'h', POPT_ARG_STRING, &(hName), 'h', "Name of the merge heurstic to use; default count_driven. Use any heuristic in the evaluation directory. It is often beneficial to write your own, as heuristics are very application specific.", "string" },
-    app.add_option("-h,--heuristic-name", param->hName, "Name of the merge heurstic to use; default count_driven. Use any heuristic in the evaluation directory. It is often beneficial to write your own, as heuristics are very application specific.")->required();
+    app.add_option("-h,--heuristic-name,--heuristic_name", param->hName, "Name of the merge heurstic to use; default count_driven. Use any heuristic in the evaluation directory. It is often beneficial to write your own, as heuristics are very application specific.")->required();
 
     // { "data-name", 'd', POPT_ARG_STRING, &(hData), 'd', "Name of the merge data class to use; default count_data. Use any heuristic in the evaluation directory.", "string" },
     param->hData = "default";
-    app.add_option("-d,--data-name", param->hData, "Name of the merge data class to use; default count_data. Use any heuristic in the evaluation directory.");
+    app.add_option("-d,--data-name,--data_name", param->hData, "Name of the merge data class to use; default count_data. Use any heuristic in the evaluation directory.");
 
     // { "mode", 'M', POPT_ARG_STRING, &(mode), 'M', "batch or stream depending on the mode of operation", "string" },
     param->mode = "batch";
