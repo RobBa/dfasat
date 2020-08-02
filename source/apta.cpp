@@ -267,6 +267,8 @@ void apta_node::print_json(iostream& output){
     if(source != 0 && red == false) output << "\t\t\t\"isblue\" :  " << source->find()->red << ",\n";
     else output << "\t\t\t\"isblue\" :  " << false << ",\n";
 
+    output<< "\t\t\t\"type\" : " << type << ",\n";
+
     output << "\t\t\t\"traces\" : [ ";
     for(tail_iterator it = tail_iterator(this); *it != 0; ++it) {
         tail* t = *it;
