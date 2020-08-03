@@ -1,0 +1,58 @@
+\hypertarget{interactive_8cpp}{}\section{source/interactive.cpp File Reference}
+\label{interactive_8cpp}\index{source/interactive.\+cpp@{source/interactive.\+cpp}}
+
+
+All the functions and definitions for interactive merge mode.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include \char`\"{}refinement.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}random\+\_\+greedy.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}parameters.\+h\char`\"{}}\newline
+Include dependency graph for interactive.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interactive_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+refinement\+\_\+list $\ast$ \hyperlink{interactive_8cpp_a62b0ab67b021c0adc94e44c44fdd179c}{interactive} (state\+\_\+merger $\ast$merger, parameters $\ast$param)
+\begin{DoxyCompactList}\small\item\em Main loop for interactive mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+All the functions and definitions for interactive merge mode. 
+
+\begin{DoxyAuthor}{Author}
+Christian Hammerschmidt, \href{mailto:hammerschmidt@posteo.de}{\tt hammerschmidt@posteo.\+de} 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{interactive_8cpp_a62b0ab67b021c0adc94e44c44fdd179c}\label{interactive_8cpp_a62b0ab67b021c0adc94e44c44fdd179c}} 
+\index{interactive.\+cpp@{interactive.\+cpp}!interactive@{interactive}}
+\index{interactive@{interactive}!interactive.\+cpp@{interactive.\+cpp}}
+\subsubsection{\texorpdfstring{interactive()}{interactive()}}
+{\footnotesize\ttfamily refinement\+\_\+list$\ast$ interactive (\begin{DoxyParamCaption}\item[{state\+\_\+merger $\ast$}]{merger,  }\item[{parameters $\ast$}]{param }\end{DoxyParamCaption})}
+
+
+
+Main loop for interactive mode. 
+
+Constructs batch A\+P\+TA, gets and prints possible merges, prompts user for interaction, executes command. Loops until some terminal condition is reached or user terminates the session. Outputs into two dot files to visualize current step/last step (merged) A\+P\+TA. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em merger} & state\+\_\+merger$\ast$ object \\
+\hline
+\mbox{\tt in}  & {\em param} & parameters$\ast$ object to set global variables \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+refinement\+\_\+list$\ast$ list of refinments executed by the state merger 
+\end{DoxyReturn}

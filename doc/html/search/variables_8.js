@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type',['type',['../classapta__node.html#a9c1cf7c316ab485ff4435f90dda2766e',1,'apta_node']]]
+  ['size',['size',['../classapta__node.html#a24c9dae152b759bb6a2ebcae6bbc36d5',1,'apta_node']]],
+  ['source',['source',['../classapta__node.html#a3988cbceb4424c44507237241a430aa4',1,'apta_node']]]
 ];

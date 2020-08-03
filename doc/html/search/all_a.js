@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['plot',['plot',['../classflexfringe_1_1estimators_1_1_d_f_a_s_a_t_estimator.html#aea42a1d82c30007acc257a4d4e587f12',1,'flexfringe.estimators.DFASATEstimator.plot(self)'],['../classflexfringe_1_1estimators_1_1_d_f_a_s_a_t_estimator.html#aea42a1d82c30007acc257a4d4e587f12',1,'flexfringe.estimators.DFASATEstimator.plot(self)']]],
-  ['plot_5ftemplate',['plot_template',['../namespaceplot__template.html',1,'']]],
-  ['predict',['predict',['../classflexfringe_1_1estimators_1_1_d_f_a_s_a_t_estimator.html#a0f3e5a09ad107352e7d0c92e1a19ae7d',1,'flexfringe.estimators.DFASATEstimator.predict(self, X)'],['../classflexfringe_1_1estimators_1_1_d_f_a_s_a_t_estimator.html#a0f3e5a09ad107352e7d0c92e1a19ae7d',1,'flexfringe.estimators.DFASATEstimator.predict(self, X)']]]
+  ['score_5fcompare',['score_compare',['../structscore__compare.html',1,'']]],
+  ['size',['size',['../classapta__node.html#a24c9dae152b759bb6a2ebcae6bbc36d5',1,'apta_node']]],
+  ['source',['source',['../classapta__node.html#a3988cbceb4424c44507237241a430aa4',1,'apta_node']]]
 ];

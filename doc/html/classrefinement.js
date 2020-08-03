@@ -1,13 +1,12 @@
 var classrefinement =
 [
     [ "doref", "classrefinement.html#a3927f962be48969209071fff60a92e6d", null ],
-    [ "doref", "classrefinement.html#a25db5c058abbc726958cbb281ef11456", null ],
-    [ "print", "classrefinement.html#af49fa4a662bf1e70b10263f09fbd9815", null ],
-    [ "print", "classrefinement.html#a0ee933176436975fb05a2edb04ebd819", null ],
-    [ "print_short", "classrefinement.html#a46046c9842832db4cd5a9310972dd898", null ],
-    [ "print_short", "classrefinement.html#ad4bf879b18d00055d497fd7cff285933", null ],
+    [ "print", "classrefinement.html#aa4bbc17b1f7e2f01ef453ae7b8ef21fa", null ],
+    [ "print_short", "classrefinement.html#a361b2a09417e236493ebd17367d4715a", null ],
+    [ "testref", "classrefinement.html#a6d37805eb5ae4597ceb18aee77a574b8", null ],
     [ "undo", "classrefinement.html#a77bfd65c7d57546bfeb04ba7dacbf066", null ],
-    [ "undo", "classrefinement.html#ab3d77f5214321dffd44c36445fe0e5eb", null ],
-    [ "right", "classrefinement.html#a704aab10cc3cad2704aa3fe054f66e2e", null ],
-    [ "score", "classrefinement.html#a024cfbac56c02c168736c38f17f0a197", null ]
+    [ "red", "classrefinement.html#af4949e43e585b8b0778c1406b11c4e77", null ],
+    [ "score", "classrefinement.html#a024cfbac56c02c168736c38f17f0a197", null ],
+    [ "tempblue", "classrefinement.html#a1707602bfb1bbffb37a38e8bee7d9986", null ],
+    [ "tempnode", "classrefinement.html#a8ad8cc493424451b9be9f7579e0348bb", null ]
 ];

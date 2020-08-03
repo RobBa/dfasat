@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['main_2ecpp',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['main_2ecpp',['main.cpp',['../pypackage_2src_2main_8cpp.html',1,'']]],
-  ['merge_5frefinement',['merge_refinement',['../classmerge__refinement.html',1,'']]]
+  ['original_5fsource',['original_source',['../classapta__node.html#ad5fecd3dc4b9dfba4e68cf05af5ab34b',1,'apta_node']]]
 ];

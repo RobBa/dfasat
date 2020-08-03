@@ -1,13 +1,10 @@
 var classmerge__refinement =
 [
-    [ "merge_refinement", "classmerge__refinement.html#ab15fbbafe3f8f46af3642854c8369358", null ],
-    [ "merge_refinement", "classmerge__refinement.html#ab15fbbafe3f8f46af3642854c8369358", null ],
+    [ "merge_refinement", "classmerge__refinement.html#a4623af919a6ad5c95c592cb6b448d209", null ],
     [ "doref", "classmerge__refinement.html#ad1b3a5fe3fa980978d909debf4eaebd1", null ],
-    [ "doref", "classmerge__refinement.html#a9d086a6cf86ccf48572d0293e6b31f1b", null ],
-    [ "print", "classmerge__refinement.html#a953914729ca33cc00487e2bde5005d0a", null ],
-    [ "print", "classmerge__refinement.html#ab2cefa02adc51cdb87a05e9d78b0c54a", null ],
-    [ "print_short", "classmerge__refinement.html#a0c6074a732d5656f1fd87432c7c2b1de", null ],
-    [ "print_short", "classmerge__refinement.html#a4baf6cb0eaf2af651fcd1c3bff723317", null ],
+    [ "print", "classmerge__refinement.html#a88369d77cd09ba18d453a845311ba52b", null ],
+    [ "print_short", "classmerge__refinement.html#ad0fc6a061a0ff0d91c4e4c869194f0ac", null ],
+    [ "testref", "classmerge__refinement.html#aa9f4507d2a3de285a52546be3be2ba40", null ],
     [ "undo", "classmerge__refinement.html#ae5d7dcbd7ddc8595b2d7bcf88d14ad98", null ],
-    [ "undo", "classmerge__refinement.html#a29caa18a89730e768f9e335b804f0749", null ]
+    [ "blue", "classmerge__refinement.html#af413c36fd61642d4c6ace0bec57192f4", null ]
 ];

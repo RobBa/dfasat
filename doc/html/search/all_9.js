@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['named_5ftuple',['named_tuple',['../classnamed__tuple_1_1named__tuple.html',1,'named_tuple']]],
-  ['number',['number',['../classapta__node.html#aa4d8ad2056671f1e14ddb4123ac6f87e',1,'apta_node']]]
+  ['red',['red',['../classapta__node.html#ab5e461390057947fba0c8ec64b7fd57a',1,'apta_node']]],
+  ['refinement',['refinement',['../classrefinement.html',1,'']]],
+  ['representative',['representative',['../classapta__node.html#aaa89817381036872082c939d9c3e0094',1,'apta_node']]],
+  ['root',['root',['../classapta.html#a96e4359fad19dafce95f0a3086c44a73',1,'apta']]]
 ];
