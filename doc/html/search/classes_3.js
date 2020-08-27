@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['merge_5frefinement',['merge_refinement',['../classmerge__refinement.html',1,'']]]
+  ['refinement',['refinement',['../classrefinement.html',1,'']]]
 ];

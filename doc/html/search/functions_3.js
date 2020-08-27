@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['init_5fwith_5fparams',['init_with_params',['../main_8cpp.html#aea146edad7ddb04f66a176c90b4b15a5',1,'init_with_params(parameters *param):&#160;main.cpp'],['../pypackage_2src_2main_8cpp.html#aea146edad7ddb04f66a176c90b4b15a5',1,'init_with_params(parameters *param):&#160;main.cpp']]]
+  ['undo_5fmerge_5fwith',['undo_merge_with',['../classapta__node.html#aaaa403466a13fa9a8884c36a242ff49d',1,'apta_node']]]
 ];
