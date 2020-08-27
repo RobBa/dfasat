@@ -124,6 +124,7 @@ public:
   virtual bool sink_consistent(apta_node* node, int type);
   virtual int num_sink_types();
 
+  virtual void initialize();
 };
 
 

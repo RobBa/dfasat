@@ -62,11 +62,16 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
 
             if(refs->empty()){
                 cerr << "no more possible merges" << endl;
+                delete refs;
                 break;
             }
             if(merger->red_states.size() > CLIQUE_BOUND){
-               cerr << "too many red states" << endl;
-               break;
+                cerr << "too many red states" << endl;
+                for(refinement_set::iterator it = refs->begin(); it != refs->end(); ++it){
+                    (*it)->erase();
+                }
+                delete refs;
+                break;
             }
             // FIXME
             /*if(merger->get_final_apta_size() <= APTA_BOUND){
@@ -101,7 +106,7 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
             }
 
             for(refinement_set::iterator it = refs->begin(); it != refs->end(); ++it){
-                if(*it != best_ref) delete *it;
+                if(*it != best_ref) (*it)->erase();
             }
             delete refs;
             num = num + 1;

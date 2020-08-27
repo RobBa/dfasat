@@ -234,7 +234,7 @@ refinement_list* interactive(state_merger* merger, parameters* param){
             all_refs->push_front(chosen_ref);
             
             for(refinement_set::iterator it = refs->begin(); it != refs->end(); ++it){
-                if(*it != chosen_ref) delete *it;
+                if(*it != chosen_ref) (*it)->erase();
             }
             delete refs;
             num = num + 1;

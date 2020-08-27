@@ -12,15 +12,13 @@ vector<string> inputdata::types;
 map<string, int> inputdata::r_types;
 int inputdata::num_attributes;
 
-tail* tail::split(){
-    tail* t = new tail(this);
+void tail::split(tail* t){
     t->split_from = this;
     t->future_tail = future_tail;
     t->past_tail = past_tail;
     //if(past_tail != 0) past_tail->future_tail = t;
     //if(future_tail != 0) future_tail->past_tail = t;
     split_to = t;
-    return t;
 };
 
 void tail::undo_split(){
@@ -54,6 +52,16 @@ tail* tail::past(){
 };
 
 tail::tail(tail* ot){
+    td = ot->td;
+
+    past_tail = 0;
+    future_tail = 0;
+    next_in_list = 0;
+    split_from = 0;
+    split_to = 0;
+};
+
+void tail::initialize(tail* ot){
     td = ot->td;
 
     past_tail = 0;
@@ -302,6 +310,13 @@ const string inputdata::to_json_str() const{
     ostringstream ostr;
     ostr << all_data;
     return ostr.str();
+};
+
+tail::~tail(){
+    if(split_from == 0){
+        delete td->attr;
+        delete td;
+    }
 };
 
 /*

@@ -49,7 +49,7 @@ int greedy(state_merger* merger){
     cerr << "u";
     top_ref->print_short();
     cerr << " ";
-    delete top_ref;
+    top_ref->erase();
 
     merger->todot();
     oss2 << "post" << num_gr++ << ".dot";
@@ -93,7 +93,7 @@ void change_refinement_list(state_merger* merger, refinement_list* new_list){
 	refinement_list::reverse_iterator old_it = current_refinements->rbegin();
 	while(old_it != current_refinements->rend()){
 		(*old_it)->undo(merger);
-        delete *old_it;
+        (*old_it)->erase();
 		old_it++;
 	}
 	refinement_list::iterator new_it = new_list->begin();

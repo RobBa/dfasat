@@ -34,6 +34,7 @@ using namespace std;
 
 class refinement;
 class merge_refinement;
+class split_refinement;
 class extend_refinement;
 struct score_compare;
 
@@ -60,6 +61,8 @@ public:
 	virtual void doref(state_merger* m);
 	virtual void undo(state_merger* m);
     virtual bool testref(state_merger* m);
+
+    virtual void erase();
 };
 
 /**
@@ -72,12 +75,15 @@ public:
 	tail* blue;
 
 	merge_refinement(state_merger* m, double s, apta_node* l, apta_node* r);
+    void initialize(state_merger* m, double s, apta_node* l, apta_node* r);
 
 	virtual inline void print() const;
 	virtual inline void print_short() const;
 	virtual inline void doref(state_merger* m);
 	virtual inline void undo(state_merger* m);
     virtual inline bool testref(state_merger* m);
+
+    virtual inline void erase();
 };
 
  /**
@@ -88,12 +94,15 @@ public:
 class extend_refinement : public refinement {
 public:
 	extend_refinement(state_merger* m, apta_node* r);
+    void initialize(state_merger* m, apta_node* r);
 
 	virtual inline void print() const;
 	virtual inline void print_short() const;
 	virtual inline void doref(state_merger* m);
 	virtual inline void undo(state_merger* m);
     virtual inline bool testref(state_merger* m);
+
+    virtual inline void erase();
 };
 
 class split_refinement : public refinement {
@@ -102,12 +111,15 @@ public:
     int attribute;
 
 	split_refinement(state_merger* m, double s, apta_node* l, tail* t, int a);
+	void initialize(state_merger* m, double s, apta_node* l, tail* t, int a);
 
 	virtual inline void print() const;
 	virtual inline void print_short() const;
 	virtual inline void doref(state_merger* m);
 	virtual inline void undo(state_merger* m);
     virtual inline bool testref(state_merger* m);
+
+    virtual inline void erase();
 };
 
 

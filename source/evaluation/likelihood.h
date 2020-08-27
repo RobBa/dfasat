@@ -7,6 +7,7 @@
 class likelihood_data: public alergia_data {
 protected:
   REGISTER_DEC_DATATYPE(likelihood_data);
+    virtual void initialize();
 };
 
 class likelihoodratio: public alergia {

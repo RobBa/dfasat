@@ -17,6 +17,7 @@ class merger_context;
 #include "evaluate.h"
 #include "apta.h"
 #include "refinement.h"
+#include "mem_store.h"
 
 using namespace std;
 
@@ -80,6 +81,9 @@ class state_merger{
 private:
 
 public:
+    merger_context context;
+    apta* aut;
+
     /* recursive state merging routines */
     bool merge(apta_node* red, apta_node* blue);
     bool merge(apta_node* red, apta_node* blue, int depth, bool evaluate, bool perform, bool test);
@@ -101,8 +105,7 @@ public:
     int node_number = 1;
     int num_merges = 0;
 
-    merger_context context;
-    apta* aut;
+
     /* core of merge targets */
     state_set red_states;
     /* fringe of merge candidates */

@@ -115,6 +115,8 @@ public:
     virtual bool is_stream_sink(apta_node* node);
     virtual int sink_type(apta_node* node);
     virtual bool sink_consistent(int type);
+
+    virtual void initialize();
 };
 
 

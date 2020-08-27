@@ -64,6 +64,8 @@ public:
     apta_guard(apta_guard*);
     
     bool bounds_satisfy(tail* t);
+
+    void initialize(apta_guard *g);
 };
 
 /**
@@ -223,6 +225,7 @@ public:
     apta_node();
     apta_node(apta* context);
     ~apta_node();
+    void initialize(apta_node* n);
 
     int final;
 

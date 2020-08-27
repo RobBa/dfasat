@@ -61,6 +61,8 @@ public:
     inline int neg_final(){
         return final_counts[0];
     }
+
+    virtual void initialize();
 };
 
 class count_driven: public evaluation_function {

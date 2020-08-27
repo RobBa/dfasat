@@ -27,7 +27,7 @@ void greedyrun(state_merger* merger){
         top_ref = currentrun->front();
         currentrun->pop_front();
         if(top_ref->testref(merger) == false){
-            delete top_ref;
+            top_ref->erase();
             top_ref = merger->get_best_refinement();
         }
     }

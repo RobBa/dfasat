@@ -17,6 +17,11 @@ evaluation_data::evaluation_data(){
     undo_pointer = 0;
 }
 
+void evaluation_data::initialize(){
+    node_type = -1;
+    undo_pointer = 0;
+}
+
 void evaluation_data::read_from(int seq_nr, int index){
     read_from(  inputdata::get_type(seq_nr),
                 index,
@@ -131,8 +136,8 @@ bool evaluation_data::sink_consistent(int type){
 };
 
 /* defa */ 
-evaluation_function::evaluation_function() {   
-
+evaluation_function::evaluation_function() {
+    compute_before_merge = false;
 };
 
 void evaluation_function::set_params(string params) {   

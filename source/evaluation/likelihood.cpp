@@ -1,6 +1,8 @@
+#define STATS_GO_INLINE
+
 #include <math.h>
 #include <map>
-//#include <gsl/gsl_cdf.h>
+#include <gsl/gsl_cdf.h>
 #include "utility/stats.hpp"
 
 #include "state_merger.h"
@@ -10,6 +12,10 @@
 
 REGISTER_DEF_DATATYPE(likelihood_data);
 REGISTER_DEF_TYPE(likelihoodratio);
+
+void likelihood_data::initialize() {
+    alergia_data::initialize();
+}
 
 bool likelihoodratio::consistent(state_merger *merger, apta_node* left, apta_node* right){
     likelihood_data* l = (likelihood_data*) left->data;
@@ -128,7 +134,7 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
 bool likelihoodratio::compute_consistency(state_merger *merger, apta_node* left, apta_node* right){
     double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
     //double p_value = gsl_cdf_chisq_Q (test_statistic, 1.0 + (double)extra_parameters);
-    double p_value = stats::pchisq(test_statistic, extra_parameters, false);
+    double p_value = 1.0 - stats::pchisq(test_statistic, extra_parameters, false);
 
     //cerr << loglikelihood_orig << " " << loglikelihood_merged << " " << loglikelihood_orig - loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
     
@@ -145,12 +151,17 @@ double likelihoodratio::compute_score(state_merger *merger, apta_node* left, apt
     //if (inconsistency_found) return -1;
 
     double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
-    //double p_value = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
-    double p_value = stats::pchisq(test_statistic, extra_parameters, false);
+    double p_value1 = 1.0 - gsl_cdf_chisq_P (test_statistic, (double)extra_parameters);
+    double p_value2 = gsl_cdf_chisq_Q (test_statistic, (double)extra_parameters);
+    double p_value = 1.0 - stats::pchisq(test_statistic, extra_parameters, false);
 
-    //cerr << "merge score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
+    if(p_value2 > 0.05 && (p_value > p_value2 + 0.01 || p_value < p_value2 - 0.01)){
+        cerr << endl;
+        cerr << " values: " << test_statistic << " " << extra_parameters << " " << p_value << " " << p_value1 << " " << p_value2 << endl;
+        cerr << "merge score: " << p_value << " " << loglikelihood_orig << " " << loglikelihood_merged << " " << extra_parameters << " " << p_value << endl;
+    }
 
-    return p_value;
+    return p_value2;
 };
 
 void likelihoodratio::reset(state_merger *merger){

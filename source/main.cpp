@@ -157,8 +157,8 @@ void run(parameters* param) {
 
     cerr << "done parsing" << endl;
     
-    state_merger merger = state_merger(eval,the_apta);
-    the_apta->context = &merger;
+    state_merger* merger = new state_merger(eval,the_apta);
+    the_apta->context = merger;
 
     //cerr << id.to_json_str();
     
@@ -181,16 +181,16 @@ void run(parameters* param) {
         if(OUTPUT == "dot" || OUTPUT == "both") {
             oss3 << ".dot";
             FILE* output = fopen(oss3.str().c_str(), "w");
-            merger.todot();
-            merger.print_dot(output);
+            merger->todot();
+            merger->print_dot(output);
             fclose(output);
         }
 
         if(OUTPUT == "json" || OUTPUT == "both") {
             oss3<< ".json";
             FILE* output = fopen(oss3.str().c_str(), "w");
-            merger.tojson();
-            merger.print_json(output);
+            merger->tojson();
+            merger->print_json(output);
             fclose(output);
         }
 
@@ -205,7 +205,7 @@ void run(parameters* param) {
           LOG_S(INFO) << "Starting state-merging in batch mode";
           cout << "dfasat running";
 
-          solution = dfasat(merger, param->sat_program, oss2.str().c_str(), oss.str().c_str());
+          solution = dfasat((*merger), param->sat_program, oss2.str().c_str(), oss.str().c_str());
           if(solution != -1)
              CLIQUE_BOUND = min(CLIQUE_BOUND, solution - OFFSET + EXTRA_STATES);
          }
@@ -214,7 +214,7 @@ void run(parameters* param) {
        cout << "stream mode selected" << endl;
        LOG_S(INFO) << "Stream mode selected, starting run";
 
-       stream_mode(&merger, param, input_stream, &id);
+       stream_mode(merger, param, input_stream, &id);
     } else if(param->mode == "inter") {
 
        LOG_S(INFO) << "Reading data in interactive mode";
@@ -229,7 +229,7 @@ void run(parameters* param) {
        cout << "Reading data finished, processing:" << endl;
  
        // run interactive loop
-       interactive(&merger, param); 
+       interactive(merger, param);
     } else {
        LOG_S(ERROR) << "Unknown mode of operation selected, please chose batch, stream, or inter. Provided was " << param->mode;
        cerr << R"(unknown mode of operation selected, valid options are "batch", "stream", and "inter", while the parameter provided was )" << param->mode << endl;
@@ -246,25 +246,27 @@ void run(parameters* param) {
     if(OUTPUT == "dot" || OUTPUT == "both") {
       oss2 << ".dot";
       ofstream output(oss2.str().c_str());
-      merger.todot();
-      output << merger.dot_output;
+      merger->todot();
+      output << merger->dot_output;
       output.close();
     }
 
     if(OUTPUT == "json" || OUTPUT == "both") {
         oss2 << ".json";
         ofstream output(oss2.str().c_str());
-        merger.tojson();
-        output << merger.json_output;
+        merger->tojson();
+        output << merger->json_output;
         output.close();
 
         oss3 << ".json";
         ofstream output2(oss3.str().c_str());
-        merger.tojsonsinks();
-        output2 << merger.json_output;
+        merger->tojsonsinks();
+        output2 << merger->json_output;
         output2.close();
     }
     input_stream.close();
+
+    delete merger;
 
 
 } // end run
@@ -433,6 +435,8 @@ int main(int argc, char *argv[]){
     delete param;
 
     LOG_S(INFO) << "Ending flexfringe run normally";
+
+    mem_store::erase();
 
     return 0;
 }

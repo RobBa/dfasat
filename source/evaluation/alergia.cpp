@@ -21,10 +21,15 @@ alergia_data::alergia_data() : count_data() {
 	// LOG_S(INFO) << "Creating alergia_data class"; // example; warning, this is created in every APTA node
 };
 
+void alergia_data::initialize() {
+    count_data::initialize();
+    trans_counts.clear();
+}
+
 void alergia_data::read_from(int type, int index, int length, int symbol, string data){
     count_data::read_from(type, index, length, symbol, data);
     if(trans_counts.find(type) == trans_counts.end()){
-        trans_counts[type] = num_map();
+        //trans_counts[type] = num_map();
         trans_counts[type][symbol] = 1;
     } else {
         if(trans_counts[type].find(symbol) == trans_counts[type].end()){

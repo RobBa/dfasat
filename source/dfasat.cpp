@@ -876,17 +876,17 @@ int dfasat(state_merger &merger, string sat_program, const char* dot_output_file
     merger.context.red_states     = merger.red_states;
     merger.context.sink_states    = merger.get_sink_states();
     
-    if(merger.context.best_solution != -1 && merger.red_states.size() >= merger.context.best_solution + EXTRA_STATES){
+    //if(merger.context.best_solution != -1 && merger.red_states.size() >= merger.context.best_solution + EXTRA_STATES){
         cerr << "Greedy preprocessing resulted in too many red states." << endl;
         while(!refs->empty()){
             refinement* ref = refs->front();
             refs->pop_front();
-            ref->undo(&merger);
-            delete ref;
+            //ref->undo(&merger);
+            ref->erase();
         }
         delete refs;
         return -1;
-    }
+    //}
     
     merger.context.dfa_size = min(merger.red_states.size() + OFFSET, merger.context.red_states.size() + merger.context.non_red_states.size());
     merger.context.sinks_size = 0;

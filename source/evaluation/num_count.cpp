@@ -22,6 +22,14 @@ count_data::count_data() : evaluation_data() {
     total_final = 0;
 };
 
+void count_data::initialize(){
+    evaluation_data::initialize();
+    total_paths = 0;
+    total_final = 0;
+    path_counts.clear();
+    final_counts.clear();
+};
+
 void count_data::print_transition_label(iostream& output, int symbol, apta* aptacontext){
     for(num_map::iterator it = path_counts.begin(); it != path_counts.end(); ++it){
         output << it->first << ":" << it->second << " - ";

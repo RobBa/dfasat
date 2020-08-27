@@ -41,6 +41,7 @@ public:
 class tail{
 public:
     tail(tail *ot);
+    void initialize(tail* ot);
 
     tail_data* td;
 
@@ -51,8 +52,9 @@ public:
     tail* split_to;
     
     tail(int seq, int i, tail* past_tail);
+    ~tail();
 
-    tail* split();
+    void split(tail* t);
     void undo_split();
     tail* next();
     tail* future();

@@ -13,6 +13,14 @@ merge_refinement::merge_refinement(state_merger* m, double s, apta_node* l, apta
     score = s;
 }
 
+void merge_refinement::initialize(state_merger* m, double s, apta_node* l, apta_node* r){
+    red = m->get_tail_from_state(l);
+    blue = m->get_tail_from_state(r);
+    tempnode = l;
+    tempblue = r;
+    score = s;
+}
+
 split_refinement::split_refinement(state_merger* m, double s, apta_node* r, tail* t, int a){
     split_point = t;
     red = m->get_tail_from_state(r);
@@ -21,7 +29,22 @@ split_refinement::split_refinement(state_merger* m, double s, apta_node* r, tail
     tempnode = r;
 }
 
+void split_refinement::initialize(state_merger* m, double s, apta_node* r, tail* t, int a){
+    split_point = t;
+    red = m->get_tail_from_state(r);
+    score = s;
+    attribute = a;
+    tempnode = r;
+}
+
 extend_refinement::extend_refinement(state_merger* m, apta_node* r){
+    //cerr << r << endl;
+    red = m->get_tail_from_state(r);
+    score = LOWER_BOUND;
+    tempnode = r;
+}
+
+void extend_refinement::initialize(state_merger* m, apta_node* r){
     //cerr << r << endl;
     red = m->get_tail_from_state(r);
     score = LOWER_BOUND;
@@ -46,6 +69,9 @@ inline bool refinement::testref(state_merger* m){
     return true;
 };
 
+inline void refinement::erase(){
+};
+
 inline void merge_refinement::print() const{
     //cerr << "merge( " << score << " " << left->number << " " << right->number << " )" << endl;
 };
@@ -60,6 +86,10 @@ inline void merge_refinement::doref(state_merger* m){
     //left = tempnode;
     //right = tempblue;
     //cerr << "merge " << left << " " << right << endl;
+    if(left->red == false){
+        m->extend(left);
+        right->red = true;
+    }
     m->perform_merge(left, right);
 };
 	
@@ -73,6 +103,10 @@ inline void merge_refinement::undo(state_merger* m){
     //right = tempblue;
     //cerr << "undo merge " << left << " " << right << endl;
     m->undo_perform_merge(left, right);
+    if(right->red == true){
+        right->red = false;
+        m->undo_extend(left);
+    }
 };
 
 inline bool merge_refinement::testref(state_merger* m){
@@ -80,7 +114,7 @@ inline bool merge_refinement::testref(state_merger* m){
     apta_node* right = m->get_state_from_tail(blue);
     //left = tempnode;
     //right = tempblue;
-    if(left->red == false || right->red == true || right->source->find()->red == false) return false;
+    if((left->red == false && left->source->find()->red == false) || right->red == true || right->source->find()->red == false) return false;
     if(left->representative != 0 || right->representative != 0) return false;
     refinement* ref = m->test_merge(left, right);
     if(ref != 0){
@@ -88,6 +122,10 @@ inline bool merge_refinement::testref(state_merger* m){
         return true;
     }
     return false;
+};
+
+inline void merge_refinement::erase(){
+    mem_store::delete_merge_refinement(this);
 };
 
 inline void split_refinement::print() const{
@@ -130,6 +168,10 @@ inline bool split_refinement::testref(state_merger* m){
     return false;
 };
 
+inline void split_refinement::erase(){
+    mem_store::delete_split_refinement(this);
+};
+
 inline void extend_refinement::print() const{
     //cerr << "extend( " << right->number << " )" << endl;
 };
@@ -161,3 +203,8 @@ inline bool extend_refinement::testref(state_merger* m){
     if(right->representative != 0) return false;
     return true;
 };
+
+inline void extend_refinement::erase(){
+    mem_store::delete_extend_refinement(this);
+};
+

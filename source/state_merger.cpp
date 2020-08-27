@@ -245,28 +245,31 @@ void state_merger::undo_merge(apta_node* left, apta_node* right){
 
 bool state_merger::split_single(apta_node* new_node, apta_node* old_node, tail* t, bool evaluate){
     //if(old_node->size == 0) return true;
-    
+    if(t->future() == 0) return true;
+
     int symbol = inputdata::get_symbol(t);
     if(symbol == -1) return true;
     apta_node* old_child = old_node->child(symbol)->find();
     apta_node* new_child = new_node->child(symbol);
     if(new_child == 0){
-        new_child = new apta_node(aut);
+        //new_child = new apta_node(aut);
+        new_child = mem_store::create_node(aut, old_child);
         new_node->set_child(symbol,new_child);
         new_child->source = new_node;
         new_child->label  = symbol;
         //new_child->number = node_number++;
         new_child->depth = new_node->depth + 1;
     }
-    
-    if(t->future() == 0) return true;
-    
+
     if(evaluate) eval->split_update_score_before(this, old_child, new_child, t->future());
     new_child->size++;
     old_child->size--;
+
+    tail* future_tail = t->future();
     
-    old_child->data->del_tail(t->future());
-    tail* new_tail = t->future()->split();
+    old_child->data->del_tail(future_tail);
+    tail* new_tail = mem_store::create_tail(future_tail);
+    future_tail->split(new_tail);
     new_child->add_tail(new_tail);
     new_child->data->add_tail(new_tail);    
     split_single(new_child, old_child, new_tail, evaluate);
@@ -285,13 +288,16 @@ void state_merger::undo_split_single(apta_node* new_node, apta_node* old_node){
         apta_guard* new_guard = it->second;
         apta_guard* old_guard = old_node->guard(i, it->second);
         
-        apta_node* new_child = new_guard->target->find();
+        apta_node* new_child = new_guard->target;
         apta_node* old_child = old_guard->target->find();
         
         undo_split_single(new_child, old_child);
         
         new_guard->target = 0;
-        delete new_child;
+        //delete new_child;
+        mem_store::delete_tail(new_child->tails_head);
+        new_child->tails_head = 0;
+        mem_store::delete_node(new_child);
     }
     
     old_node->size = old_node->size + new_node->size;
@@ -310,16 +316,20 @@ bool state_merger::split(apta_node* new_node, apta_node* old_node, int depth, bo
         if (t->future() == 0) continue;
 
         int symbol = inputdata::get_symbol(t);
+        apta_node *old_child = old_node->child(symbol)->find();
         apta_node *new_child = new_node->child(symbol);
         if (new_child == 0) {
-            new_child = new apta_node(aut);
+            //new_child = new apta_node(aut);
+            new_child = mem_store::create_node(aut, old_child);
             new_node->set_child(symbol, new_child);
             new_child->source = new_node;
             new_child->label = symbol;
             new_child->depth = new_node->depth + 1;
         }
         new_child->size++;
-        tail *new_tail = t->future()->split();
+        tail* future_tail = t->future();
+        tail *new_tail = mem_store::create_tail(future_tail);
+        future_tail->split(new_tail);
         new_child->add_tail(new_tail);
         new_child->data->add_tail(new_tail);
     }
@@ -338,7 +348,10 @@ bool state_merger::split(apta_node* new_node, apta_node* old_node, int depth, bo
                 t->split_from->undo_split();
             }
             new_guard->target = 0;
-            delete new_child;
+            //delete new_child;
+            mem_store::delete_tail(new_child->tails_head);
+            new_child->tails_head = 0;
+            mem_store::delete_node(new_child);
             if(perform) {
                 new_guard->target = old_child;
                 old_guard->target = 0;
@@ -366,7 +379,10 @@ bool state_merger::split(apta_node* new_node, apta_node* old_node, int depth, bo
                     t->split_from->undo_split();
                 }
                 new_guard->target = 0;
-                delete new_child;
+                //delete new_child;
+                mem_store::delete_tail(new_child->tails_head);
+                new_child->tails_head = 0;
+                mem_store::delete_node(new_child);
             }
         }
     }
@@ -404,7 +420,10 @@ void state_merger::undo_split(apta_node* new_node, apta_node* old_node){
             t->split_from->undo_split();
         }
         new_guard->target = 0;
-        delete new_child;
+        //delete new_child;
+        mem_store::delete_tail(new_child->tails_head);
+        new_child->tails_head = 0;
+        mem_store::delete_node(new_child);
     }
     //assert(old_node->size == old_node->count_tails());
     //assert(new_node->size == new_node->count_tails());
@@ -420,7 +439,8 @@ bool state_merger::split_init(apta_node* red, tail* t, int attr, int depth, bool
 
     if(perform){
         red->performed_splits.push_front(pair< tail*, int >(t, attr));
-        new_guard = new apta_guard(old_guard);
+        //new_guard = new apta_guard(old_guard);
+        new_guard = mem_store::create_guard(old_guard);
         old_guard->min_attribute_values[attr] = val;
         new_guard->max_attribute_values[attr] = val;
         red->guards.insert(pair<int, apta_guard *>(symbol, new_guard));
@@ -443,11 +463,14 @@ bool state_merger::split_init(apta_node* red, tail* t, int attr, int depth, bool
         return false;
     }
 
-    apta_node* new_child = new apta_node(aut);
+    //apta_node* new_child = new apta_node(aut);
+    apta_node* old_child = old_guard->target->find();
+    apta_node* new_child = mem_store::create_node(aut, old_child);
     for (tail_iterator it = tail_iterator(blue); *it != 0; ++it) {
         tail *t2 = *it;
         if (inputdata::get_value(t2->past_tail, attr) < val) {
-            tail *new_tail = t2->split();
+            tail *new_tail = mem_store::create_tail(t2);
+            t2->split(new_tail);
             new_child->add_tail(new_tail);
             new_child->data->add_tail(new_tail);
             new_child->size++;
@@ -480,7 +503,10 @@ bool state_merger::split_init(apta_node* red, tail* t, int attr, int depth, bool
         for (tail *t = new_child->tails_head; t != 0; t = t->next()) {
             t->split_from->undo_split();
         }
-        delete new_child;
+        //delete new_child;
+        mem_store::delete_tail(new_child->tails_head);
+        new_child->tails_head = 0;
+        mem_store::delete_node(new_child);
     }
     return true;
 }
@@ -516,7 +542,10 @@ void state_merger::undo_split_init(apta_node* red, tail* t, int attr){
             t->split_from->undo_split();
         }
         new_guard->target = 0;
-        delete new_child;
+        //delete new_child;
+        mem_store::delete_tail(new_child->tails_head);
+        new_child->tails_head = 0;
+        mem_store::delete_node(new_child);
     }
 
     if (new_guard->min_attribute_values.find(attr) != new_guard->min_attribute_values.end())
@@ -526,7 +555,8 @@ void state_merger::undo_split_init(apta_node* red, tail* t, int attr){
 
     red->guards.erase(new_it);
 
-    delete new_guard;
+    //delete new_guard;
+    mem_store::delete_guard(new_guard);
 
     red->performed_splits.erase(red->performed_splits.begin());
 }
@@ -541,7 +571,7 @@ refinement* state_merger::test_split(apta_node* red, tail* t, int attr){
         split_result = eval->split_compute_consistency(this, left, right);
         score_result = eval->split_compute_score(this, left, right);
     }
-    if(split_result) return new split_refinement(this, score_result, red, t, attr);
+    if(split_result) return mem_store::create_split_refinement(this, score_result, red, t, attr);
     return 0;
 }
 
@@ -681,13 +711,13 @@ refinement* state_merger::get_stored_merge(apta_node* left, apta_node* right){
 
         //if(STORE_MERGES_KEEP_CONFLICT && size_same == merge_size && merge_score.first == false)
         if(STORE_MERGES_KEEP_CONFLICT && merge_score.first == false)
-            return new merge_refinement(this, merge_score.second, left, right);
+            return mem_store::create_merge_refinement(this, merge_score.second, left, right);
 
         if(size_change < STORE_MERGES_SIZE_THRESHOLD)
-            return new merge_refinement(this, merge_score.second, left, right);
+            return mem_store::create_merge_refinement(this, merge_score.second, left, right);
 
         if((double)size_change/(double)left->size < STORE_MERGES_RATIO_THRESHOLD)
-            return new merge_refinement(this, merge_score.second, left, right);
+            return mem_store::create_merge_refinement(this, merge_score.second, left, right);
     }
     return 0;
 }
@@ -737,13 +767,14 @@ refinement* state_merger::test_merge(apta_node* left, apta_node* right){
     if(STORE_MERGES) store_merge(merge_result, score_result, left, right);
     
     if(merge_result == false) return 0;
-    return new merge_refinement(this, score_result, left, right);
+    return mem_store::create_merge_refinement(this, score_result, left, right);
 }
 
 int testnr = 1;
 
 
 refinement* state_merger::test_splits(apta_node* blue){
+    //cerr << "starting test_splits" << endl;
     refinement* result = 0;
     double score = 0;
     double best_score = -1.0;
@@ -755,8 +786,9 @@ refinement* state_merger::test_splits(apta_node* blue){
             sorted_tails.insert(pair<float, tail*>(inputdata::get_value(t->past_tail, attr),t));
         }
         
-        apta_node* new_node = new apta_node(aut);
-        
+        //apta_node* new_node = new apta_node(aut);
+        apta_node* new_node = mem_store::create_node(aut, blue);
+
         float prev_val = (*(sorted_tails.begin())).first;
         //cerr << "splits: attr:" << attr << endl;
         for(multimap<float, tail*>::iterator it = sorted_tails.begin(); it != sorted_tails.end(); ++it){
@@ -765,8 +797,8 @@ refinement* state_merger::test_splits(apta_node* blue){
             if(it->first > prev_val){
                 score = eval->split_compute_score(this, blue, new_node);
                 if(eval->split_compute_consistency(this, blue, new_node) && (score > best_score || result == 0)){
-                    if(result != 0) delete result;
-                    result = new split_refinement(this, score, blue->source->find(), it->second->past_tail, attr);
+                    if(result != 0) result->erase();
+                    result = mem_store::create_split_refinement(this, score, blue->source->find(), it->second->past_tail, attr);
                 }
                 //cerr << score << " ";
                 prev_val = it->first;
@@ -778,7 +810,8 @@ refinement* state_merger::test_splits(apta_node* blue){
             
             blue->size--;
             blue->data->del_tail(t);
-            tail* new_tail = t->split();
+            tail* new_tail = mem_store::create_tail(t);
+            t->split(new_tail);
             new_node->size++;
             new_node->add_tail(new_tail);
             new_node->data->add_tail(new_tail);
@@ -792,10 +825,14 @@ refinement* state_merger::test_splits(apta_node* blue){
         //cerr << "undoing split " << endl;
         undo_split_single(new_node, blue);
         
-        delete new_node;
+        //delete new_node;
+        mem_store::delete_tail(new_node->tails_head);
+        new_node->tails_head = 0;
+        mem_store::delete_node(new_node);
         sorted_tails.clear();
     }
 
+    //cerr << "ending test_splits" << endl;
     return result;
 }
 
@@ -913,16 +950,16 @@ refinement_set* state_merger::get_possible_refinements(){
             // cerr << "came out empty for merges" <<endl;
             
             if(EXTEND_ANY_RED){
-                for(refinement_set::iterator it = result->begin(); it != result->end(); ++it) delete *it;
+                for(refinement_set::iterator it = result->begin(); it != result->end(); ++it) (*it)->erase();
                 result->clear();
-                result->insert(new extend_refinement(this, blue));
+                result->insert(mem_store::create_extend_refinement(this, blue));
                 return result;
             }
             
         }
         
         //if(result->size() == 0)
-        result->insert(new extend_refinement(this, blue));
+        result->insert(mem_store::create_extend_refinement(this, blue));
         
         if(MERGE_MOST_VISITED) break;
     }
@@ -979,76 +1016,14 @@ merge_map* state_merger::get_possible_merges(int count){
 /* returns the highest scoring merge given the current sets of red and blue states
  * behavior depends on input parameters
  * returns (0,0) if none exists (given the input parameters) */
-refinement* state_merger::get_best_refinement(){
-    refinement_set* rs = get_possible_refinements();
-    refinement* r = 0;
-    if(!rs->empty()){
+refinement* state_merger::get_best_refinement() {
+    refinement_set *rs = get_possible_refinements();
+    refinement *r = 0;
+    if (!rs->empty()) {
         r = *rs->begin();
     }
     delete rs;
     return r;
-
-    refinement* best = 0;
-    
-    state_set blue_its = state_set();
-    for(blue_state_iterator it = blue_state_iterator(aut->root); *it != 0; ++it){
-        if((*it)->size != 0) blue_its.insert(*it);
-    }
-    
-    for(state_set::iterator it = blue_its.begin(); it != blue_its.end(); ++it){
-        apta_node* blue = *it;
-        bool found = false;
-        
-        if(!MERGE_SINKS_DSOLVE && (sink_type(blue) != -1)) continue;
-        
-        //cerr << inputdata::num_attributes << endl;
-        if(inputdata::num_attributes > 0){
-            //cerr << "testing splits" << endl;
-            test_splits(blue);
-        }
-        
-        for(red_state_iterator it2 = red_state_iterator(aut->root); *it2 != 0; ++it2){
-            apta_node* red = *it2;
-            
-            refinement* ref = test_merge(red,blue);
-            if(ref != 0 && (best == 0 || best->score < ref->score)){
-                delete best;
-                best = ref;
-            } else {
-                delete ref;
-            }
-        }
-        
-        if(MERGE_BLUE_BLUE){
-            for(state_set::iterator it2 = blue_its.begin(); it2 != blue_its.end(); ++it2){
-                apta_node* blue2 = *it2;
-                
-                if(blue == blue2) continue;
-                
-                refinement* ref = test_merge(blue2,blue);
-                if(ref != 0 && (best == 0 || best->score < ref->score)){
-                    delete best;
-                    best = ref;
-                } else {
-                    delete ref;
-                }
-            }
-        }
-        
-        if(found == false && sink_type(blue) == -1) {
-            if(EXTEND_ANY_RED){
-                delete best;
-                return new extend_refinement(this, blue);
-            }
-            if(best == 0 || best->score < -1){
-                delete best;
-                best = new extend_refinement(this, blue);
-            }
-        }
-        
-        if(MERGE_MOST_VISITED) break;
-    }
-    return best;
 }
 
 merge_pair* state_merger::get_best_merge(int count){
@@ -1070,7 +1045,7 @@ merge_pair* state_merger::get_best_merge(int count){
                 best->second = blue;
                 result = ref->score;
             } else {
-                delete ref;
+                ref->erase();
             }
         }
         
@@ -1087,7 +1062,7 @@ merge_pair* state_merger::get_best_merge(int count){
                     best->second = blue;
                     result = ref->score;
                 } else {
-                    delete ref;
+                    ref->erase();
                 }
             }
         }
@@ -1181,4 +1156,5 @@ int state_merger::compute_global_score(){
 state_merger::~state_merger(){
     delete aut;
     delete eval;
+    cerr << "deleted merger" << endl;
 };

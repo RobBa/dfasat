@@ -54,6 +54,10 @@ apta::apta(){
     merge_count = 0;
 }
 
+apta::~apta(){
+    delete root;
+}
+
 /* for batch mode */
 // i want tis to map back to the sample by sample read functions from streaming
 void apta::read_file(istream &input_stream){
@@ -263,6 +267,8 @@ void apta_node::print_json(iostream& output){
     if(source != 0 && red == false) output << "\t\t\t\"isblue\" :  " << source->find()->red << ",\n";
     else output << "\t\t\t\"isblue\" :  " << false << ",\n";
 
+    output<< "\t\t\t\"type\" : " << type << ",\n";
+
     output << "\t\t\t\"traces\" : [ ";
     for(tail_iterator it = tail_iterator(this); *it != 0; ++it) {
         tail* t = *it;
@@ -392,20 +398,9 @@ apta_guard::apta_guard(){
 apta_guard::apta_guard(apta_guard* g){
     target = 0;
     undo = 0;
-
+    
     min_attribute_values = bound_map(g->min_attribute_values);
     max_attribute_values = bound_map(g->max_attribute_values);
-}
-
-void apta_guard::initialize(apta_guard* g){
-    target = 0;
-    undo = 0;
-
-    min_attribute_values.clear();
-    max_attribute_values.clear();
-
-    min_attribute_values.insert(g->min_attribute_values.begin(), g->min_attribute_values.end());
-    max_attribute_values.insert(g->max_attribute_values.begin(), g->max_attribute_values.end());
 }
 
 void apta_node::add_tail(tail* t){
@@ -476,29 +471,6 @@ apta_node::apta_node(){
     } catch(const std::out_of_range& oor ) {
        std::cerr << "No data type found..." << std::endl;
     }
-}
-
-void apta_node::initialize(apta_node* n){
-    source = 0;
-    original_source = 0;
-    representative = 0;
-    next_merged_node = 0;
-    representative_of = 0;
-    tails_head = 0;
-    label = 0;
-    number = -1;
-    satnumber = 0;
-    colour = 0;
-    size = 0;
-    final = 0;
-    depth = 0;
-    type = -1;
-    red = false;
-    data->initialize();
-    for(guard_map::iterator it = guards.begin(); it != guards.end(); ++it){
-        mem_store::delete_guard(it->second);
-    }
-    guards.clear();
 }
 
 apta_node* apta_node::child(tail* t){
@@ -822,10 +794,6 @@ apta_node* tail_iterator::next_forward(){
 }*/
 
 //std::set<void*> freed;
-
-apta::~apta(){
-    delete root;
-}
 
 apta_node::~apta_node(){
     for(guard_map::iterator it = guards.begin();it != guards.end(); ++it){
