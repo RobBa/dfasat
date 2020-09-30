@@ -73,6 +73,8 @@ public:
     inline int get_sequence(){
         return td->sequence;
     };
+
+    const string to_string();
 };
 
 class inputdata{

@@ -312,6 +312,34 @@ const string inputdata::to_json_str() const{
     return ostr.str();
 };
 
+const string tail::to_string(){
+    ostringstream ostr;
+    tail* t = this;
+    while(t->past() != 0) t = t->past_tail;
+
+    ostr << "[ ";
+    while(t != this->future_tail){
+        ostr << "\"" << inputdata::alphabet[inputdata::get_symbol(t)];
+        if(inputdata::num_attributes > 0){
+            ostr << ":";
+            for(int i = 0; i < inputdata::num_attributes; i++){
+                ostr << inputdata::get_value(t, i);
+                if(i + 1 < inputdata::num_attributes)
+                    ostr << ",";
+            }
+        }
+        if(inputdata::get_data(t) != "") {
+            ostr << "/" << inputdata::get_data(t);
+        }
+        t = t->future_tail;
+        if(t != this->future_tail){
+            ostr << "\" , ";
+        }
+    }
+    ostr << "\" ]";
+    return ostr.str();
+};
+
 tail::~tail(){
     if(split_from == 0){
         delete td->attr;

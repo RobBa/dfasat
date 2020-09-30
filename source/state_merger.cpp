@@ -1131,7 +1131,6 @@ void state_merger::print_json(FILE* output)
     fprintf(output, "%s", json_output.c_str());
 }
 
-
 void state_merger::print_dot(FILE* output)
 {
     fprintf(output, "%s", dot_output.c_str());

@@ -97,16 +97,21 @@ bool process_mining::consistent(state_merger *merger, apta_node* left, apta_node
     process_data* l = (process_data*)left->data;
     process_data* r = (process_data*)right->data;
 
-    for(set<int>::iterator it = l->done_tasks.begin(); it != l->done_tasks.end(); ++it){
-        if(r->done_tasks.find(*it) == r->done_tasks.end()){
-            inconsistency_found = true;
-            return false;
+    if(true || !r->future_tasks.empty()){
+        for(set<int>::iterator it = l->future_tasks.begin(); it != l->future_tasks.end(); ++it){
+            if(r->future_tasks.find(*it) == r->future_tasks.end()) {
+                inconsistency_found = true;
+                return false;
+            }
         }
     }
-    for(set<int>::iterator it = r->done_tasks.begin(); it != r->done_tasks.end(); ++it){
-        if(l->done_tasks.find(*it) == l->done_tasks.end()){
-            inconsistency_found = true;
-            return false;
+
+    if(true || !l->future_tasks.empty()){
+        for(set<int>::iterator it = r->future_tasks.begin(); it != r->future_tasks.end(); ++it){
+            if(l->future_tasks.find(*it) == l->future_tasks.end()) {
+                inconsistency_found = true;
+                return false;
+            }
         }
     }
     return true;

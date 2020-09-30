@@ -425,8 +425,12 @@ int main(int argc, char *argv[]){
     app.add_option("--ktail", KTAIL, "k-Tails (speedup parameter), only testing merges until depth k (although original ktails can produce non-deterministic machines, flexfringe cannot, it is purely for speedup).");
     app.add_option("--kstate", KSTATE, "k-Tails for states (speedup parameter), only testing merges until states of size k.");
 
+    // only perform local merges: tree distance at most merge_local, but do allow merges with any collector state with at least merge_local_collector_count incoming transitions
     app.add_option("--mergelocal", MERGE_LOCAL, "only perform local merges, up to APTA distance k, useful when learning from software data.");
-    app.add_option("--mlcollector", MERGE_LOCAL_COLLECTOR_COUNT, "when local merges are used, allow merges with non-local collector states, these are states with at least k input transitions.");
+    app.add_option("--mcollector", MERGE_LOCAL_COLLECTOR_COUNT, "when local merges are used, allow merges with non-local collector states, these are states with at least k input transitions.");
+
+    // model final probabilites? if set to 1, distributions are over Sigma*, otherwise over SigmaN.
+    app.add_option("--finalprob", FINAL_PROBABILITIES, "model final probabilites? if set to 1, distributions are over Sigma*, otherwise over SigmaN. (default: 0)");
 
     CLI11_PARSE(app, argc, argv);
 

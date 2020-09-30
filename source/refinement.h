@@ -63,6 +63,10 @@ public:
     virtual bool testref(state_merger* m);
 
     virtual void erase();
+
+    virtual void print_json(iostream &output) const;
+
+    static void print_refinement_list_json(iostream &output, refinement_list *list);
 };
 
 /**
@@ -84,6 +88,8 @@ public:
     virtual inline bool testref(state_merger* m);
 
     virtual inline void erase();
+
+    virtual void print_json(iostream &output) const;
 };
 
  /**
@@ -103,6 +109,8 @@ public:
     virtual inline bool testref(state_merger* m);
 
     virtual inline void erase();
+
+    virtual void print_json(iostream &output) const;
 };
 
 class split_refinement : public refinement {
@@ -120,6 +128,8 @@ public:
     virtual inline bool testref(state_merger* m);
 
     virtual inline void erase();
+
+    virtual void print_json(iostream &output) const;
 };
 
 

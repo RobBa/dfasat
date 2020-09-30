@@ -54,7 +54,13 @@ void extend_refinement::initialize(state_merger* m, apta_node* r){
 inline void refinement::print() const{
     cerr << "score " << score << endl;
 };
-	
+
+inline void refinement::print_json(iostream& output) const{
+    output << "\t\t[\n";
+    output << "score " << score << endl;
+    output << "\t\t]\n";
+};
+
 inline void refinement::print_short() const{
     cerr << score;
 };
@@ -78,6 +84,15 @@ inline void merge_refinement::print() const{
 	
 inline void merge_refinement::print_short() const{
     cerr << "m" << score;
+};
+
+inline void merge_refinement::print_json(iostream& output) const{
+    output << "\t\t{\n";
+    output << "\t\t\t\"type\" : \"merge\", " << endl;
+    output << "\t\t\t\"red\" : " << red->past()->to_string() << "," << endl;
+    output << "\t\t\t\"blue\" : " << blue->past()->to_string() << "," << endl;
+    output << "\t\t\t\"score\" : " << score << endl;
+    output << "\t\t}\n";
 };
 
 inline void merge_refinement::doref(state_merger* m){
@@ -136,6 +151,16 @@ inline void split_refinement::print_short() const{
     cerr << "s" << score;
 };
 
+inline void split_refinement::print_json(iostream& output) const{
+    output << "\t\t{\n";
+    output << "\t\t\t\"type\" : \"split\", " << endl;
+    output << "\t\t\t\"red\" : " << red->past()->to_string() << "," << endl;
+    output << "\t\t\t\"point\" : " << split_point->past()->to_string() << "," << endl;
+    output << "\t\t\t\"attribute\" : " << attribute << "," << endl;
+    output << "\t\t\t\"score\" : " << score << endl;
+    output << "\t\t}\n";
+};
+
 inline void split_refinement::doref(state_merger* m){
     apta_node* right = m->get_state_from_tail(red);
     //right = tempnode;
@@ -180,6 +205,14 @@ inline void extend_refinement::print_short() const{
     cerr << "x";
 };
 
+inline void extend_refinement::print_json(iostream& output) const{
+    output << "\t\t{\n";
+    output << "\t\t\t\"type\" : \"extend\", " << endl;
+    output << "\t\t\t\"red\" : " << red->past()->to_string() << "," << endl;
+    output << "\t\t\t\"score\" : " << score << endl;
+    output << "\t\t}\n";
+};
+
 inline void extend_refinement::doref(state_merger* m){
     apta_node* right = m->get_state_from_tail(red);
     //right = tempnode;
@@ -207,4 +240,19 @@ inline bool extend_refinement::testref(state_merger* m){
 inline void extend_refinement::erase(){
     mem_store::delete_extend_refinement(this);
 };
+
+void refinement::print_refinement_list_json(iostream& output, refinement_list* list){
+    output << "[\n";
+
+    refinement_list::iterator it = list->begin();
+    while(it != list->end()){
+        (*it)->print_json(output);
+        it++;
+        if(it != list->end())
+            output << ",\n";
+    }
+
+    output << "]\n";
+};
+
 

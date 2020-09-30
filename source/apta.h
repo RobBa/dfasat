@@ -236,6 +236,8 @@ public:
     void print_json(iostream &output);
 
     void print_json_transitions(iostream &output);
+
+    int compute_depth();
 };
 
 /*
