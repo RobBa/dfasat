@@ -32,6 +32,7 @@ int MERGE_LOCAL = -1;
 int MERGE_LOCAL_COLLECTOR_COUNT = -1;
 int KTAIL = -1;
 int KSTATE = -1;
+bool MARKOVIAN_MODEL = 0;
 
 bool EXCEPTION4OVERLAP = false;
 

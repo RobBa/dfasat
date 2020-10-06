@@ -32,6 +32,15 @@ int apta_node::count_tails(){
     return count;
 };
 
+tail* apta_node::get_tail_from_state(){
+    tail_iterator it = tail_iterator(this);
+    tail* t = *it;
+    while(t->split_from != 0){
+        t = t->split_from;
+    }
+    return t;
+};
+
 
 bool apta_guard::bounds_satisfy(tail* t){
     for(bound_map::iterator it = min_attribute_values.begin(); it != min_attribute_values.end(); ++it){
@@ -250,7 +259,8 @@ void apta::print_dot(iostream& output){
 
 void apta_node::print_json(iostream& output){
     output << "\t\t{\n";
-    output << "\t\t\t\"id\" : " << number << ",\n";
+    //output << "\t\t\t\"id\" : " << number << ",\n";
+    output << "\t\t\t\"id\" : " << get_tail_from_state()->to_string() << ",\n";
     output << "\t\t\t\"label\" : \"";
     data->print_state_label(output, context);
     output  << "\",\n";
@@ -294,9 +304,9 @@ void apta_node::print_json_transitions(iostream& output){
         apta_node* child = it->second->target->find();
 
         output << "\t\t{\n";
-        output << "\t\t\t\"id\" : \"" << number << "_" << child->number << "\",\n";
-        output << "\t\t\t\"source\" : \"" << number << "\",\n";
-        output << "\t\t\t\"target\" : \"" << child->number << "\",\n";
+        output << "\t\t\t\"id\" : " << get_tail_from_state()->to_string() << "_" << child->get_tail_from_state()->to_string() << ",\n";
+        output << "\t\t\t\"source\" : " << get_tail_from_state()->to_string() << ",\n";
+        output << "\t\t\t\"target\" : " << child->get_tail_from_state()->to_string() << ",\n";
 
         output << "\t\t\t\"name\": \"" << context->alph_str(it->first) << "\",\n";
         output << "\t\t\t\"appearances\": \"";

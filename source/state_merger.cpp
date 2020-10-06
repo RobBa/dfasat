@@ -747,6 +747,12 @@ refinement* state_merger::test_merge(apta_node* left, apta_node* right){
             return 0;
         }
     }
+
+    if(MARKOVIAN_MODEL){
+        if(left->label != right->label){
+            return 0;
+        }
+    }
     
     if(eval->compute_before_merge) score_result = eval->compute_score(this, left, right);
     

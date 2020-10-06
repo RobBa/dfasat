@@ -238,6 +238,8 @@ public:
     void print_json_transitions(iostream &output);
 
     int compute_depth();
+
+    tail *get_tail_from_state();
 };
 
 /*

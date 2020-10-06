@@ -432,6 +432,9 @@ int main(int argc, char *argv[]){
     // model final probabilites? if set to 1, distributions are over Sigma*, otherwise over SigmaN.
     app.add_option("--finalprob", FINAL_PROBABILITIES, "model final probabilites? if set to 1, distributions are over Sigma*, otherwise over SigmaN. (default: 0)");
 
+    // learn a Markovian model? is set to 1 input labels are restricted to be identical for each state.
+    app.add_option("--markovian", MARKOVIAN_MODEL, "learn a \"Markovian\" model that ensures the incoming transitions have the same label, resulting in a Markov graph (states correspond to a unique label, but the same label can occur in multiple places), any heuristic can be used. (default: 0)");
+
     CLI11_PARSE(app, argc, argv);
 
     run(param);
