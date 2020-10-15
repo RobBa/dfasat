@@ -10,285 +10,14 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_DIR="cmake-build-debug-windows" />
-      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" GENERATION_DIR="cmake-build-release-windows" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_DIR="cmake-build-debug-win" />
+      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" GENERATION_DIR="cmake-build-release-win" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7723900-667b-4c3b-a6b7-6d571c18802f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/INSTALL_PYTHON" beforeDir="false" afterPath="$PROJECT_DIR$/INSTALL_PYTHON" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/00.README-FIRST-PLEASE-PAutomaC.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/00.README-FIRST-PLEASE-PAutomaC.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/1.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/1.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/1.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/1.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/1.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/1.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/1.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/1.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/10.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/10.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/10.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/10.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/10.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/10.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/10.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/10.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/11.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/11.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/11.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/11.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/11.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/11.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/11.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/11.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/12.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/12.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/12.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/12.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/12.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/12.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/12.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/12.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/13.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/13.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/13.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/13.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/13.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/13.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/13.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/13.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/14.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/14.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/14.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/14.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/14.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/14.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/14.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/14.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/15.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/15.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/15.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/15.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/15.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/15.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/15.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/15.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/16.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/16.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/16.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/16.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/16.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/16.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/16.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/16.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/17.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/17.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/17.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/17.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/17.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/17.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/17.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/17.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/18.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/18.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/18.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/18.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/18.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/18.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/18.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/18.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/19.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/19.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/19.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/19.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/19.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/19.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/19.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/19.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/2.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/2.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/2.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/2.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/2.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/2.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/2.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/2.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/20.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/20.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/20.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/20.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/20.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/20.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/20.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/20.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/21.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/21.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/21.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/21.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/21.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/21.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/21.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/21.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/22.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/22.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/22.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/22.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/22.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/22.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/22.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/22.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/23.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/23.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/23.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/23.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/23.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/23.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/23.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/23.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/24.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/24.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/24.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/24.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/24.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/24.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/24.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/24.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/25.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/25.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/25.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/25.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/25.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/25.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/25.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/25.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/26.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/26.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/26.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/26.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/26.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/26.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/26.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/26.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/27.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/27.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/27.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/27.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/27.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/27.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/27.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/27.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/28.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/28.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/28.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/28.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/28.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/28.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/28.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/28.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/29.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/29.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/29.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/29.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/29.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/29.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/29.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/29.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/3.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/3.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/3.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/3.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/3.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/3.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/3.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/3.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/30.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/30.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/30.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/30.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/30.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/30.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/30.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/30.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/31.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/31.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/31.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/31.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/31.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/31.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/31.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/31.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/32.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/32.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/32.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/32.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/32.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/32.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/32.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/32.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/33.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/33.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/33.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/33.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/33.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/33.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/33.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/33.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/34.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/34.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/34.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/34.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/34.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/34.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/34.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/34.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/35.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/35.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/35.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/35.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/35.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/35.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/35.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/35.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/36.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/36.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/36.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/36.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/36.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/36.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/36.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/36.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/37.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/37.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/37.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/37.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/37.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/37.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/37.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/37.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/38.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/38.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/38.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/38.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/38.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/38.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/38.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/38.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/39.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/39.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/39.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/39.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/39.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/39.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/39.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/39.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/4.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/4.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/4.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/4.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/4.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/4.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/4.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/4.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/40.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/40.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/40.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/40.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/40.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/40.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/40.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/40.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/41.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/41.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/41.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/41.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/41.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/41.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/41.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/41.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/42.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/42.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/42.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/42.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/42.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/42.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/42.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/42.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/43.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/43.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/43.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/43.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/43.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/43.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/43.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/43.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/44.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/44.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/44.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/44.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/44.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/44.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/44.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/44.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/45.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/45.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/45.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/45.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/45.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/45.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/45.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/45.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/46.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/46.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/46.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/46.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/46.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/46.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/46.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/46.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/47.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/47.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/47.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/47.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/47.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/47.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/47.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/47.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/48.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/48.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/48.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/48.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/48.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/48.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/48.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/48.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/5.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/5.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/5.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/5.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/5.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/5.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/5.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/5.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/6.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/6.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/6.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/6.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/6.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/6.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/6.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/6.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/7.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/7.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/7.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/7.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/7.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/7.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/7.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/7.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/8.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/8.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/8.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/8.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/8.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/8.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/8.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/8.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/9.pautomac.test" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/9.pautomac.test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/9.pautomac.train" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/9.pautomac.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/9.pautomac_model.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/9.pautomac_model.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/PAutomaC-competition_sets/9.pautomac_solution.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/PAutomaC-competition_sets/9.pautomac_solution.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/KSPIswap_longtrace.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/KSPIswap_longtrace.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/KSPIswap_splittrace.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/KSPIswap_splittrace.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/LIT101_sensor_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/LIT101_sensor_train.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/abnormal_sequences.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/abnormal_sequences.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/bpi_12.dat" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/bpi_12.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/bpi_12.spice" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/bpi_12.spice" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/nasa_complete.dat" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/nasa_complete.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/nasa_complete.spice" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/nasa_complete.spice" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/normal_sequences.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/normal_sequences.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/pmyfile2.updated" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/pmyfile2.updated" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/receipt_phase.dat" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/receipt_phase.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/receipt_phase.spice" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/receipt_phase.spice" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/sepsis.dat" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/sepsis.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/sepsis.spice" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/sepsis.spice" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/traces.dat" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/traces.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/traces100.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/traces100.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/traces1000.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/traces1000.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/train.rti" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/train.rti" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/train1.rti" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/train1.rti" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/words_teckping.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/words_teckping.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/examples/words_teckping2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/examples/words_teckping2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demos/flexfringe tutorial.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/demos/flexfringe tutorial.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate.py" beforeDir="false" afterPath="$PROJECT_DIR$/generate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ini/batch-alergia.ini" beforeDir="false" afterPath="$PROJECT_DIR$/ini/batch-alergia.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ini/batch-likelihood.ini" beforeDir="false" afterPath="$PROJECT_DIR$/ini/batch-likelihood.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ini/batch-mealy.ini" beforeDir="false" afterPath="$PROJECT_DIR$/ini/batch-mealy.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ini/batch-overlap.ini" beforeDir="false" afterPath="$PROJECT_DIR$/ini/batch-overlap.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ini/batch-process.ini" beforeDir="false" afterPath="$PROJECT_DIR$/ini/batch-process.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ini/process.ini" beforeDir="false" afterPath="$PROJECT_DIR$/ini/process.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ini/rti.ini" beforeDir="false" afterPath="$PROJECT_DIR$/ini/rti.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interactive.sh" beforeDir="false" afterPath="$PROJECT_DIR$/interactive.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/.travis.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/INSTALL" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/INSTALL" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/MANIFEST.in" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/MANIFEST.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/ci_scripts/install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/ci_scripts/install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/ci_scripts/push_doc.sh" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/ci_scripts/push_doc.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/ci_scripts/success.sh" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/ci_scripts/success.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/ci_scripts/test.sh" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/ci_scripts/test.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/circle.yml" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/circle.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/dependencies.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/dependencies.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/doc/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/doc/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/doc/api.rst" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/doc/api.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/doc/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/doc/conf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/doc/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/doc/index.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/doc/template.rst" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/doc/template.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/examples/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/examples/README.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/examples/plot_template.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/examples/plot_template.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/flexfringe/0.spice.train" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/flexfringe/0.spice.train" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/flexfringe/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/flexfringe/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/flexfringe/estimators.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/flexfringe/estimators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/flexfringe/eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/flexfringe/eval.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/flexfringe/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/flexfringe/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/flexfringe/tests/test_common.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/flexfringe/tests/test_common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/flexfringe/tests/test_template.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/flexfringe/tests/test_template.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/setup.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/setup.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/setup.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pypackage/train_toy.txt" beforeDir="false" afterPath="$PROJECT_DIR$/pypackage/train_toy.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redo.sh" beforeDir="false" afterPath="$PROJECT_DIR$/redo.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/show.sh" beforeDir="false" afterPath="$PROJECT_DIR$/show.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/apta.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/apta.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/apta.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/apta.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/evaluation/process-mining.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/evaluation/process-mining.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/inputdata.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/inputdata.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/inputdata.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/inputdata.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/parameters.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/parameters.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/random_greedy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/random_greedy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/refinement.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/refinement.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/refinement.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/refinement.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/state_merger.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/state_merger.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start-interactive.sh" beforeDir="false" afterPath="$PROJECT_DIR$/start-interactive.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -298,7 +27,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -316,8 +45,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="ObjectiveC" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmake-build-release-windows" />
-    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -341,7 +70,7 @@
       </method>
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -373,12 +102,15 @@
       <workItem from="1600083810295" duration="4200000" />
       <workItem from="1600262728861" duration="22095000" />
       <workItem from="1601290517629" duration="876000" />
-      <workItem from="1601468492843" duration="850000" />
+      <workItem from="1601468492843" duration="2474000" />
+      <workItem from="1601891304934" duration="294000" />
+      <workItem from="1601891612830" duration="7260000" />
+      <workItem from="1601983169105" duration="3601000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -397,10 +129,10 @@
       <screen x="0" y="23" width="1680" height="985" />
     </state>
     <state x="434" y="179" key="#Deployment/0.23.1680.985@0.23.1680.985" timestamp="1594207049058" />
-    <state x="2180" y="180" width="817" height="519" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600419551163">
-      <screen x="1680" y="23" width="1920" height="1011" />
+    <state x="667" y="217" width="1089" height="761" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601983005032">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="667" y="217" width="1089" height="713" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1599680015077" />
+    <state x="667" y="217" width="1089" height="761" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1601983005032" />
     <state x="438" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.978@0.23.1680.978" timestamp="1594807011782" />
     <state x="438" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.980@0.23.1680.980" timestamp="1595426232729" />
     <state x="438" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.981@0.23.1680.981" timestamp="1596571761808" />
@@ -418,11 +150,11 @@
       <screen x="0" y="23" width="1680" height="981" />
     </state>
     <state x="728" y="285" key="EnvironmentVariablesDialog/0.23.1680.981@0.23.1680.981" timestamp="1596492382401" />
-    <state x="802" y="293" key="FileChooserDialogImpl" timestamp="1600083875590">
+    <state x="802" y="293" key="FileChooserDialogImpl" timestamp="1601983128627">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="802" y="293" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1600083875590" />
-    <state width="1447" height="179" key="GridCell.Tab.0.bottom" timestamp="1600537578075">
+    <state x="802" y="293" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1601983128627" />
+    <state width="1268" height="283" key="GridCell.Tab.0.bottom" timestamp="1602006207270">
       <screen x="0" y="23" width="1680" height="981" />
     </state>
     <state width="2330" height="366" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1599679980771" />
@@ -437,7 +169,8 @@
     <state width="1231" height="442" key="GridCell.Tab.0.bottom/0.23.1680.986@0.23.1680.986" timestamp="1594803598427" />
     <state width="1526" height="256" key="GridCell.Tab.0.bottom/0.23.1680.987@0.23.1680.987" timestamp="1594799504993" />
     <state width="723" height="394" key="GridCell.Tab.0.bottom/1680.23.1920.1011/0.23.1680.1027@1680.23.1920.1011" timestamp="1600419604950" />
-    <state width="1447" height="179" key="GridCell.Tab.0.center" timestamp="1600537578074">
+    <state width="1268" height="283" key="GridCell.Tab.0.bottom/1680.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1602006207270" />
+    <state width="1268" height="283" key="GridCell.Tab.0.center" timestamp="1602006207269">
       <screen x="0" y="23" width="1680" height="981" />
     </state>
     <state width="2330" height="366" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1599679980771" />
@@ -452,7 +185,8 @@
     <state width="1231" height="442" key="GridCell.Tab.0.center/0.23.1680.986@0.23.1680.986" timestamp="1594803598427" />
     <state width="1526" height="256" key="GridCell.Tab.0.center/0.23.1680.987@0.23.1680.987" timestamp="1594799504993" />
     <state width="723" height="394" key="GridCell.Tab.0.center/1680.23.1920.1011/0.23.1680.1027@1680.23.1920.1011" timestamp="1600419604949" />
-    <state width="1447" height="179" key="GridCell.Tab.0.left" timestamp="1600537578073">
+    <state width="1268" height="283" key="GridCell.Tab.0.center/1680.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1602006207269" />
+    <state width="1268" height="283" key="GridCell.Tab.0.left" timestamp="1602006207268">
       <screen x="0" y="23" width="1680" height="981" />
     </state>
     <state width="2330" height="366" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1599679980771" />
@@ -467,7 +201,8 @@
     <state width="1231" height="442" key="GridCell.Tab.0.left/0.23.1680.986@0.23.1680.986" timestamp="1594803598426" />
     <state width="1526" height="256" key="GridCell.Tab.0.left/0.23.1680.987@0.23.1680.987" timestamp="1594799504992" />
     <state width="723" height="394" key="GridCell.Tab.0.left/1680.23.1920.1011/0.23.1680.1027@1680.23.1920.1011" timestamp="1600419604948" />
-    <state width="1447" height="179" key="GridCell.Tab.0.right" timestamp="1600537578074">
+    <state width="1268" height="283" key="GridCell.Tab.0.left/1680.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1602006207268" />
+    <state width="1268" height="283" key="GridCell.Tab.0.right" timestamp="1602006207270">
       <screen x="0" y="23" width="1680" height="981" />
     </state>
     <state width="2330" height="366" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1599679980771" />
@@ -482,6 +217,7 @@
     <state width="1231" height="442" key="GridCell.Tab.0.right/0.23.1680.986@0.23.1680.986" timestamp="1594803598427" />
     <state width="1526" height="256" key="GridCell.Tab.0.right/0.23.1680.987@0.23.1680.987" timestamp="1594799504993" />
     <state width="723" height="394" key="GridCell.Tab.0.right/1680.23.1920.1011/0.23.1680.1027@1680.23.1920.1011" timestamp="1600419604950" />
+    <state width="1268" height="283" key="GridCell.Tab.0.right/1680.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1602006207270" />
     <state width="1447" height="407" key="GridCell.Tab.1.bottom" timestamp="1600520960816">
       <screen x="0" y="23" width="1680" height="981" />
     </state>
@@ -542,14 +278,18 @@
     <state width="1231" height="442" key="GridCell.Tab.1.right/0.23.1680.986@0.23.1680.986" timestamp="1594803599895" />
     <state width="1526" height="490" key="GridCell.Tab.1.right/0.23.1680.987@0.23.1680.987" timestamp="1594799511279" />
     <state width="723" height="394" key="GridCell.Tab.1.right/1680.23.1920.1011/0.23.1680.1027@1680.23.1920.1011" timestamp="1600419604951" />
-    <state x="850" y="297" width="900" height="722" key="SettingsEditor" timestamp="1601468676271">
+    <state x="850" y="297" width="900" height="722" key="SettingsEditor" timestamp="1602240544977">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="850" y="297" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1601468676271" />
+    <state x="850" y="297" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1602240544977" />
     <state x="343" y="152" width="1139" height="722" key="SettingsEditor/0.23.1680.981@0.23.1680.981" timestamp="1596222372633" />
     <state x="343" y="153" width="1139" height="722" key="SettingsEditor/0.23.1680.985@0.23.1680.985" timestamp="1594207315975" />
     <state x="343" y="153" width="900" height="722" key="SettingsEditor/0.23.1680.989@0.23.1680.989" timestamp="1599727450593" />
     <state x="2700" y="358" width="900" height="722" key="SettingsEditor/1680.23.1920.1057/0.23.1680.984@1680.23.1920.1057" timestamp="1600263228474" />
+    <state x="814" y="436" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602005445133">
+      <screen x="0" y="23" width="1680" height="981" />
+    </state>
+    <state x="814" y="436" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1680.23.1920.1057/0.23.1680.981@0.23.1680.981" timestamp="1602005445133" />
     <state x="480" y="352" width="1331" height="919" key="find.popup" timestamp="1596112618662">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

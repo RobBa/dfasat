@@ -125,6 +125,8 @@ public:
   virtual int num_sink_types();
 
   virtual void initialize();
+
+    virtual bool print_state_true(apta *aptacontext);
 };
 
 
