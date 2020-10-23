@@ -271,6 +271,7 @@ void inputdata::add_sequence_to_apta(apta* the_apta, int seq_nr){
     
     int depth = 0;
     apta_node* node = the_apta->root;
+    node->label = -1;
     tail* ot = 0;
 
     for(int index = 0; index < sequence["L"]; index++){
