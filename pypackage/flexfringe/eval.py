@@ -5,15 +5,6 @@ from scipy.stats import rv_discrete
 import sys
 import numpy as np
 
-# we should define these somewhere that is associated with the
-# evaluation_functino. Maybe member variables that are initialized in
-# the print_dot function ... but 
-# that would make evaluation depend on
-# the output format, which is not very elegant.
-# technically we should use the apta after merging, and
-MEAN_REGEX = '(?P<state>\d+) \[shape=(doublecircle|circle|ellipse) label=\"\[(?P<mean>\d+)\].*\"\];'
-SYMLST_REGEX = "((?P<sym>\d+):(?P<occ>\d+))+"
-TRAN_REGEX = "(?P<sst>.+) -> (?P<dst>.+) \[label=\"(?P<slst>(.+))\"[ style=dotted]*  \];$"
 
 def load_means(content):
     means = []
@@ -169,33 +160,4 @@ def predict(prefix, model):
   if len(model[state].items()) == 0:
     return [(-1, (0, 1))]
   return sorted(model[state].items(), key=lambda x: x[1][1], reverse=True)
-
-if __name__ == "__main__":
-
-    # you can also invoke the script from the command line
-    if len(sys.argv) > 1:
-        dot = sys.argv[1]
-        tst = sys.argv[2]
-        of = sys.argv[3]
-    else:
-        print("usesage: ./name dotfile testfile outputfile")
-
-    m = load_model_from_file(dot, normalize=True)
-
-    print(m)
-
-    with open(tst) as fh:
-        test = fh.readlines()
-
-    with open("resultfile.txt", 'w') as fh:
-        res = []
-        for line in test[1:]:
-            sum = "" 
-            for elm in predict(line, m):
-                sum += str(elm[0]) + " "
-            res.append(sum + '\n')
-        fh.writelines(res)
-
-    
-
 
