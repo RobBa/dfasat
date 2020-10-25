@@ -88,7 +88,9 @@ add_executable(flexfringe
         source/state_merger.cpp
         source/state_merger.h
         source/stream.cpp
-        source/stream.h)
+        source/stream.h
+        source/mem_store.cpp
+        source/mem_store.h)
 
 #find_package(GSL REQUIRED)
 #target_link_libraries(flexfringe GSL::gsl GSL::gslcblas)

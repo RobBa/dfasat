@@ -49,6 +49,7 @@ extern int MERGE_LOCAL;
 extern int MERGE_LOCAL_COLLECTOR_COUNT;
 extern int KTAIL;
 extern int KSTATE;
+extern bool MARKOVIAN_MODEL;
 
 class parameters{
 public:

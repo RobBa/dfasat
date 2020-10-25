@@ -32,6 +32,15 @@ int apta_node::count_tails(){
     return count;
 };
 
+tail* apta_node::get_tail_from_state(){
+    tail_iterator it = tail_iterator(this);
+    tail* t = *it;
+    while(t->split_from != 0){
+        t = t->split_from;
+    }
+    return t;
+};
+
 
 bool apta_guard::bounds_satisfy(tail* t){
     for(bound_map::iterator it = min_attribute_values.begin(); it != min_attribute_values.end(); ++it){
@@ -133,8 +142,8 @@ void apta::print_dot(iostream& output){
     output << "\t\tI -> " << root->find()->number << ";\n";
     int ncounter = 0;
     //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
-    for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
-    //for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
+    //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
+    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
         n->number = ncounter++;
     }
@@ -142,17 +151,22 @@ void apta::print_dot(iostream& output){
     //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
     //for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
+
+        if(n->data->print_state_true(this) == false){
+            continue;
+        }
+
         output << "\t" << n->number << " [ label=\"";
         output << n->number << ":#" << n->size << "\n";
-        output << n << "\n";
-        output << n->representative << "\n";
+        //output << n << "\n";
+        //output << n->representative << "\n";
         /*if(inputdata::num_attributes > 0){
             for(tail_iterator it = tail_iterator(n); *it != 0; ++it){
                 tail* t = *it;
                 if(t->past_tail != 0) output << " " << inputdata::get_value(t->past_tail, 0);
             }
         }*/
-        output << "\n";
+        //output << "\n";
         n->data->print_state_label(output, this);
         output << "\" ";
         n->data->print_state_style(output, this);
@@ -251,11 +265,12 @@ void apta::print_dot(iostream& output){
 void apta_node::print_json(iostream& output){
     output << "\t\t{\n";
     output << "\t\t\t\"id\" : " << number << ",\n";
+    //output << "\t\t\t\"id\" : " << get_tail_from_state()->to_string() << ",\n";
     output << "\t\t\t\"label\" : \"";
     data->print_state_label(output, context);
     output  << "\",\n";
     output << "\t\t\t\"size\" : " << size << ",\n";
-    output<< "\t\t\t\"level\" : " << depth << ",\n";
+    output<< "\t\t\t\"level\" : " << compute_depth() << ",\n";
     output << "\t\t\t\"style\" : \"";
     data->print_state_style(output, context);
     output  << "\",\n";
@@ -294,9 +309,12 @@ void apta_node::print_json_transitions(iostream& output){
         apta_node* child = it->second->target->find();
 
         output << "\t\t{\n";
-        output << "\t\t\t\"id\" : \"" << number << "_" << child->number << "\",\n";
-        output << "\t\t\t\"source\" : \"" << number << "\",\n";
-        output << "\t\t\t\"target\" : \"" << child->number << "\",\n";
+        //output << "\t\t\t\"id\" : " << get_tail_from_state()->to_string() << "_" << child->get_tail_from_state()->to_string() << ",\n";
+        //output << "\t\t\t\"source\" : " << get_tail_from_state()->to_string() << ",\n";
+        //output << "\t\t\t\"target\" : " << child->get_tail_from_state()->to_string() << ",\n";
+        output << "\t\t\t\"id\" : " << number << "_" << child->number << ",\n";
+        output << "\t\t\t\"source\" : " << number << ",\n";
+        output << "\t\t\t\"target\" : " << child->number << ",\n";
 
         output << "\t\t\t\"name\": \"" << context->alph_str(it->first) << "\",\n";
         output << "\t\t\t\"appearances\": \"";
@@ -345,11 +363,11 @@ void apta::print_json(iostream& output){
 };
 
 void apta::print_sinks_json(iostream& output){
-    int count = 0;
+    /*int count = 0;
     for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
         n->number = count++;
-    }
+    }*/
 
     output << "{\n";
     output << "\t\"nodes\" : [\n";
@@ -564,6 +582,26 @@ apta_guard* apta_node::guard(tail* t){
     return 0;
 };
 
+int apta_node::compute_depth(){
+    return depth;
+    int max_depth = 0;
+    apta_node* l = this;
+    while(l != 0){
+        l = l->find();
+        l = l->source;
+        max_depth++;
+    }
+    if(representative_of != 0 && source != 0){
+        for(apta_node* n = representative_of; n!= 0; n = n->next_merged_node){
+            if(n->source != 0 && n->source->find() != source->find()){
+                int dist = n->compute_depth();
+                if(dist > max_depth) max_depth = dist;
+            }
+        }
+    }
+    return max_depth;
+};
+
 int apta_node::depth_distance(apta_node* right){
     int min_depth = 0;
     apta_node* l = this;
@@ -653,8 +691,10 @@ merged_APTA_iterator::merged_APTA_iterator(apta_node* start){
 apta_node* merged_APTA_iterator::next_forward() {
     guard_map::iterator it;
     for(it = current->guards.begin();it != current->guards.end(); ++it){
+        int d = current->depth;
         apta_node* target = it->second->target;
         if(target != 0 && target->representative == 0){
+            target->depth = d + 1;
             return target;
         }
     }
@@ -665,7 +705,9 @@ apta_node* merged_APTA_iterator::next_backward() {
     guard_map::iterator it;
     apta_node* source = current;
     while(source != base){
+        int d = current->depth;
         current = source->find();
+        if(current->depth < d - 1) current->depth = d - 1;
         source = source->source->find();
         it = source->guards.find(current->label);
         it = source->guards.begin();

@@ -101,6 +101,10 @@ void evaluation_data::split_undo(evaluation_data* right){
 };
 
 // DOT output functions
+bool evaluation_data::print_state_true(apta* aptacontext){
+    return true;
+};
+
 void evaluation_data::print_state_label(iostream& output, apta* aptacontext){
 
 };

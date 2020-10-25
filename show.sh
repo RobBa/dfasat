@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 
-dot -Tpdf $1 > temp.pdf && evince temp.pdf
+dot -Tpdf "$1" > temp.pdf && evince temp.pdf

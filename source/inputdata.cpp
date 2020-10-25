@@ -271,6 +271,7 @@ void inputdata::add_sequence_to_apta(apta* the_apta, int seq_nr){
     
     int depth = 0;
     apta_node* node = the_apta->root;
+    node->label = -1;
     tail* ot = 0;
 
     for(int index = 0; index < sequence["L"]; index++){
@@ -309,6 +310,34 @@ void inputdata::add_sequence_to_apta(apta* the_apta, int seq_nr){
 const string inputdata::to_json_str() const{
     ostringstream ostr;
     ostr << all_data;
+    return ostr.str();
+};
+
+const string tail::to_string(){
+    ostringstream ostr;
+    tail* t = this;
+    while(t->past() != 0) t = t->past_tail;
+
+    ostr << "[ ";
+    while(t != this->future_tail){
+        ostr << "\"" << inputdata::alphabet[inputdata::get_symbol(t)];
+        if(inputdata::num_attributes > 0){
+            ostr << ":";
+            for(int i = 0; i < inputdata::num_attributes; i++){
+                ostr << inputdata::get_value(t, i);
+                if(i + 1 < inputdata::num_attributes)
+                    ostr << ",";
+            }
+        }
+        if(inputdata::get_data(t) != "") {
+            ostr << "/" << inputdata::get_data(t);
+        }
+        t = t->future_tail;
+        if(t != this->future_tail){
+            ostr << "\" , ";
+        }
+    }
+    ostr << "\" ]";
     return ostr.str();
 };
 

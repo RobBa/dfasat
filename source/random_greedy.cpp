@@ -94,7 +94,7 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
             cout << " ";
             std::cout.flush();
             best_ref->doref(merger);
-            all_refs->push_front(best_ref);
+            all_refs->push_back(best_ref);
             
             if(print_all_models) {
                 merger->todot();
@@ -115,6 +115,16 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
         int size =  merger->get_final_apta_size();
         int red_size = merger->red_states.size();
         cout << endl << "found intermediate solution with " << size << " and " << red_size << " red states" << endl;
+
+        std::ostringstream ref_os;
+        ref_os << "refinements.json";
+        ofstream ref_output(ref_os.str().c_str());
+        stringstream output_buf;
+        refinement::print_refinement_list_json(output_buf, all_refs);
+        cerr << output_buf.str();
+        ref_output << output_buf.str();
+        ref_output.close();
+
         return all_refs;
     }
     return all_refs;
