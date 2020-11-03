@@ -121,7 +121,6 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
         ofstream ref_output(ref_os.str().c_str());
         stringstream output_buf;
         refinement::print_refinement_list_json(output_buf, all_refs);
-        cerr << output_buf.str();
         ref_output << output_buf.str();
         ref_output.close();
 

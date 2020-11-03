@@ -45,6 +45,14 @@ public:
     inline int num_final(){
         return total_final;
     }
+
+    inline int num_paths(int type){
+        return path_counts[type];
+    }
+
+    inline int num_final(int type){
+        return final_counts[type];
+    }
     
     inline int pos_paths(){
         return path_counts[1];

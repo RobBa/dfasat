@@ -742,6 +742,12 @@ refinement* state_merger::test_merge(apta_node* left, apta_node* right){
     double score_result = -1;
     bool   merge_result = false;
 
+    if(!MERGE_ROOT){
+        if(left->source == 0){
+            return 0;
+        }
+    }
+
     if(MERGE_LOCAL > -1){
         if(left->depth_distance(right) > MERGE_LOCAL && left->num_distinct_sources() > MERGE_LOCAL_COLLECTOR_COUNT){
             return 0;
@@ -750,6 +756,18 @@ refinement* state_merger::test_merge(apta_node* left, apta_node* right){
 
     if(MARKOVIAN_MODEL){
         if(left->label != right->label){
+            return 0;
+        }
+    }
+
+    if(!MERGE_SINKS){
+        if(sink_type(left) != -1 || sink_type(right) != -1){
+            return 0;
+        }
+    }
+
+    if(!MERGE_SINKS_WITH_CORE){
+        if(sink_type(left) == -1 && sink_type(right) != -1){
             return 0;
         }
     }
@@ -893,36 +911,46 @@ refinement_set* state_merger::get_possible_refinements(){
     refinement_set* result = new refinement_set();
     
     state_set blue_its = state_set();
-    //bool found = false;
+    bool found_non_sink = false;
     
     for(blue_state_iterator it = blue_state_iterator(aut->root); *it != 0; ++it){
         if((*it)->size != 0) blue_its.insert(*it);
+        if(sink_type(*it) == -1) found_non_sink = true;
     }
     // DEBUG("checking for " << blue_its.size() << " blue states" <<endl);
+
+    if(!found_non_sink && !MERGE_SINKS){
+        return result;
+    }
     
     for(state_set::iterator it = blue_its.begin(); it != blue_its.end(); ++it){
         apta_node* blue = *it;
         bool found = false;
-        if((sink_type(blue) != -1)) continue;
+
+        if(found_non_sink && (sink_type(blue) != -1)) continue;
         
         // cerr << inputdata::num_attributes << endl;
-        if(inputdata::num_attributes > 0){
-            //cerr << "testing splits" << endl;
-            /*refinement_set* refs = test_splits(blue);
-            if(refs != 0){
+        if(sink_type(blue) == -1){
+            if(inputdata::num_attributes > 0){
+                //cerr << "testing splits" << endl;
+                /*refinement_set* refs = test_splits(blue);
+                if(refs != 0){
                 result->insert(refs->begin(), refs->end());
                 found = true;
                 delete refs;
-            }*/
-            refinement* ref = test_splits(blue);
-            if(ref != 0){
-                result->insert(ref);
-                found = true;
+                }*/
+                refinement* ref = test_splits(blue);
+                if(ref != 0){
+                    result->insert(ref);
+                    found = true;
+                }
             }
         }
         
         for(red_state_iterator it2 = red_state_iterator(aut->root); *it2 != 0; ++it2){
             apta_node* red = *it2;
+
+            //cerr << "testing merge " << red << " " << blue << endl;
             
             refinement* ref = test_merge(red,blue);
             
@@ -938,7 +966,7 @@ refinement_set* state_merger::get_possible_refinements(){
                 
                 if(blue == blue2) continue;
                 
-                if(!MERGE_SINKS_DSOLVE && (sink_type(blue2) != -1)) continue;
+                if(found_non_sink && (sink_type(blue2) != -1)) continue;
                 
                 refinement* ref = test_merge(blue2,blue);
                 if(ref != 0){

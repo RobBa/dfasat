@@ -50,6 +50,16 @@ extern int MERGE_LOCAL_COLLECTOR_COUNT;
 extern int KTAIL;
 extern int KSTATE;
 extern bool MARKOVIAN_MODEL;
+extern bool MERGE_SINKS_WITH_CORE;
+
+extern bool TYPE_DISTRIBUTIONS;
+extern bool TYPE_CONSISTENT;
+
+extern bool MERGE_ROOT;
+extern bool PRINT_WHITE;
+extern bool PRINT_BLUE;
+
+extern string DFA_FILE;
 
 class parameters{
 public:

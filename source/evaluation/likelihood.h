@@ -29,6 +29,7 @@ public:
   virtual double  compute_score(state_merger*, apta_node* left, apta_node* right);
   virtual void reset(state_merger *merger);
   //virtual void print_dot(iostream&, state_merger *);
+    void update_likelihood_pool(double left_count, double right_count, double left_divider, double right_divider);
 };
 
 #endif

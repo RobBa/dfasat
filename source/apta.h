@@ -9,6 +9,7 @@
 #include <map>
 #include <unordered_map>
 #include <string>
+#include <queue>
 
 class apta;
 class apta_node;
@@ -290,11 +291,13 @@ class APTA_iterator {
 public:
     apta_node* base;
     apta_node* current;
+
+    queue<apta_node*> q;
     
     APTA_iterator(apta_node* start);
     
-    apta_node* next_forward();
-    apta_node* next_backward();
+    //apta_node* next_forward();
+    //apta_node* next_backward();
     virtual void increment();
     
     apta_node* operator*() const { return current; }
@@ -305,11 +308,13 @@ class merged_APTA_iterator {
 public:
     apta_node* base;
     apta_node* current;
-    
+
+    queue<apta_node*> q;
+
     merged_APTA_iterator(apta_node* start);
 
-    apta_node* next_forward();
-    apta_node* next_backward();
+    //apta_node* next_forward();
+    //apta_node* next_backward();
     virtual void increment();
     
     apta_node* operator*() const { return current; }

@@ -135,6 +135,16 @@ public:
   //virtual int sink_type(apta_node* node);
   //virtual bool sink_consistent(apta_node* node, int type);
   virtual int num_sink_types();
+
+    void update_divider(double left_count, double right_count, double &left_divider, double &right_divider);
+
+    void update_divider_pool(double left_pool, double right_pool, double &left_divider, double &right_divider);
+
+    void update_left_pool(double left_count, double right_count, double &left_pool, double &right_pool);
+
+    void update_right_pool(double left_count, double right_count, double &left_pool, double &right_pool);
+
+    bool alergia_consistency_pool(double right_count, double left_count, double right_total, double left_total);
 };
 
 #endif

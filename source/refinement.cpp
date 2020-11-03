@@ -41,6 +41,7 @@ extend_refinement::extend_refinement(state_merger* m, apta_node* r){
     //cerr << r << endl;
     red = m->get_tail_from_state(r);
     score = LOWER_BOUND;
+    size = r->size;
     tempnode = r;
 }
 
@@ -48,6 +49,7 @@ void extend_refinement::initialize(state_merger* m, apta_node* r){
     //cerr << r << endl;
     red = m->get_tail_from_state(r);
     score = LOWER_BOUND;
+    size = r->size;
     tempnode = r;
 }
 
@@ -206,7 +208,7 @@ inline void extend_refinement::print() const{
 };
 	
 inline void extend_refinement::print_short() const{
-    cerr << "x";
+    cerr << "x" << size;
 };
 
 inline void extend_refinement::print_json(iostream& output) const{

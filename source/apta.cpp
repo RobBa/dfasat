@@ -147,66 +147,48 @@ void apta::print_dot(iostream& output){
         apta_node* n = *Ait;
         n->number = ncounter++;
     }
-    for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
+    //for(merged_APTA_iterator_func Ait = merged_APTA_iterator_func(root, is_sink); *Ait != 0; ++Ait){
     //for(APTA_iterator Ait = APTA_iterator(root); *Ait != 0; ++Ait){
-    //for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
-        apta_node* n = *Ait;
+    for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait) {
+        apta_node *n = *Ait;
 
-        if(n->data->print_state_true(this) == false){
+        if (n->data->print_state_true(this) == false) {
             continue;
+        }
+
+        if (!PRINT_WHITE && n->red == false) {
+            if (n->source != 0) {
+                if (n->source->find()->red == false)
+                    continue;
+                if (!PRINT_BLUE)
+                    continue;
+            }
         }
 
         output << "\t" << n->number << " [ label=\"";
         output << n->number << ":#" << n->size << "\n";
-        //output << n << "\n";
-        //output << n->representative << "\n";
-        /*if(inputdata::num_attributes > 0){
-            for(tail_iterator it = tail_iterator(n); *it != 0; ++it){
-                tail* t = *it;
-                if(t->past_tail != 0) output << " " << inputdata::get_value(t->past_tail, 0);
-            }
-        }*/
-        //output << "\n";
         n->data->print_state_label(output, this);
         output << "\" ";
         n->data->print_state_style(output, this);
-        if(n->red == false) output << " style=dotted";
-        output << ", penwidth=" << log(1+n->size);
+        if (n->red == false) output << " style=dotted";
+        output << ", penwidth=" << log(1 + n->size);
         output << "];\n";
 
-        // transition labels for item
-        map<apta_node*, set<int>> childlabels;
-        map<int, set<int>> sinklabels;
-
         for(guard_map::iterator it = n->guards.begin(); it != n->guards.end(); ++it){
-            /*if(it->second->target == 0) continue;
-            apta_node* child = it->second->target->find();
-            if(sink_type(child) != -1){
-                if(sinklabels.find(sink_type(child)) == sinklabels.end())
-                    sinklabels[sink_type(child)] = set<int>();
-                sinklabels[sink_type(child)].insert( it->first );
-            } else {
-                if(childlabels.find(child) == childlabels.end())
-                    childlabels[child] = set<int>();
-                childlabels[child].insert( it->first );
-            }
-        }
-        for(map<apta_node*, set<int>>::iterator it2 = childlabels.begin(); it2 != childlabels.end(); ++it2){
-            apta_node* child = it2->first;
-            set<int> labels  = it2->second;
-            */
             if(it->second->target == 0) continue;
             int symbol = it->first;
             apta_guard* g = it->second;
             apta_node* child = it->second->target->find();
-            if(sink_type(child) != -1) continue;
+
+            if (!PRINT_WHITE && child->red == false) {
+                if (n->red == false)
+                    continue;
+                if (!PRINT_BLUE)
+                    continue;
+            }
+
             output << "\t\t" << n->number << " -> " << child->number << " [label=\"";
-            /*for(set<int>::iterator its = labels.begin(); its != labels.end(); its++){
-                output << " " << inputdata::alphabet[*its];
-            }*/
-            
             output << inputdata::alphabet[it->first] << endl;
-            //output << it->first << endl;
 
             n->data->print_transition_label(output, it->first, this);
             
@@ -217,47 +199,10 @@ void apta::print_dot(iostream& output){
             for(bound_map::iterator it2 = g->max_attribute_values.begin(); it2 != g->max_attribute_values.end(); ++it2){
                 output << " " << it2->first << " < " << it2->second;
             }
-            
-             
-            /*for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
-                output << alph_str(*it3) << ":";
-                n->data->print_transition_label(output, *it3, this);
-                if(std::next(it3) != labels.end()) output << ",";
-            }*/
 
             output << "\" ";
-            //if(alph_str(it->first) == "13" || alph_str(it->first) == "31" || alph_str(it->first) == "9" || alph_str(it->first) == "10" || alph_str(it->first) == "32") output << ", color=red";
-            //n->data->print_transition_style(output, labels, this);
             output << " ];\n";
         }
-        /*
-        for(map<int, set<int>>::iterator it2 = sinklabels.begin(); it2 != sinklabels.end(); ++it2){
-            int stype = it2->first;
-            set<int> labels  = it2->second;
-            
-            output << "\tS" << n->number << "t" << stype << " [ label=\"";
-            for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
-                output << n->get_child(*it3)->size << " ";
-                n->get_child(*it3)->data->print_state_label(output, this);
-            }
-            output << "\"\n ";
-            n->get_child(*(labels.begin()))->data->print_state_style(output, this);
-            if(n->red == false) output << " shape=box";
-            output << " ];\n";
-
-            output << "\t\t" << n->number << " -> S" << n->number << "t" << stype << " [ label=\"";
-            
-            for(set<int>::iterator it3 = labels.begin(); it3 != labels.end(); ++it3){
-                output << alph_str(*it3) << ":";
-                n->data->print_transition_label(output, *it3, this);
-                output << "\n";
-            }
-
-            output << "\" ";
-            n->data->print_transition_style(output, labels, this);
-            output << " ];\n";
-        }
-        */
     }
     output << "}\n";
 };
@@ -270,7 +215,7 @@ void apta_node::print_json(iostream& output){
     data->print_state_label(output, context);
     output  << "\",\n";
     output << "\t\t\t\"size\" : " << size << ",\n";
-    output<< "\t\t\t\"level\" : " << compute_depth() << ",\n";
+    output<< "\t\t\t\"level\" : " << depth << ",\n";
     output << "\t\t\t\"style\" : \"";
     data->print_state_style(output, context);
     output  << "\",\n";
@@ -325,9 +270,11 @@ void apta_node::print_json_transitions(iostream& output){
 
 void apta::print_json(iostream& output){
     int count = 0;
+    root->depth = 0;
     for(merged_APTA_iterator Ait = merged_APTA_iterator(root); *Ait != 0; ++Ait){
         apta_node* n = *Ait;
         n->number = count++;
+        if(n != root) n->depth = n->source->find()->depth + 1;
     }
 
     output << "{\n";
@@ -583,13 +530,9 @@ apta_guard* apta_node::guard(tail* t){
 };
 
 int apta_node::compute_depth(){
-    return depth;
     int max_depth = 0;
-    apta_node* l = this;
-    while(l != 0){
-        l = l->find();
-        l = l->source;
-        max_depth++;
+    if(source != 0){
+        max_depth = 1 + source->compute_depth();
     }
     if(representative_of != 0 && source != 0){
         for(apta_node* n = representative_of; n!= 0; n = n->next_merged_node){
@@ -640,6 +583,113 @@ int apta_node::num_distinct_sources(){
 };
 
 /* iterators for the APTA and merged APTA */
+
+APTA_iterator::APTA_iterator(apta_node* start){
+    base = start;
+    current = start;
+}
+
+void APTA_iterator::increment() {
+    guard_map::iterator it;
+    for(it = current->guards.begin();it != current->guards.end(); ++it) {
+        apta_node *target = it->second->target;
+        if (target != 0 && target->source == current) {
+            q.push(target);
+        }
+    }
+    if(!q.empty()) {
+        current = q.front();
+        q.pop();
+    } else {
+        current = 0;
+    }
+}
+
+merged_APTA_iterator::merged_APTA_iterator(apta_node* start){
+    base = start;
+    current = start;
+}
+
+void merged_APTA_iterator::increment() {
+    guard_map::iterator it;
+    for(it = current->guards.begin();it != current->guards.end(); ++it) {
+        apta_node *target = it->second->target;
+        if (target != 0 && target->source->find() == current && target->representative == 0) {
+            q.push(target);
+        }
+    }
+    if(!q.empty()) {
+        current = q.front();
+        q.pop();
+    } else {
+        current = 0;
+    }
+}
+
+merged_APTA_iterator_func::merged_APTA_iterator_func(apta_node* start, bool(*node_check)(apta_node*)) : merged_APTA_iterator(start){
+    check_function = node_check;
+}
+
+void merged_APTA_iterator_func::increment() {
+    guard_map::iterator it;
+    for(it = current->guards.begin();it != current->guards.end(); ++it) {
+        apta_node *target = it->second->target;
+        if (target != 0 && target->source->find() == current && target->representative == 0) {
+            if(!check_function(current)) q.push(target);
+        }
+    }
+    if(!q.empty()) {
+        current = q.front();
+        q.pop();
+    } else {
+        current = 0;
+    }
+}
+
+blue_state_iterator::blue_state_iterator(apta_node* start) : merged_APTA_iterator(start) {
+    if(current->red == true) increment();
+}
+
+void blue_state_iterator::increment() {
+    if(current->red == true) {
+        guard_map::iterator it;
+        for (it = current->guards.begin(); it != current->guards.end(); ++it) {
+            apta_node *target = it->second->target;
+            if (target != 0 && target->source->find() == current && target->representative == 0) {
+                q.push(target);
+            }
+        }
+    }
+    if(!q.empty()) {
+        current = q.front();
+        q.pop();
+        if(current->red == true) increment();
+    } else {
+        current = 0;
+    }
+}
+
+red_state_iterator::red_state_iterator(apta_node* start) : merged_APTA_iterator(start) { }
+
+void red_state_iterator::increment() {
+    if(current->red == true) {
+        guard_map::iterator it;
+        for (it = current->guards.begin(); it != current->guards.end(); ++it) {
+            apta_node *target = it->second->target;
+            if (target != 0 && target->source->find() == current && target->representative == 0) {
+                if(target->red == true) q.push(target);
+            }
+        }
+    }
+    if(!q.empty()) {
+        current = q.front();
+        q.pop();
+    } else {
+        current = 0;
+    }
+}
+
+/* OLD
 APTA_iterator::APTA_iterator(apta_node* start){
     base = start;
     current = start;
@@ -798,6 +848,7 @@ void merged_APTA_iterator_func::increment() {
 merged_APTA_iterator_func::merged_APTA_iterator_func(apta_node* start, bool(*node_check)(apta_node*)) : merged_APTA_iterator(start){
     check_function = node_check;
 }
+*/
 
 tail_iterator::tail_iterator(apta_node* start){
     base = start;

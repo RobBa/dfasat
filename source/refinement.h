@@ -99,6 +99,8 @@ public:
  */
 class extend_refinement : public refinement {
 public:
+    int size;
+
 	extend_refinement(state_merger* m, apta_node* r);
     void initialize(state_merger* m, apta_node* r);
 

@@ -28,6 +28,9 @@ void alergia_data::initialize() {
 
 void alergia_data::read_from(int type, int index, int length, int symbol, string data){
     count_data::read_from(type, index, length, symbol, data);
+
+    if(!TYPE_DISTRIBUTIONS) type = 1;
+
     if(trans_counts.find(type) == trans_counts.end()){
         //trans_counts[type] = num_map();
         trans_counts[type][symbol] = 1;
@@ -75,108 +78,143 @@ void alergia_data::undo(evaluation_data* right){
     }
 };
 
+
+inline void alergia::update_divider(double left_count, double right_count, double& left_divider, double& right_divider){
+    if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
+        left_divider += left_count + CORRECTION;
+        right_divider += right_count + CORRECTION;
+    }
+}
+
+inline void alergia::update_divider_pool(double left_pool, double right_pool, double& left_divider, double& right_divider){
+    if(left_pool >= SYMBOL_COUNT || right_pool >= SYMBOL_COUNT){
+        left_divider += left_pool + CORRECTION;
+        right_divider += right_pool + CORRECTION;
+    }
+}
+
+inline void alergia::update_left_pool(double left_count, double right_count, double& left_pool, double& right_pool){
+    if(right_count < SYMBOL_COUNT){
+        left_pool += left_count;
+        right_pool += right_count;
+    }
+}
+
+inline void alergia::update_right_pool(double left_count, double right_count, double& left_pool, double& right_pool){
+    if(left_count < SYMBOL_COUNT){
+        left_pool += left_count;
+        right_pool += right_count;
+    }
+}
+
 bool alergia::alergia_consistency(double right_count, double left_count, double right_total, double left_total){
-    double bound = (1.0 / sqrt(left_total) + 1.0 / sqrt(right_total));
-    bound = bound * sqrt(0.5 * log(2.0 / CHECK_PARAMETER));
-    
-    double gamma = (left_count / left_total) - (right_count / right_total);
-    
-    //cerr << "(" << left_count << "/" << left_total << ") - (" << right_count << "/" << right_total << ")" << endl;
+    if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
+        double bound = (1.0 / sqrt(left_total) + 1.0 / sqrt(right_total));
+        bound = bound * sqrt(0.5 * log(2.0 / CHECK_PARAMETER));
 
-    //cerr << gamma << " " << bound << endl;
+        double gamma = (left_count / left_total) - (right_count / right_total);
 
-    if(gamma > bound) return false;
-    if(-gamma > bound) return false;
+        //cerr << "(" << left_count << "/" << left_total << ") - (" << right_count << "/" << right_total << ")" << endl;
 
+        //cerr << gamma << " " << bound << endl;
+
+        if(gamma > bound) return false;
+        if(-gamma > bound) return false;
+    }
+    return true;
+};
+
+bool alergia::alergia_consistency_pool(double right_count, double left_count, double right_total, double left_total){
+    if(left_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT){
+        double bound = (1.0 / sqrt(left_total) + 1.0 / sqrt(right_total));
+        bound = bound * sqrt(0.5 * log(2.0 / CHECK_PARAMETER));
+
+        double gamma = (left_count / left_total) - (right_count / right_total);
+
+        //cerr << "(" << left_count << "/" << left_total << ") - (" << right_count << "/" << right_total << ")" << endl;
+
+        //cerr << gamma << " " << bound << endl;
+
+        if(gamma > bound) return false;
+        if(-gamma > bound) return false;
+    }
     return true;
 };
 
 bool alergia::data_consistent(alergia_data* l, alergia_data* r){
-    if(EVAL_TYPE == 1){ if(l->pos_paths() + l->pos_final() < STATE_COUNT || r->pos_paths() + l->pos_final() < STATE_COUNT) return true; }
-    else if(l->pos_paths() < STATE_COUNT || r->pos_paths() < STATE_COUNT) return true;
-    
-    double left_count = 0.0;
-    double right_count = 0.0;
-    
-    double left_total = (double)l->pos_paths();
-    double right_total = (double)r->pos_paths();
-    
-    if(EVAL_TYPE == 1){
-        left_total += (double)l->pos_final();
-        right_total += (double)r->pos_final();
-    }
+    /* we ignore low frequency states, decided by input parameter STATE_COUNT */
+    if(FINAL_PROBABILITIES) if(r->num_paths() + r->num_final() < STATE_COUNT || l->num_paths() + l->num_final() < STATE_COUNT) return true;
+    else if(r->num_paths() < STATE_COUNT || l->num_paths() < STATE_COUNT) return true;
 
-    double l1_pool = 0.0;
-    double r1_pool = 0.0;
-    double l2_pool = 0.0;
-    double r2_pool = 0.0;
-    double matching_right = 0.0;
+    /* we treat type distributions as independent */
+    for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++){
+        int type = it->first;
+        num_map& nm = it->second;
 
-    for(type_num_map::iterator it = l->trans_counts.begin(); it != l->trans_counts.end(); it++){
-        num_map& l_nm = it->second;
-        num_map& r_nm = r->trans_counts[it->first];
-        for(num_map::iterator itnm = l_nm.begin(); itnm != l_nm.end(); ++itnm){
-            left_count = (*itnm).second;
-            right_count = r_nm[(*itnm).first];
+        /* computing the dividers (denominator) */
+        double left_divider = 0.0; double right_divider = 0.0;
+        /* we pool low frequency counts (sum them up in a separate bin), decided by input parameter SYMBOL_COUNT
+        * we create pools 1 and 2 separately for left and right low counts
+        * in this way, we can detect differences in distributions even if all counts are low (i.e. [0,0,1,1] vs [1,1,0,0]) */
+        double l1_pool = 0.0; double r1_pool = 0.0; double l2_pool = 0.0; double r2_pool = 0.0;
+
+        int matching_right = 0;
+        for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
+            int symbol = it2->first;
+            double left_count = it2->second;
+            if(left_count == 0) continue;
+
+            double right_count = r->count(type,symbol);
             matching_right += right_count;
-        
-            if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
-                if(alergia_consistency(right_count, left_count, right_total, left_total) == false){
-                    inconsistency_found = true; return false;
-                }
-            }
 
-            if(right_count < SYMBOL_COUNT){
-                l1_pool += left_count;
-                r1_pool += right_count;
-            }
-            if(left_count < SYMBOL_COUNT) {
-                l2_pool += left_count;
-                r2_pool += right_count;
-            }
+            update_divider(left_count, right_count, left_divider, right_divider);
+            update_left_pool(left_count, right_count, l1_pool, r1_pool);
+            update_right_pool(left_count, right_count, l2_pool, r2_pool);
         }
-    }
-    if(EVAL_TYPE == 1){
-        left_count = l->pos_final();
-        right_count = r->pos_final();
-        if(left_count != 0) matching_right += right_count;
-        
-        if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
-            if(alergia_consistency(right_count, left_count, right_total, left_total) == false){
+        r2_pool += r->num_paths(type) - matching_right;
+
+        /* optionally add final probabilities (input parameter) */
+        if(FINAL_PROBABILITIES){
+            double left_count = l->num_final(type);
+            double right_count = r->num_final(type);
+
+            update_divider(left_count, right_count, left_divider, right_divider);
+            update_left_pool(left_count, right_count, l1_pool, r1_pool);
+            update_right_pool(left_count, right_count, l2_pool, r2_pool);
+        }
+
+        update_divider_pool(l1_pool, r1_pool, left_divider, right_divider);
+        update_divider_pool(l2_pool, r2_pool, left_divider, right_divider);
+
+        if(left_divider < STATE_COUNT || right_divider < STATE_COUNT) continue;
+
+        /* we have calculated the dividers and pools */
+        for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
+            int symbol = it2->first;
+            double left_count = it2->second;
+            if(left_count == 0) continue;
+
+            double right_count = r->count(type,symbol);
+
+            if(alergia_consistency(left_count, right_count, left_divider, right_divider) == false){
                 inconsistency_found = true; return false;
             }
         }
+        if(FINAL_PROBABILITIES){
+            double left_count = l->num_final(type);
+            double right_count = r->num_final(type);
 
-        if(right_count < SYMBOL_COUNT){
-            l1_pool += left_count;
-            r1_pool += right_count;
+            if(alergia_consistency(left_count, right_count, left_divider, right_divider) == false){
+                inconsistency_found = true; return false;
+            }
         }
-        if(left_count < SYMBOL_COUNT) {
-            l2_pool += left_count;
-            r2_pool += right_count;
+        if(alergia_consistency_pool(l1_pool, r1_pool, left_divider, right_divider) == false){
+            inconsistency_found = true; return false;
         }
-    }
-
-    r2_pool += r->pos_paths() - matching_right;
-    
-    left_count = l1_pool;
-    right_count = r1_pool;
-    
-    if(left_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT) {
-        if(alergia_consistency(right_count, left_count, right_total, left_total) == false){
+        if(alergia_consistency_pool(l2_pool, r2_pool, left_divider, right_divider) == false){
             inconsistency_found = true; return false;
         }
     }
-    
-    left_count = l2_pool;
-    right_count = r2_pool;
-    
-    if(left_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT) {
-        if(alergia_consistency(right_count, left_count, right_total, left_total) == false){
-            inconsistency_found = true; return false;
-        }
-    }
-    
     return true;
 };
 
@@ -198,7 +236,7 @@ bool alergia::consistent(state_merger *merger, apta_node* left, apta_node* right
  * low count sink = frequency smaller than STATE_COUNT */
 bool alergia_data::is_low_count_sink(){
     //cerr << num_paths() << " " << num_final() << "<" << SINK_COUNT << endl;
-    return num_paths() + num_final() < SINK_COUNT;
+    return pos_paths() + pos_final() < SINK_COUNT;
     //if(EVAL_TYPE == 1) return pos_final() + neg_final() + pos_paths() + neg_paths() < SINK_COUNT;
     //return pos_paths() + neg_paths() < SINK_COUNT;
 }

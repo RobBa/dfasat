@@ -43,6 +43,8 @@ void count_data::print_state_label(iostream& output, apta* aptacontext){
 };
 
 void count_data::read_from(int type, int index, int length, int symbol, string data){
+    if(!TYPE_DISTRIBUTIONS) type = 1;
+
     if(path_counts.find(type) == path_counts.end()){
         path_counts[type] = 1;
     } else {
@@ -53,7 +55,9 @@ void count_data::read_from(int type, int index, int length, int symbol, string d
 };
 
 void count_data::read_to(int type, int index, int length, int symbol, string data){
-    if(index < length - 1) return;
+    if(!TYPE_DISTRIBUTIONS) type = 1;
+
+    if(index != -1) return;
     
     if(final_counts.find(type) == final_counts.end()){
         final_counts[type] = 1;
@@ -117,12 +121,16 @@ void count_data::undo(evaluation_data* right){
 /* default evaluation, count number of performed merges */
 bool count_driven::consistent(state_merger *merger, apta_node* left, apta_node* right){
     if(inconsistency_found) return false;
+
+    if(!TYPE_CONSISTENT) return true;
   
     count_data* l = (count_data*)left->data;
     count_data* r = (count_data*)right->data;
 
-    //if(l->pos_final() != 0 && r->neg_final() != 0){ inconsistency_found = true; return false; }
-    //if(l->neg_final() != 0 && r->pos_final() != 0){ inconsistency_found = true; return false; }
+    if(l->pos_final() != 0 && r->neg_final() != 0){ inconsistency_found = true; return false; }
+    if(l->neg_final() != 0 && r->pos_final() != 0){ inconsistency_found = true; return false; }
+
+    return true;
     
     for(num_map::iterator it = l->final_counts.begin(); it != l->final_counts.end(); ++it){
         int type = it->first;

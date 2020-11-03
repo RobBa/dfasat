@@ -14,7 +14,6 @@ protected:
 
 public:
     alergia94_data();
-
 };
 
 

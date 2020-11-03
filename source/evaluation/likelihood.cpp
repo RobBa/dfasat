@@ -23,15 +23,30 @@ bool likelihoodratio::consistent(state_merger *merger, apta_node* left, apta_nod
     return count_driven::consistent(merger, left, right);
 };
 
-void likelihoodratio::update_likelihood(double left_count, double right_count, double left_divider, double right_divider){    
-    if(left_count != 0.0)
-        loglikelihood_orig += (left_count + CORRECTION)  * log((left_count + CORRECTION)  / left_divider);
-    if(right_count != 0.0)
-        loglikelihood_orig += (right_count + CORRECTION) * log((right_count + CORRECTION) / right_divider);
-    if(right_count != 0.0 || left_count != 0.0)
-        loglikelihood_merged += (left_count + right_count + 2*CORRECTION) * log((left_count + right_count + 2*CORRECTION) / (left_divider + right_divider));
-    if(right_count != 0.0 && left_count != 0.0)
-        extra_parameters = extra_parameters + 1;
+void likelihoodratio::update_likelihood(double left_count, double right_count, double left_divider, double right_divider){
+    if (left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
+        if(left_count != 0.0)
+            loglikelihood_orig += (left_count + CORRECTION)  * log((left_count + CORRECTION)  / left_divider);
+        if(right_count != 0.0)
+            loglikelihood_orig += (right_count + CORRECTION) * log((right_count + CORRECTION) / right_divider);
+        if(right_count != 0.0 || left_count != 0.0)
+            loglikelihood_merged += (left_count + right_count + 2*CORRECTION) * log((left_count + right_count + 2*CORRECTION) / (left_divider + right_divider));
+        if(right_count != 0.0 && left_count != 0.0)
+            extra_parameters = extra_parameters + 1;
+    }
+};
+
+void likelihoodratio::update_likelihood_pool(double left_count, double right_count, double left_divider, double right_divider){
+    if (left_count >= SYMBOL_COUNT || right_count >= SYMBOL_COUNT){
+        if(left_count != 0.0)
+            loglikelihood_orig += (left_count + CORRECTION)  * log((left_count + CORRECTION)  / left_divider);
+        if(right_count != 0.0)
+            loglikelihood_orig += (right_count + CORRECTION) * log((right_count + CORRECTION) / right_divider);
+        if(right_count != 0.0 || left_count != 0.0)
+            loglikelihood_merged += (left_count + right_count + 2*CORRECTION) * log((left_count + right_count + 2*CORRECTION) / (left_divider + right_divider));
+        if(right_count != 0.0 && left_count != 0.0)
+            extra_parameters = extra_parameters + 1;
+    }
 };
 
 /* Likelihood Ratio (LR), computes an LR-test (used in RTI) and uses the p-value as score and consistency */
@@ -40,7 +55,8 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
     likelihood_data* r = (likelihood_data*) right->data;
 
     /* we ignore low frequency states, decided by input parameter STATE_COUNT */
-    if(r->num_paths() < STATE_COUNT || l->num_paths() < STATE_COUNT) return;
+    if(FINAL_PROBABILITIES) if(r->num_paths() + r->num_final() < STATE_COUNT || l->num_paths() + l->num_final() < STATE_COUNT) return;
+    else if(r->num_paths() < STATE_COUNT || l->num_paths() < STATE_COUNT) return;
 
     /* computing the dividers (denominator) */
     double left_divider = 0.0;
@@ -59,74 +75,65 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
 
     int matching_right = 0;
 
-    for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++){
+    /* we treat type distributions as independent */
+    for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++) {
         int type = it->first;
-        num_map& nm = it->second;
-        for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2){
-            int symbol = it2->first;
-            left_count = it2->second;
-            if(left_count == 0) continue;
+        num_map &nm = it->second;
 
-            right_count = r->count(type,symbol);
+        /* computing the dividers (denominator) */
+        double left_divider = 0.0;
+        double right_divider = 0.0;
+        /* we pool low frequency counts (sum them up in a separate bin), decided by input parameter SYMBOL_COUNT
+        * we create pools 1 and 2 separately for left and right low counts
+        * in this way, we can detect differences in distributions even if all counts are low (i.e. [0,0,1,1] vs [1,1,0,0]) */
+        double l1_pool = 0.0;
+        double r1_pool = 0.0;
+        double l2_pool = 0.0;
+        double r2_pool = 0.0;
+
+        int matching_right = 0;
+        for (num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2) {
+            int symbol = it2->first;
+            double left_count = it2->second;
+            if (left_count == 0) continue;
+
+            double right_count = r->count(type, symbol);
             matching_right += right_count;
 
-            if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
-                left_divider += left_count + CORRECTION;
-                right_divider += right_count + CORRECTION;
-            } else {
-                if(right_count < SYMBOL_COUNT){
-                    l1_pool += left_count;
-                    r1_pool += right_count;
-                }
-                if(left_count < SYMBOL_COUNT) {
-                    l2_pool += left_count;
-                    r2_pool += right_count;
-                }
-            }
+            update_divider(left_count, right_count, left_divider, right_divider);
+            update_left_pool(left_count, right_count, l1_pool, r1_pool);
+            update_right_pool(left_count, right_count, l2_pool, r2_pool);
         }
-    }
-    r2_pool += r->num_paths() - matching_right;
+        r2_pool += r->num_paths(type) - matching_right;
 
-    if(l1_pool >= SYMBOL_COUNT || r1_pool >= SYMBOL_COUNT){
-        left_divider += l1_pool + CORRECTION;
-        right_divider += r1_pool + CORRECTION;
-    }
-    if(l2_pool >= SYMBOL_COUNT || r2_pool >= SYMBOL_COUNT){
-        left_divider += l2_pool + CORRECTION;
-        right_divider += r2_pool + CORRECTION;
-    }
+        /* optionally add final probabilities (input parameter) */
+        if (FINAL_PROBABILITIES) {
+            double left_count = l->num_final(type);
+            double right_count = r->num_final(type);
 
-    /* optionally add final probabilities (input parameter), these are not pooled */
-    if(FINAL_PROBABILITIES){
-        left_divider += (double)l->num_final() + CORRECTION;
-        right_divider += (double)r->num_final() + CORRECTION;
-    }
+            update_divider(left_count, right_count, left_divider, right_divider);
+            update_left_pool(left_count, right_count, l1_pool, r1_pool);
+            update_right_pool(left_count, right_count, l2_pool, r2_pool);
+        }
 
-    /* now we have the dividers and pools, we compute the likelihoods */
-    for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++){
-        int type = it->first;
-        num_map& nm = it->second;
-        for(num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2) {
+        update_divider_pool(l1_pool, r1_pool, left_divider, right_divider);
+        update_divider_pool(l2_pool, r2_pool, left_divider, right_divider);
+
+        if(left_divider < STATE_COUNT || right_divider < STATE_COUNT) continue;
+
+        /* now we have the dividers and pools, we compute the likelihoods */
+        for (num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2) {
             int symbol = it2->first;
             left_count = it2->second;
             right_count = r->count(type, symbol);
 
-            if (left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT)
-                update_likelihood(left_count, right_count, left_divider, right_divider);
+            update_likelihood(left_count, right_count, left_divider, right_divider);
         }
-    }
-    
-    /* count the pools */
-    if(l1_pool >= SYMBOL_COUNT || r1_pool >= SYMBOL_COUNT){
-        update_likelihood(l1_pool, r1_pool, left_divider, right_divider);
-    }
-    if(l2_pool >= SYMBOL_COUNT || r2_pool >= SYMBOL_COUNT){
-        update_likelihood(l2_pool, r2_pool, left_divider, right_divider);
-    }
-
-    /* and always count final probabilities (are be pooled) */
-    if(FINAL_PROBABILITIES){
-        update_likelihood(l->num_final(), r->num_final(), left_divider, right_divider);
+        /* and final probabilities */
+        if (FINAL_PROBABILITIES) update_likelihood(l->num_final(type), r->num_final(type), left_divider, right_divider);
+        /* count the pools */
+        update_likelihood_pool(l1_pool, r1_pool, left_divider, right_divider);
+        update_likelihood_pool(l2_pool, r2_pool, left_divider, right_divider);
     }
 };
 

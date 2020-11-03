@@ -131,6 +131,9 @@ void run(parameters* param) {
 
     inputdata id;
     string file_name = param->dfa_file;
+    string output_file = param->dot_file;
+    if(output_file == "") output_file = param->dfa_file + ".ff";
+
     // based on the file extension run the corresponding parser
     if (file_name.substr(file_name.find_last_of('.') + 1) == "json") {
         LOG_S(INFO) << "Parse json input file";
@@ -176,7 +179,7 @@ void run(parameters* param) {
         int solution = -1;
 
         std::ostringstream oss3;
-        oss3 << param->dot_file  << "init_dfa";
+        oss3 << output_file  << ".init_dfa";
 
         if(OUTPUT == "dot" || OUTPUT == "both") {
             oss3 << ".dot";
@@ -187,7 +190,7 @@ void run(parameters* param) {
         }
 
         if(OUTPUT == "json" || OUTPUT == "both") {
-            oss3<< ".json";
+            oss3 << ".json";
             FILE* output = fopen(oss3.str().c_str(), "w");
             merger->tojson();
             merger->print_json(output);
@@ -198,9 +201,9 @@ void run(parameters* param) {
 
        for(int i = 0; i < param->runs; ++i){
           std::ostringstream oss;
-          oss << param->dot_file << "dfa" << (i+1) << ".aut";
+          oss << output_file << ".dfa" << (i+1) << ".aut";
           std::ostringstream oss2;
-          oss2 << param->dot_file << "dfa" << (i+1);
+          oss2 << output_file << ".dfa" << (i+1);
 
           LOG_S(INFO) << "Starting state-merging in batch mode";
           cout << "dfasat running";
@@ -237,9 +240,9 @@ void run(parameters* param) {
     }
 
     std::ostringstream oss2;
-    oss2 << param->dot_file << "final";
+    oss2 << output_file << ".final";
     std::ostringstream oss3;
-    oss3 << param->dot_file << "sinksfinal";
+    oss3 << output_file << ".sinksfinal";
 
     OUTPUT = "both";
 
@@ -434,6 +437,14 @@ int main(int argc, char *argv[]){
 
     // learn a Markovian model? is set to 1 input labels are restricted to be identical for each state.
     app.add_option("--markovian", MARKOVIAN_MODEL, "learn a \"Markovian\" model that ensures the incoming transitions have the same label, resulting in a Markov graph (states correspond to a unique label, but the same label can occur in multiple places), any heuristic can be used. (default: 0)");
+
+    // Allow merges with the root?.
+    app.add_option("--mergeroot", MERGE_ROOT, "Allow merges with the root? Defult: 1 (true).");
+
+    // Print blue states?.
+    app.add_option("--printblue", PRINT_BLUE, "Print blue states in the .dot file? Default 1 (true).");
+    // Print white states?.
+    app.add_option("--printwhite", PRINT_WHITE, "Print white states in the .dot file? These are typically sinks states, i.e., states that have not been considered for merging. Default 0 (false).");
 
     CLI11_PARSE(app, argc, argv);
 

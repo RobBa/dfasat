@@ -33,12 +33,23 @@ int MERGE_LOCAL_COLLECTOR_COUNT = -1;
 int KTAIL = -1;
 int KSTATE = -1;
 bool MARKOVIAN_MODEL = 0;
+bool MERGE_SINKS_WITH_CORE = 0;
 
 bool EXCEPTION4OVERLAP = false;
+
+bool TYPE_DISTRIBUTIONS = false;
+bool TYPE_CONSISTENT = false;
+
+bool MERGE_ROOT = false;
+
+bool PRINT_WHITE = false;
+bool PRINT_BLUE = true;
 
 int RANGE = 100;
 string eval_string;
 string OUTPUT;
+
+string DFA_FILE = "";
 
 int STORE_MERGES = 0;
 int STORE_MERGES_KEEP_CONFLICT = 0;
@@ -52,7 +63,7 @@ parameters::parameters(){
     delta=0.95;
     mode = "batch";
     evalpar = "";
-    dot_file = "dfa";
+    dot_file = "";
     sat_program = "";
     hName = "default";
     hData = "evaluation_data";
