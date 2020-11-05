@@ -2,11 +2,11 @@
 
 flexfringe (formerly DFASAT), a flexible state-merging framework written in C++.
 
-### What this repositor contains ###
+## What this repositor contains ##
 
 This repository contains the latest release version of flexfringe. 
 
-### How to get set up ###
+## How to get set up ##
 
 flexfringe compiles without external dependencies. It currently supports build chains using make and cmake.
 
@@ -19,7 +19,7 @@ $ make clean all
 
 in the main directory to build the executable named *flexfringe*. There is also a CMakelists.txt for building with cmake. We tested the toolchains on Linux (Ubuntu 16+), MacOS (10.14), and Windows 10. For the latter, be built using CMake shipped with CLion.
 
-### How to run it###
+## How to run it ##
 
 Run ./flexfringe --help to get help.
 
@@ -31,7 +31,7 @@ Example:
 
 See the .ini files for more information, and the --help flag for a short description of the options.
 
-#### Input files ####
+### Input files ###
 
 The default input is formated following the Abadingo formating:
 
@@ -46,7 +46,7 @@ for each symbol, additional data can be attached via /, i.e. `label length sym1/
 
 Real-valued attributes, e.g. for real-time automata, can be attached via :, i.e. `label length sym1:real1,real2,realn ...`. The number of attributes has to be specified in the header after the alphabet size, i.e. `num_samples alphabet_size:num_attributes`.
 
-#### Output files ####
+### Output files ###
 
 flexfringe will generate several .dot files into the specified output directory (./ by default):
 
@@ -63,11 +63,11 @@ or
 after installing dot from graphviz. 
 To use the generated models for language acceptance testing or as a distribution function, it is best to parse the JSON file. You can find an exmaple in the Jupyter notebook at https://github.com/laxris/flexfringe-colab.
 
-### Documentation ###
+## Documentation ##
 
 *flexfringe* has partial Doxygen-style documentation included in the *./doc* directory. It can be regenerated using the settings in Doxygen file.
 
-### Contribution guidelines ###
+## Contribution guidelines ##
 
 * Fork and implement, request pulls.
 * You can find sample evaluation files in ./source/evaluation. Make sure to REGISTER your own file to be able to access it via the -h and --heuristic-name flag.
@@ -85,10 +85,10 @@ Logging is incomplete. *flexfringe* uses the loguru framework (see the [https://
 * Christian Hammerschmidt (author of the online/streaming mode, interactive mode, and the flexible evaluation function mechanism)
 * Sicco Verwer (original author; best to reach out to for questions on batch mode, RTI+ implementation, and SAT reduction)
 
-### Badges ###
+## Badges ##
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2f63a8167ec14bbe8122c3432b3ccfd5)](https://www.codacy.com/bb/chrshmmmr/dfasat/dashboard?utm_source=chrshmmmr@bitbucket.org&amp;utm_medium=referral&amp;utm_content=chrshmmmr/dfasat&amp;utm_campaign=Badge_Grade)
 
-### Credits and Licences
+## Credits and Licences
 
 *flexfinge* relies on a number of open source packages and libraries. You can find the respective LICENCE files in the source/utility subdirectory. 
 Most notable, we use
