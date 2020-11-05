@@ -2,11 +2,11 @@
 
 flexfringe (formerly DFASAT), a flexible state-merging framework written in C++.
 
-### What is this repository for? ###
+### What this repositor contains ###
 
 This repository contains the latest release version of flexfringe. 
 
-### How do I get set up? ###
+### How to get set up ###
 
 flexfringe compiles without external dependencies. It currently supports build chains using make and cmake.
 
@@ -19,7 +19,7 @@ $ make clean all
 
 in the main directory to build the executable named *flexfringe*. There is also a CMakelists.txt for building with cmake. We tested the toolchains on Linux (Ubuntu 16+), MacOS (10.14), and Windows 10. For the latter, be built using CMake shipped with CLion.
 
-### How do I run it? ###
+### How to run it###
 
 Run ./flexfringe --help to get help.
 
@@ -84,6 +84,9 @@ Logging is incomplete. *flexfringe* uses the loguru framework (see the [https://
 * Sofia Tsoni (scientific programmer, maintainer)
 * Christian Hammerschmidt (author of the online/streaming mode, interactive mode, and the flexible evaluation function mechanism)
 * Sicco Verwer (original author; best to reach out to for questions on batch mode, RTI+ implementation, and SAT reduction)
+
+### Badges ###
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/2f63a8167ec14bbe8122c3432b3ccfd5)](https://www.codacy.com/bb/chrshmmmr/dfasat/dashboard?utm_source=chrshmmmr@bitbucket.org&amp;utm_medium=referral&amp;utm_content=chrshmmmr/dfasat&amp;utm_campaign=Badge_Grade)
 
 ### Credits and Licences
 
