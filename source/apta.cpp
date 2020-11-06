@@ -257,7 +257,7 @@ void apta_node::print_json_transitions(iostream& output){
         //output << "\t\t\t\"id\" : " << get_tail_from_state()->to_string() << "_" << child->get_tail_from_state()->to_string() << ",\n";
         //output << "\t\t\t\"source\" : " << get_tail_from_state()->to_string() << ",\n";
         //output << "\t\t\t\"target\" : " << child->get_tail_from_state()->to_string() << ",\n";
-        output << "\t\t\t\"id\" : " << number << "_" << child->number << ",\n";
+        output << "\t\t\t\"id\" : \"" << number << "_" << child->number << "\",\n";
         output << "\t\t\t\"source\" : " << number << ",\n";
         output << "\t\t\t\"target\" : " << child->number << ",\n";
 
