@@ -6,6 +6,6 @@ if [ $# -ne 1 ]; then
 fi
 
 
-read -r COMMAND < $1
+read -r COMMAND < "$1"
 
 ${COMMAND:3}
