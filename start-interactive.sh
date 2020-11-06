@@ -1,18 +1,10 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo usage: $0 ini-file
+    echo "usage: $0 ini-file inputfile"
     exit 1
 fi
 
-param=$(grep -v '^#' $1 |{
-    temp=""
-    while read line
-    do
-        temp="$temp --$(echo $line)"    
-    done
-    echo -n $temp
-})
 #echo $param
 
 cp tests/template.pdf tests/pre_0.dot.pdf
@@ -27,7 +19,7 @@ sleep 5
 
 echo "Starting interactive mode"
 
-./flexfringe $param $2
+./flexfringe --ini="$1" "$2"
 
 evince tests/final.dot.pdf &>/dev/null
 
