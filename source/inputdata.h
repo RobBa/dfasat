@@ -73,6 +73,9 @@ public:
     inline int get_sequence(){
         return td->sequence;
     };
+    inline int get_symbol(){
+        return td->symbol;
+    }
 
     const string to_string();
 };

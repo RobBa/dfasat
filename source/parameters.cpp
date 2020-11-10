@@ -37,6 +37,7 @@ bool MERGE_SINKS_WITH_CORE = 0;
 
 bool EXCEPTION4OVERLAP = false;
 
+bool PERTYPE_DISTRIBUTIONS = false;
 bool TYPE_DISTRIBUTIONS = false;
 bool TYPE_CONSISTENT = false;
 

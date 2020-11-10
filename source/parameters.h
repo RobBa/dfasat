@@ -52,6 +52,7 @@ extern int KSTATE;
 extern bool MARKOVIAN_MODEL;
 extern bool MERGE_SINKS_WITH_CORE;
 
+extern bool PERTYPE_DISTRIBUTIONS;
 extern bool TYPE_DISTRIBUTIONS;
 extern bool TYPE_CONSISTENT;
 

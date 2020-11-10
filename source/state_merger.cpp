@@ -845,7 +845,6 @@ refinement* state_merger::test_splits(apta_node* blue){
             eval->split_update_score_after(this, blue, new_node, t);
         }
         //cerr << endl;
-        
         //cerr << "undoing split " << endl;
         undo_split_single(new_node, blue);
         
@@ -939,6 +938,7 @@ refinement_set* state_merger::get_possible_refinements(){
                 found = true;
                 delete refs;
                 }*/
+
                 refinement* ref = test_splits(blue);
                 if(ref != 0){
                     result->insert(ref);

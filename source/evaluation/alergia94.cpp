@@ -34,41 +34,71 @@ bool alergia94::alergia_consistency(double right_count, double left_count, doubl
 };
 
 bool alergia94::data_consistent(alergia94_data* l, alergia94_data* r){
-    if(alergia94::EVAL_TYPE == 1){ if(l->pos_paths() + l->pos_final() < STATE_COUNT || r->pos_paths() + l->pos_final() < STATE_COUNT) return true; }
-    else if(l->pos_paths() < STATE_COUNT || r->pos_paths() < STATE_COUNT) return true;
-    
-    double left_count  = 0.0;
-    double right_count = 0.0;
-    
-    double left_total  = (double)l->pos_paths();
-    double right_total = (double)r->pos_paths();
-    
-    if(alergia94::EVAL_TYPE == 1){
-        left_total  += (double)l->pos_final();
-        right_total += (double)r->pos_final();
-    }
+    /* we ignore low frequency states, decided by input parameter STATE_COUNT */
+    if(FINAL_PROBABILITIES) if(r->num_paths() + r->num_final() < STATE_COUNT || l->num_paths() + l->num_final() < STATE_COUNT) return true;
+    else if(r->num_paths() < STATE_COUNT || l->num_paths() < STATE_COUNT) return true;
 
-    for(type_num_map::iterator it = l->trans_counts.begin(); it != l->trans_counts.end(); it++){
-        num_map& l_nm = it->second;
-        num_map& r_nm = r->trans_counts[it->first];
-        for(num_map::iterator itnm = l_nm.begin(); itnm != l_nm.end(); ++itnm){
-            left_count = (*itnm).second;
-            right_count = r_nm[(*itnm).first];
-        
-            if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
-                if(alergia_consistency(right_count, left_count, right_total, left_total) == false){
-                    inconsistency_found = true; return false;
-                }
+    /* we treat type distributions as independent */
+    for(type_num_map::iterator it = l->counts_begin(); it != l->counts_end(); it++) {
+        int type = it->first;
+        num_map &nm = it->second;
+
+        /* computing the dividers (denominator) */
+        double left_divider = (double) l->num_paths(type);
+        double right_divider = (double) r->num_paths(type);
+
+        if (FINAL_PROBABILITIES) {
+            left_divider += (double) r->num_final(type);
+            right_divider += (double) r->num_final(type);
+        }
+
+        for (num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2) {
+            int symbol = it2->first;
+            double left_count = it2->second;
+            if (left_count == 0) continue;
+            double right_count = r->count(type, symbol);
+
+            if (alergia_consistency(right_count, left_count, right_divider, left_divider) == false) {
+                inconsistency_found = true;
+                return false;
+            }
+        }
+        /* count the final probabilities */
+        if (FINAL_PROBABILITIES) {
+            double left_count = l->num_final();
+            double right_count = r->num_final();
+
+            if (alergia_consistency(right_count, left_count, right_divider, left_divider) == false) {
+                inconsistency_found = true;
+                return false;
             }
         }
     }
-    if(alergia94::EVAL_TYPE == 1){
-        left_count = l->pos_final();
-        right_count = r->pos_final();
-        
-        if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
-            if(alergia_consistency(right_count, left_count, right_total, left_total) == false){
-                inconsistency_found = true; return false;
+
+    /* count the possibly missed right values, with 0 left occurrences */
+    for(type_num_map::iterator it = r->counts_begin(); it != r->counts_end(); it++) {
+        int type = it->first;
+        num_map &nm = it->second;
+
+        /* computing the dividers (denominator) */
+        double left_divider = (double) l->num_paths(type);
+        double right_divider = (double) r->num_paths(type);
+
+        if (FINAL_PROBABILITIES) {
+            left_divider += (double) r->num_final(type);
+            right_divider += (double) r->num_final(type);
+        }
+
+        for (num_map::iterator it2 = nm.begin(); it2 != nm.end(); ++it2) {
+            int symbol = it2->first;
+            double right_count = it2->second;
+            if (right_count == 0) continue;
+            double left_count = r->count(type, symbol);
+            if (left_count != 0) continue;
+
+            if (alergia_consistency(right_count, left_count, right_divider, left_divider) == false) {
+                inconsistency_found = true;
+                return false;
             }
         }
     }
@@ -76,7 +106,7 @@ bool alergia94::data_consistent(alergia94_data* l, alergia94_data* r){
     return true;
 };
 
-/* ALERGIA, consistency based on Hoeffding bound, only uses positive (type=1) data */
+/* ALERGIA, consistency based on Hoeffding bound */
 bool alergia94::consistent(state_merger *merger, apta_node* left, apta_node* right){
     if(count_driven::consistent(merger, left, right) == false){ inconsistency_found = true; return false; }
     alergia94_data* l = (alergia94_data*) left->data;

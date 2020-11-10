@@ -29,7 +29,7 @@ void alergia_data::initialize() {
 void alergia_data::read_from(int type, int index, int length, int symbol, string data){
     count_data::read_from(type, index, length, symbol, data);
 
-    if(!TYPE_DISTRIBUTIONS) type = 1;
+    if(!PERTYPE_DISTRIBUTIONS) type = 1;
 
     if(trans_counts.find(type) == trans_counts.end()){
         //trans_counts[type] = num_map();
@@ -42,6 +42,18 @@ void alergia_data::read_from(int type, int index, int length, int symbol, string
         }
     }
 };
+
+void alergia_data::del_tail(tail* t){
+    count_data::del_tail(t);
+
+    if(t->get_index() == -1) return;
+
+    int type = t->get_type();
+    if(!PERTYPE_DISTRIBUTIONS) type = 1;
+    int symbol = t->get_symbol();
+
+    trans_counts[type][symbol]--;
+}
 
 void alergia_data::print_transition_label(iostream& output, int symbol, apta* apta_context){
     for(type_num_map::iterator it = trans_counts.begin(); it != trans_counts.end(); it++){
@@ -78,7 +90,6 @@ void alergia_data::undo(evaluation_data* right){
     }
 };
 
-
 inline void alergia::update_divider(double left_count, double right_count, double& left_divider, double& right_divider){
     if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT){
         left_divider += left_count + CORRECTION;
@@ -114,10 +125,6 @@ bool alergia::alergia_consistency(double right_count, double left_count, double 
 
         double gamma = (left_count / left_total) - (right_count / right_total);
 
-        //cerr << "(" << left_count << "/" << left_total << ") - (" << right_count << "/" << right_total << ")" << endl;
-
-        //cerr << gamma << " " << bound << endl;
-
         if(gamma > bound) return false;
         if(-gamma > bound) return false;
     }
@@ -130,10 +137,6 @@ bool alergia::alergia_consistency_pool(double right_count, double left_count, do
         bound = bound * sqrt(0.5 * log(2.0 / CHECK_PARAMETER));
 
         double gamma = (left_count / left_total) - (right_count / right_total);
-
-        //cerr << "(" << left_count << "/" << left_total << ") - (" << right_count << "/" << right_total << ")" << endl;
-
-        //cerr << gamma << " " << bound << endl;
 
         if(gamma > bound) return false;
         if(-gamma > bound) return false;

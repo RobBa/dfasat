@@ -23,13 +23,13 @@ void conflict_edsm_data::update(evaluation_data* right){
     
     while(it != conflicts.end() && it2 != r->conflicts.end()){
         if(*it == *it2){
-            it++;
-            it2++;
+            ++it;
+            ++it2;
         } else if(*it < *it2){
-            it++;
+            ++it;
         } else {
             r->undo_info.insert(*it2);
-            it2++;
+            ++it2;
         }
     }
     while(it2 != r->conflicts.end()){

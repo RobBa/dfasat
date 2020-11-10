@@ -117,6 +117,8 @@ public:
     virtual bool sink_consistent(int type);
 
     virtual void initialize();
+
+    virtual void del_tail(tail *t);
 };
 
 

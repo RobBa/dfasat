@@ -71,6 +71,8 @@ public:
     }
 
     virtual void initialize();
+
+    virtual void del_tail(tail *t);
 };
 
 class count_driven: public evaluation_function {

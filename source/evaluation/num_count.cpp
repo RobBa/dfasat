@@ -43,8 +43,6 @@ void count_data::print_state_label(iostream& output, apta* aptacontext){
 };
 
 void count_data::read_from(int type, int index, int length, int symbol, string data){
-    if(!TYPE_DISTRIBUTIONS) type = 1;
-
     if(path_counts.find(type) == path_counts.end()){
         path_counts[type] = 1;
     } else {
@@ -55,8 +53,6 @@ void count_data::read_from(int type, int index, int length, int symbol, string d
 };
 
 void count_data::read_to(int type, int index, int length, int symbol, string data){
-    if(!TYPE_DISTRIBUTIONS) type = 1;
-
     if(index != -1) return;
     
     if(final_counts.find(type) == final_counts.end()){
@@ -66,6 +62,17 @@ void count_data::read_to(int type, int index, int length, int symbol, string dat
     }
     total_final++;
 };
+
+void count_data::del_tail(tail* t){
+    int type = t->get_type();
+    if(t->get_index() != -1) {
+        path_counts[type]--;
+        total_paths--;
+    } else {
+        final_counts[type]--;
+        total_final--;
+    }
+}
 
 void count_data::update(evaluation_data* right){
     count_data* other = reinterpret_cast<count_data*>(right);
