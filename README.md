@@ -50,9 +50,9 @@ Real-valued attributes, e.g. for real-time automata, can be attached via :, i.e.
 
 flexfringe will generate several .dot files into the specified output directory (./ by default):
 
-* pre\:\*.dot are intermediary dot files created during the merges/search process.
-* dfafinal.dot is the end result as a dot file
-* dfafinal.dot.json is the end result
+*  pre\:\*.dot are intermediary dot files created during the merges/search process.
+*  dfafinal.dot is the end result as a dot file
+*  dfafinal.dot.json is the end result
 
 You can plot the dot files via
 
@@ -79,7 +79,7 @@ Unit tests are incomplete. *flexfringe* uses the Catch2 framework (see the [http
 ### Logging ###
 Logging is incomplete. *flexfringe* uses the loguru framework (see the [https://github.com/emilk/loguru/blob/master/README.md](Loguru documentation)). *flexfringe* uses the stream-version. Please log using the `LOG_S(LEVEL) << "messge"` syntax to implement logging.
  
-## Who do I talk to? ##
+## Who to talk to ##
 
 *  Sofia Tsoni (scientific programmer, maintainer)
 *  Christian Hammerschmidt (author of the online/streaming mode, interactive mode, and the flexible evaluation function mechanism)
@@ -88,7 +88,7 @@ Logging is incomplete. *flexfringe* uses the loguru framework (see the [https://
 ## Badges ##
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2f63a8167ec14bbe8122c3432b3ccfd5)](https://www.codacy.com/bb/chrshmmmr/dfasat/dashboard?utm_source=chrshmmmr@bitbucket.org&amp;utm_medium=referral&amp;utm_content=chrshmmmr/dfasat&amp;utm_campaign=Badge_Grade)
 
-## Credits and Licences
+## Credits and Licences ##
 
 *flexfinge* relies on a number of open source packages and libraries. You can find the respective LICENCE files in the source/utility subdirectory. 
 Most notable, we use
