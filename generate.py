@@ -5,8 +5,6 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 
 import os
-import sys
-import logging
 import pygccxml
 import pyplusplus
 
@@ -66,7 +64,7 @@ a_n_pair_ret.call_policies = pyplusplus.module_builder.call_policies.return_inte
 
 a_n_map_ret = mb.member_functions( return_type='::refinement_set *') #'::std::multimap<double, std::pair<apta_node*, apta_node*> >*')
 a_n_map_ret.call_policies = pyplusplus.module_builder.call_policies.return_internal_reference(1)
-# 
+
 
 refinement = mb.class_( 'refinement' )
 refinement.include()
@@ -150,7 +148,7 @@ mb.build_code_creator( module_name='flexfringe' )
 #mb.add_registration_code("""boost::python::converter::registry::insert
 #    (convert_to_FILEptr,
 #         boost::python::type_id<FILE>(),
-#	      &boost::python::converter::wrap_pytype<&PyFile_Type>::get_pytype);""")
+#	      &boost::python::converter::wrap_pytype<&PyFile_Type>::get_pytype);)
 
 #It is common requirement in software world - each file should have license
 mb.code_creator.license = '// license'

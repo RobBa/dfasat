@@ -34,7 +34,7 @@ void conflict_edsm_data::update(evaluation_data* right){
     }
     while(it2 != r->conflicts.end()){
         r->undo_info.insert(*it2);
-        it2++;
+        ++it2;
     }
     
     for(it = r->undo_info.begin(); it != r->undo_info.end(); ++it){
@@ -92,12 +92,12 @@ void keep_conflicts(set<apta_node*>* s, conflict_edsm_data* d){
     
     while(it != s->end() && it2 != d->conflicts.end()){
         if(*it == *it2){
-            it++;
-            it2++;
+            ++it;
+            ++it2;
         } else if(*it < *it2){
             it = s->erase(it);
         } else {
-            it2++;
+            ++it2;
         }
     }
     while(it != s->end()){

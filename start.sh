@@ -7,4 +7,4 @@ fi
 
 #echo $param
 
-./cmake-build-debug/dfasat $1 $2
+./cmake-build-debug/dfasat "$1" "$2"
