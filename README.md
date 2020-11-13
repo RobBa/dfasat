@@ -69,21 +69,21 @@ To use the generated models for language acceptance testing or as a distribution
 
 ## Contribution guidelines ##
 
-* Fork and implement, request pulls.
-* You can find sample evaluation files in ./source/evaluation. Make sure to REGISTER your own file to be able to access it via the -h and --heuristic-name flag.
+*  Fork and implement, request pulls.
+*  You can find sample evaluation files in ./source/evaluation. Make sure to REGISTER your own file to be able to access it via the -h and --heuristic-name flag.
 
-#### Writing tests ####
+### Writing tests ###
 
 Unit tests are incomplete. *flexfringe* uses the Catch2 framework (see the [https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md](Tutorial) and the *tests* folder for some examples.
 
-#### Logging ####
+### Logging ###
 Logging is incomplete. *flexfringe* uses the loguru framework (see the [https://github.com/emilk/loguru/blob/master/README.md](Loguru documentation)). *flexfringe* uses the stream-version. Please log using the `LOG_S(LEVEL) << "messge"` syntax to implement logging.
  
-### Who do I talk to? ###
+## Who do I talk to? ##
 
-* Sofia Tsoni (scientific programmer, maintainer)
-* Christian Hammerschmidt (author of the online/streaming mode, interactive mode, and the flexible evaluation function mechanism)
-* Sicco Verwer (original author; best to reach out to for questions on batch mode, RTI+ implementation, and SAT reduction)
+*  Sofia Tsoni (scientific programmer, maintainer)
+*  Christian Hammerschmidt (author of the online/streaming mode, interactive mode, and the flexible evaluation function mechanism)
+*  Sicco Verwer (original author; best to reach out to for questions on batch mode, RTI+ implementation, and SAT reduction)
 
 ## Badges ##
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2f63a8167ec14bbe8122c3432b3ccfd5)](https://www.codacy.com/bb/chrshmmmr/dfasat/dashboard?utm_source=chrshmmmr@bitbucket.org&amp;utm_medium=referral&amp;utm_content=chrshmmmr/dfasat&amp;utm_campaign=Badge_Grade)
@@ -93,8 +93,8 @@ Logging is incomplete. *flexfringe* uses the loguru framework (see the [https://
 *flexfinge* relies on a number of open source packages and libraries. You can find the respective LICENCE files in the source/utility subdirectory. 
 Most notable, we use
 
-* CLI11 for command line parsing
-* Catch for unit testing
-* StatsLib C++ and GCE-Math C++ library by Keith O'Hara (Apache Version 2.0)
-* JSON for Modern C++ (version 3.1.2) by Niels Lohmann <http://nlohmann.me> from https://github.com/nlohmann/json
+*  CLI11 for command line parsing
+*  Catch for unit testing
+*  StatsLib C++ and GCE-Math C++ library by Keith O'Hara (Apache Version 2.0)
+*  JSON for Modern C++ (version 3.1.2) by Niels Lohmann <http://nlohmann.me> from https://github.com/nlohmann/json
 
