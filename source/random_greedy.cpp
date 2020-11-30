@@ -8,8 +8,10 @@
 #include "random_greedy.h"
 #include "parameters.h"
 
+// global variable
 bool print_all_models = false;
 
+// function in object oriented design
 refinement_list* random_greedy_bounded_run(state_merger* merger){
     cerr << "starting greedy merging" << endl;
     int num = 1;

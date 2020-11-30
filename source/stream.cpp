@@ -14,11 +14,13 @@
 
 #include "parameters.h"
 
+// global objects?
 int STREAM_COUNT = 0;
 int batches = 0;
 refinement_list* currentrun;
 refinement_list* nextrun;
 
+// function module embedded in object-oriented design?
 void greedyrun(state_merger* merger){
     refinement* top_ref;
     if(currentrun->empty()){

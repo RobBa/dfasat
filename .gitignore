@@ -1,3 +1,7 @@
+# ignore build and release folder
+build/
+release/
+
 # ignore all output
 *.log
 *.dot
@@ -47,3 +51,14 @@ test-reports/
 CMakeLists.txt
 cmake-build-debug/
 cmake-build-*/
+
+# ignore docs
+docs/html
+docs/latex
+docs/Makefile
+docs/make.bat
+docs/index.rst 
+docs/_build
+docs/_static
+docs/_templates
+docs/conf.py

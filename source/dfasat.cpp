@@ -38,7 +38,7 @@ int **yt;
 int **yp;
 int **ya;
 
-
+// why is merger context implemented here?
 void merger_context::reset_literals(bool init){
     int v, i, j, a;
 

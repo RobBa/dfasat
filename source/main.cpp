@@ -16,8 +16,8 @@
 #include "inputdata.h"
 #include "searcher.h"
 
-#include "utility/loguru.hpp"
-#include "utility/CLI11.hpp"
+#include "loguru.hpp"
+#include "CLI11.hpp"
 
 #include "parameters.h"
 
@@ -101,7 +101,11 @@ void init_with_params(parameters* param) {
     }
 }
 
-
+/**
+ * @brief Main run method. Branches out based on the type of session to run.
+ * 
+ * @param param 
+ */
 void run(parameters* param) {
 
     init_with_params(param);
@@ -171,7 +175,7 @@ void run(parameters* param) {
         //merger.read_apta(input_stream); TODO: error checking and logging
         LOG_S(INFO) << "Start reading data in batch mode";
         id.add_data_to_apta(the_apta);
-        the_apta-> alp = inputdata::alphabet;
+        the_apta->alp = inputdata::alphabet;
         LOG_S(INFO) << "Finished reading data in batch mode";
 
         cout << "reading data finished, processing:" << endl;
@@ -184,7 +188,7 @@ void run(parameters* param) {
         if(OUTPUT == "dot" || OUTPUT == "both") {
             oss3 << ".dot";
             FILE* output = fopen(oss3.str().c_str(), "w");
-            merger->todot();
+            merger->todot(); // are these todot(), tojson() etc. similar functions with different names?
             merger->print_dot(output);
             fclose(output);
         }
@@ -192,14 +196,14 @@ void run(parameters* param) {
         if(OUTPUT == "json" || OUTPUT == "both") {
             oss3 << ".json";
             FILE* output = fopen(oss3.str().c_str(), "w");
-            merger->tojson();
+            merger->tojson(); // inconsistent naming
             merger->print_json(output);
             fclose(output);
         }
 
         //bestfirst(&merger);
 
-       for(int i = 0; i < param->runs; ++i){
+        for(int i = 0; i < param->runs; ++i){
           std::ostringstream oss;
           oss << output_file << ".dfa" << (i+1) << ".aut";
           std::ostringstream oss2;
@@ -211,7 +215,7 @@ void run(parameters* param) {
           solution = dfasat((*merger), param->sat_program, oss2.str().c_str(), oss.str().c_str());
           if(solution != -1)
              CLIQUE_BOUND = min(CLIQUE_BOUND, solution - OFFSET + EXTRA_STATES);
-         }
+        }
 
     } else if(param->mode == "stream") {
        cout << "stream mode selected" << endl;
