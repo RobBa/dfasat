@@ -53,12 +53,5 @@ cmake-build-debug/
 cmake-build-*/
 
 # ignore docs
-docs/html
-docs/latex
-docs/Makefile
-docs/make.bat
-docs/index.rst 
-docs/_build
-docs/_static
-docs/_templates
-docs/conf.py
+docs/sphinx
+docs/doxygen

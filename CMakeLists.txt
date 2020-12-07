@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 project(flexfringe)
 
-# Add the cmake folder so the FindSphinx module for the documentation is found
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
-
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -11,7 +8,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-option(COMPILE_DOCS "This is settable from the command line" ON) # TODO: set to off
+option(COMPILE_DOCS "This is settable from the command line" OFF)
 
 set(CMAKE_CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
@@ -43,5 +40,7 @@ endif()
 
 # compile the documentation
 if(COMPILE_DOCS)
+    # Add the cmake folder so the FindSphinx module for the documentation is found
+    set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
     add_subdirectory(docs)
 endif()

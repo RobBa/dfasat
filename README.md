@@ -98,3 +98,40 @@ Most notable, we use
 *  StatsLib C++ and GCE-Math C++ library by Keith O'Hara (Apache Version 2.0)
 *  JSON for Modern C++ (version 3.1.2) by Niels Lohmann <http://nlohmann.me> from https://github.com/nlohmann/json
 
+## Documentation
+
+The documentation of this project can be build using the 
+
+COMPILE_DOCS=ON
+
+flag along with the cmake command. We are using Doxygen and Sphinx. Requirements for compiling the documentation 
+are
+
+* Doxygen (tested with version 1.8.20)
+* Sphinx (tested with version 3.3.1). We are using the rtd-theme, installation see below.
+* breathe (tested with version 4.24.0)
+
+They can be installed on Linux using the commands
+
+```
+apt-get install doxygen 
+```
+, 
+
+```
+pip install sphinx_rtd_theme
+```
+
+, and 
+
+```
+pip install breathe
+```
+. 
+
+IMPORTANT: In case new classes, functions, structs etc. have been added, and they shall show up in the documentation, 
+they have to be added at the bottom of the docs/index.rst file. For further information and a small quickstart-guide, 
+please look at e.g.
+
+https://breathe.readthedocs.io/en/latest/quickstart.html
+https://breathe.readthedocs.io/en/latest/directives.html
