@@ -48,7 +48,6 @@ runtests
 test-reports/
 
 #Clion files
-CMakeLists.txt
 cmake-build-debug/
 cmake-build-*/
 
