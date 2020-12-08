@@ -15,7 +15,9 @@ For expert users: In case you want to use the reduction to SAT and automatically
 
 You can build and compile the flexfringe project by running
 
-$ make clean all
+$ mkdir build && cd build
+$ cmake ..
+$ make
 
 in the main directory to build the executable named *flexfringe*. There is also a CMakelists.txt for building with cmake. We tested the toolchains on Linux (Ubuntu 16+), MacOS (10.14), and Windows 10. For the latter, be built using CMake shipped with CLion.
 
