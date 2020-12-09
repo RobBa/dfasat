@@ -22,7 +22,7 @@
  * @return refinement_list* list of refinments executed by the state merger
  */
 refinement_list* interactive(state_merger* merger, parameters* param){
-    cerr << "starting greedy merging" << endl;
+    cerr << "starting greedy merging" << endl; // cerr?
     int num = 1;
     refinement_list* all_refs = new refinement_list();
     merger->eval->initialize(merger);

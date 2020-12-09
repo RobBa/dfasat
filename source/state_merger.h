@@ -30,7 +30,7 @@ public:
 
     bool computing_header = true;
 
-    state_merger* merger;
+    state_merger* merger; // state merger also has merger_context reference
     state_set red_states;
     state_set non_red_states;
     state_set sink_states;
@@ -79,10 +79,22 @@ public:
 
 class state_merger{
 private:
-
+    // why are all functions below public?
 public:
     merger_context context;
     apta* aut;
+
+    /* core of merge targets */
+    state_set red_states;
+    /* fringe of merge candidates */
+    state_set blue_states;
+
+    evaluation_function* eval;
+
+    /* for building the apta  */
+    map<string, int> seen;
+    int node_number = 1;
+    int num_merges = 0;
 
     /* recursive state merging routines */
     bool merge(apta_node* red, apta_node* blue);
@@ -100,19 +112,6 @@ public:
     void pre_split(apta_node* red, apta_node* blue);
     void undo_pre_split(apta_node* red, apta_node* blue);
 
-    /* for building the apta  */
-    map<string, int> seen;
-    int node_number = 1;
-    int num_merges = 0;
-
-
-    /* core of merge targets */
-    state_set red_states;
-    /* fringe of merge candidates */
-    state_set blue_states;
-
-    evaluation_function* eval;
-
     state_merger();
     state_merger(evaluation_function*, apta*);
     ~state_merger();
@@ -120,7 +119,7 @@ public:
     void reset();
 
     /* performing red-blue merges */
-    void perform_merge(apta_node*, apta_node*);
+    void perform_merge(apta_node*, apta_node*); // merge function already above
     void undo_perform_merge(apta_node*, apta_node*);
     void perform_split(apta_node*, tail*, int);
     void undo_perform_split(apta_node*, tail*, int);
@@ -136,7 +135,7 @@ public:
     merge_pair* get_best_merge(int);
 
     /* find unmergable states */
-    apta_node* extend_red();
+    apta_node* extend_red(); // what does apta stand for?
 
     /* update the blue and red states */
     void update_red_blue();
@@ -187,7 +186,7 @@ public:
 
     bool split_init(apta_node *red, tail *t, int attr, int depth, bool evaluate, bool perform, bool test);
 
-    bool split(apta_node *new_node, apta_node *old_node, int depth, bool evaluate, bool perform, bool test);
+    bool split(apta_node *new_node, apta_node *old_node, int depth, bool evaluate, bool perform, bool test); // another split?
 };
 
 
