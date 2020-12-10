@@ -32,6 +32,7 @@ using namespace std;
 #include <map>
 #include <set>
 
+// do we need all these forward-passes?
 class refinement;
 class merge_refinement;
 class split_refinement;
