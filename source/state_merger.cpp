@@ -803,6 +803,8 @@ refinement* state_merger::test_splits(apta_node* blue){
     double score = 0;
     double best_score = -1.0;
     for(int attr = 0; attr < inputdata::num_attributes; ++attr){
+        if(!inputdata::is_splittable(attr)) continue;
+
         eval->reset_split(this, blue);
         multimap<float, tail*> sorted_tails;
         for(tail_iterator it = tail_iterator(blue); *it != 0; ++it){
@@ -823,8 +825,8 @@ refinement* state_merger::test_splits(apta_node* blue){
                 if(eval->split_compute_consistency(this, blue, new_node) && (score > best_score || result == 0)){
                     if(result != 0) result->erase();
                     result = mem_store::create_split_refinement(this, score, blue->source->find(), it->second->past_tail, attr);
+                    best_score = score;
                 }
-                //cerr << score << " ";
                 prev_val = it->first;
             }
             tail* t = it->second;
@@ -843,6 +845,7 @@ refinement* state_merger::test_splits(apta_node* blue){
             //cerr << "++  " << inputdata::alphabet[blue->label] << " <= " << prev_val << endl;
             split_single(new_node, blue, new_tail, true);
             eval->split_update_score_after(this, blue, new_node, t);
+            //cerr << eval->split_compute_score(this, blue, new_node) << " ";
         }
         //cerr << endl;
         //cerr << "undoing split " << endl;
@@ -928,7 +931,7 @@ refinement_set* state_merger::get_possible_refinements(){
 
         if(found_non_sink && (sink_type(blue) != -1)) continue;
         
-        // cerr << inputdata::num_attributes << endl;
+        cerr << inputdata::num_attributes << endl;
         if(sink_type(blue) == -1){
             if(inputdata::num_attributes > 0){
                 //cerr << "testing splits" << endl;

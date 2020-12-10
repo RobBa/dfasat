@@ -29,7 +29,7 @@ void alergia_data::initialize() {
 void alergia_data::read_from(int type, int index, int length, int symbol, string data){
     count_data::read_from(type, index, length, symbol, data);
 
-    if(!PERTYPE_DISTRIBUTIONS) type = 1;
+    //if(!PERTYPE_DISTRIBUTIONS) type = 0;
 
     if(trans_counts.find(type) == trans_counts.end()){
         //trans_counts[type] = num_map();
@@ -49,7 +49,7 @@ void alergia_data::del_tail(tail* t){
     if(t->get_index() == -1) return;
 
     int type = t->get_type();
-    if(!PERTYPE_DISTRIBUTIONS) type = 1;
+    //if(!PERTYPE_DISTRIBUTIONS) type = 1;
     int symbol = t->get_symbol();
 
     trans_counts[type][symbol]--;
@@ -239,7 +239,7 @@ bool alergia::consistent(state_merger *merger, apta_node* left, apta_node* right
  * low count sink = frequency smaller than STATE_COUNT */
 bool alergia_data::is_low_count_sink(){
     //cerr << num_paths() << " " << num_final() << "<" << SINK_COUNT << endl;
-    return pos_paths() + pos_final() < SINK_COUNT;
+    return num_paths() + num_final() < SINK_COUNT;
     //if(EVAL_TYPE == 1) return pos_final() + neg_final() + pos_paths() + neg_paths() < SINK_COUNT;
     //return pos_paths() + neg_paths() < SINK_COUNT;
 }

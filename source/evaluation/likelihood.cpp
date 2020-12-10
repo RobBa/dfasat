@@ -12,8 +12,17 @@
 REGISTER_DEF_DATATYPE(likelihood_data);
 REGISTER_DEF_TYPE(likelihoodratio);
 
+likelihood_data::likelihood_data() : alergia_data() {
+    undo_loglikelihood_orig = 0.0;
+    undo_loglikelihood_merged = 0.0;
+    undo_extra_parameters = 0;
+};
+
 void likelihood_data::initialize() {
     alergia_data::initialize();
+    undo_loglikelihood_orig = 0.0;
+    undo_loglikelihood_merged = 0.0;
+    undo_extra_parameters = 0;
 }
 
 bool likelihoodratio::consistent(state_merger *merger, apta_node* left, apta_node* right){
@@ -44,8 +53,8 @@ void likelihoodratio::update_likelihood_pool(double left_count, double right_cou
             loglikelihood_orig += (right_count + CORRECTION) * log((right_count + CORRECTION) / right_divider);
         if(right_count != 0.0 || left_count != 0.0)
             loglikelihood_merged += (left_count + right_count + 2*CORRECTION) * log((left_count + right_count + 2*CORRECTION) / (left_divider + right_divider));
-        if(right_count != 0.0 && left_count != 0.0)
-            extra_parameters = extra_parameters + 1;
+        //if(left_count >= SYMBOL_COUNT && right_count >= SYMBOL_COUNT)
+        extra_parameters = extra_parameters + 1;
     }
 };
 
@@ -53,6 +62,10 @@ void likelihoodratio::update_likelihood_pool(double left_count, double right_cou
 void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_node* right){
     likelihood_data* l = (likelihood_data*) left->data;
     likelihood_data* r = (likelihood_data*) right->data;
+
+    double temp_loglikelihood_orig = loglikelihood_orig;
+    double temp_loglikelihood_merged = loglikelihood_merged;
+    int temp_extra_parameters = extra_parameters;
 
     /* we ignore low frequency states, decided by input parameter STATE_COUNT */
     if(FINAL_PROBABILITIES) if(r->num_paths() + r->num_final() < STATE_COUNT || l->num_paths() + l->num_final() < STATE_COUNT) return;
@@ -135,6 +148,30 @@ void likelihoodratio::update_score(state_merger *merger, apta_node* left, apta_n
         update_likelihood_pool(l1_pool, r1_pool, left_divider, right_divider);
         update_likelihood_pool(l2_pool, r2_pool, left_divider, right_divider);
     }
+
+    r->undo_loglikelihood_orig = loglikelihood_orig - temp_loglikelihood_orig;
+    r->undo_loglikelihood_merged = loglikelihood_merged - temp_loglikelihood_merged;
+    r->undo_extra_parameters = extra_parameters - temp_extra_parameters;
+};
+
+void likelihoodratio::split_update_score_before(state_merger* merger, apta_node* left, apta_node* right, tail* t) {
+    likelihood_data *l = (likelihood_data *) left->data;
+    likelihood_data *r = (likelihood_data *) right->data;
+
+    loglikelihood_orig -= r->undo_loglikelihood_orig;
+    loglikelihood_merged -= r->undo_loglikelihood_merged;
+    extra_parameters -= r->undo_extra_parameters;
+
+    r->undo_loglikelihood_orig = 0.0;
+    r->undo_loglikelihood_merged = 0.0;
+    r->undo_extra_parameters = 0;
+};
+
+void likelihoodratio::split_update_score_after(state_merger* merger, apta_node* left, apta_node* right, tail* t) {
+    likelihood_data *l = (likelihood_data *) left->data;
+    likelihood_data *r = (likelihood_data *) right->data;
+
+    update_score(merger, left, right);
 };
 
 bool likelihoodratio::compute_consistency(state_merger *merger, apta_node* left, apta_node* right){
@@ -154,6 +191,26 @@ double likelihoodratio::compute_score(state_merger *merger, apta_node* left, apt
     double p_value = 1.0 - stats::pchisq(test_statistic, extra_parameters, false);
 
     return p_value;
+};
+
+bool likelihoodratio::split_compute_consistency(state_merger *, apta_node* left, apta_node* right){
+    double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
+    double p_value = 1.0 - stats::pchisq(test_statistic, extra_parameters, false);
+
+    if(left->size <= STATE_COUNT || right->size <= STATE_COUNT) return false;
+    if(USE_SINKS && (left->size <= SINK_COUNT || right->size <= SINK_COUNT)) return false;
+    if (p_value > CHECK_PARAMETER) return false;
+
+    if (inconsistency_found) return false;
+
+    return true;
+};
+
+double likelihoodratio::split_compute_score(state_merger *, apta_node* left, apta_node* right){
+    double test_statistic = 2.0 * (loglikelihood_orig - loglikelihood_merged);
+    double p_value = 1.0 - stats::pchisq(test_statistic, extra_parameters, false);
+
+    return 1.0 + CHECK_PARAMETER - p_value;
 };
 
 void likelihoodratio::reset(state_merger *merger){

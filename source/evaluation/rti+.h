@@ -46,7 +46,7 @@ public:
   static vector< vector<double> > attribute_quantiles;
 
   virtual void update_score(state_merger *merger, apta_node* left, apta_node* right);
-  virtual void update_score_after(state_merger *merger, apta_node* left, apta_node* right);
+  //virtual void update_score_after(state_merger *merger, apta_node* left, apta_node* right);
 
   virtual void split_update_score_before(state_merger*, apta_node* left, apta_node* right, tail* t);
   virtual void split_update_score_after(state_merger*, apta_node* left, apta_node* right, tail* t);

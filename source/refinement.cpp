@@ -160,8 +160,12 @@ inline void split_refinement::print_short() const{
 inline void split_refinement::print_json(iostream& output) const{
     output << "\t\t{\n";
     output << "\t\t\t\"type\" : \"split\", " << endl;
-    output << "\t\t\t\"red\" : " << red->past()->to_string() << "," << endl;
-    output << "\t\t\t\"point\" : " << split_point->past()->to_string() << "," << endl;
+    if(red->past() != 0){
+        output << "\t\t\t\"red\" : " << red->past()->to_string() << "," << endl;
+    } else {
+        output << "\t\t\t\"red\" : " << 0 << "," << endl;
+    }
+    output << "\t\t\t\"point\" : " << split_point->to_string() << "," << endl;
     output << "\t\t\t\"attribute\" : " << attribute << "," << endl;
     output << "\t\t\t\"score\" : " << score << endl;
     output << "\t\t}\n";

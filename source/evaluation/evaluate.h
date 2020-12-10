@@ -77,7 +77,10 @@ public:
 
     int node_type;
     evaluation_data* undo_pointer;
-    
+
+    bool undo_consistent;
+    double undo_score;
+
     evaluation_data();
     
 /* Set values from input string */
@@ -150,6 +153,7 @@ public:
 
 /* Global data */
   bool inconsistency_found;
+  int num_inconsistencies;
   int num_merges;
 
   void set_params(string params);

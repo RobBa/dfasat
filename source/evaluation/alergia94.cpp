@@ -109,8 +109,8 @@ bool alergia94::data_consistent(alergia94_data* l, alergia94_data* r){
 /* ALERGIA, consistency based on Hoeffding bound */
 bool alergia94::consistent(state_merger *merger, apta_node* left, apta_node* right){
     if(count_driven::consistent(merger, left, right) == false){ inconsistency_found = true; return false; }
-    alergia94_data* l = (alergia94_data*) left->data;
-    alergia94_data* r = (alergia94_data*) right->data;
+    alergia94_data* l = dynamic_cast<alergia94_data*>(left->data);
+    alergia94_data* r = dynamic_cast<alergia94_data*>(right->data);
     
     return data_consistent(l, r);
 };

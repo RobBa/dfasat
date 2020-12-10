@@ -137,6 +137,7 @@ bool count_driven::consistent(state_merger *merger, apta_node* left, apta_node* 
     if(l->pos_final() != 0 && r->neg_final() != 0){ inconsistency_found = true; return false; }
     if(l->neg_final() != 0 && r->pos_final() != 0){ inconsistency_found = true; return false; }
 
+
     return true;
     
     for(num_map::iterator it = l->final_counts.begin(); it != l->final_counts.end(); ++it){

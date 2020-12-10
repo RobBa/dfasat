@@ -29,5 +29,22 @@ bool aic::compute_consistency(state_merger *merger, apta_node* left, apta_node* 
 double aic::compute_score(state_merger *merger, apta_node* left, apta_node* right){
   double val = -2.0 * ( extra_parameters - (loglikelihood_orig - loglikelihood_merged) );
 
-  return (int)val * 100.0;
+  return val;
+};
+
+bool aic::split_compute_consistency(state_merger *, apta_node* left, apta_node* right){
+    if (inconsistency_found) return false;
+    if (extra_parameters == 0) return false;
+
+    double val = 2.0 * ( extra_parameters - (loglikelihood_orig - loglikelihood_merged) );
+
+    if(val <= 0) return false;
+
+    return true;
+};
+
+double aic::split_compute_score(state_merger *, apta_node* left, apta_node* right){
+    double val = 2.0 * ( extra_parameters - (loglikelihood_orig - loglikelihood_merged) );
+
+    return val;
 };
