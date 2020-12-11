@@ -21,6 +21,10 @@ class merger_context;
 
 using namespace std;
 
+/**
+ * @brief The merger context class. TODO: Legacy code that will be changed in the future. Get rid of merger context.
+ * 
+ */
 class merger_context {
 public:
     int literal_counter = 1;
@@ -30,7 +34,7 @@ public:
 
     bool computing_header = true;
 
-    state_merger* merger; // state merger also has merger_context reference
+    state_merger* merger; // TODO: state merger also has merger_context reference
     state_set red_states;
     state_set non_red_states;
     state_set sink_states;
@@ -77,6 +81,10 @@ public:
 
 };
 
+/**
+ * @brief The state merger. Whereas the 
+ * 
+ */
 class state_merger{
 private:
     // why are all functions below public?

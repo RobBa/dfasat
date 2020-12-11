@@ -104,7 +104,12 @@ void init_with_params(parameters* param) {
 /**
  * @brief Main run method. Branches out based on the type of session to run.
  * 
- * @param param 
+ * Possible sessions: 
+ * - batch
+ * - stream 
+ * - inter
+ * 
+ * @param param The parameters. 
  */
 void run(parameters* param) {
 
@@ -278,6 +283,11 @@ void run(parameters* param) {
 
 } // end run
 
+/**
+ * @brief Main method. Reads in arguments and starts application 
+ * by running "run()" function with the set of parsed parameters.
+ * 
+ */
 #ifndef UNIT_TESTING
 int main(int argc, char *argv[]){
 

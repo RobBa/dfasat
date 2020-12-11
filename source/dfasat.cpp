@@ -21,6 +21,7 @@
 
 #include "parameters.h"
 
+// TODO: make these members of the state_merger class
 // apta/input state i has color j
 int **x;
 // color i has a transition with label a to color j
@@ -76,6 +77,11 @@ void merger_context::reset_literals(bool init){
             if(init || ya[a][i] > 0) ya[a][i] = literal_counter++;
 }
 
+/**
+ * @brief Create the literals (boolean expressions) for expressing constraints. 
+ * For more information see e.g. Exact DFA Identification Using SAT Solvers, Heule and Verwer
+ * 
+ */
 void merger_context::create_literals(){
     int v, a, i;
     //X(STATE,COLOR)
@@ -124,6 +130,10 @@ void merger_context::create_literals(){
     reset_literals(true);
 }
 
+/**
+ * @brief Delete the literals again. 
+ * 
+ */
 void merger_context::delete_literals(){
     int v, a, i;
     for(v = 0; v < num_states; v++ )
@@ -154,7 +164,19 @@ void merger_context::delete_literals(){
     free(ya);
 }
 
-/** Print clauses without eliminated literals, -2 = false, -1 = true */
+/**
+ * @brief Print clauses without eliminated literals, -2 = false, -1 = true
+ * 
+ * @param v1 
+ * @param l1 
+ * @param v2 
+ * @param l2 
+ * @param v3 
+ * @param l3 
+ * @param v4 
+ * @param l4 
+ * @return int 
+ */
 int merger_context::print_clause(bool v1, int l1, bool v2, int l2, bool v3, int l3, bool v4, int l4){
     if(v1 && l1 == -1) return 0;
     if(!v1 && l1 == -2) return 0;
@@ -180,6 +202,17 @@ int merger_context::print_clause(bool v1, int l1, bool v2, int l2, bool v3, int 
     return 1;
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param v1 
+ * @param l1 
+ * @param v2 
+ * @param l2 
+ * @param v3 
+ * @param l3 
+ * @return int 
+ */
 int merger_context::print_clause(bool v1, int l1, bool v2, int l2, bool v3, int l3){
     if(v1 && l1 == -1) return 0;
     if(!v1 && l1 == -2) return 0;
@@ -201,6 +234,15 @@ int merger_context::print_clause(bool v1, int l1, bool v2, int l2, bool v3, int 
     return 1;
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param v1 
+ * @param l1 
+ * @param v2 
+ * @param l2 
+ * @return int 
+ */
 int merger_context::print_clause(bool v1, int l1, bool v2, int l2){
     if(v1 && l1 == -1) return 0;
     if(!v1 && l1 == -2) return 0;
@@ -284,8 +326,11 @@ void merger_context::fix_sink_values(){
     }
 }
 
-/** erase possible colors due to symmetry reduction
- * should be compatible with BFS symmtry breaking, unchecked
+/**
+ * @brief Erase possible colors due to symmetry reduction.
+ * Should be compatible with BFS symmtry breaking, unchecked
+ * 
+ * @return int 
  */
 int merger_context::set_symmetry(){
     int num = 0;
@@ -339,7 +384,10 @@ int merger_context::print_symmetry(){
     return num;
 }
 
-/** eliminate literals for merges that conflict with the red states */
+/**
+ * @brief Eliminate literals for merges that conflict with the red states.
+ * 
+ */
 void merger_context::erase_red_conflict_colours(){
     for(state_set::iterator it = red_states.begin(); it != red_states.end(); ++it){
         apta_node* left = *it;
@@ -362,7 +410,11 @@ void erase_sink_conflict_colours(){
     }*/
 }
 
-/* print the at least one en at most one clauses for x */
+/**
+ * @brief Print the at least one en at most one clauses for x
+ * 
+ * @return int TODO
+ */
 int merger_context::print_colours(){
     int num = 0;
     bool altr = false;
@@ -394,8 +446,12 @@ int merger_context::print_colours(){
     return num;
 }
 
-/* print clauses restricting two unmergable states to have the same color *
- * excludes pairs of states that are covered by the z literals            */
+/**
+ * @brief Print clauses restricting two unmergable states to have the same color.
+ * Excludes pairs of states that are covered by the z literals.
+ * 
+ * @return int 
+ */
 int merger_context::print_conflicts(){
     int num = 0;
     for(state_set::iterator it = non_red_states.begin(); it != non_red_states.end(); ++it){
@@ -423,7 +479,11 @@ int merger_context::print_conflicts(){
     return num;
 }
 
-/* print de clauses voor z literals */
+/**
+ * @brief Print the clauses for z literals.
+ * 
+ * @return int 
+ */
 int merger_context::print_accept(){
     int num = 0;
     for(state_set::iterator it = non_red_states.begin(); it != non_red_states.end(); ++it){
@@ -438,7 +498,11 @@ int merger_context::print_accept(){
     return num;
 }
 
-/* print de clauses voor y literals */
+/**
+ * @brief Print the clauses for y literals.
+ * 
+ * @return int 
+ */
 int merger_context::print_transitions(){
     int num = 0;
     for(int a = 0; a < alphabet_size; ++a)
