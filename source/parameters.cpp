@@ -41,7 +41,7 @@ bool PERTYPE_DISTRIBUTIONS = true;
 bool TYPE_DISTRIBUTIONS = false;
 bool TYPE_CONSISTENT = true;
 
-bool MERGE_ROOT = false;
+bool MERGE_ROOT = true;
 
 bool PRINT_WHITE = true;
 bool PRINT_BLUE = true;

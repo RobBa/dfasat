@@ -11,6 +11,7 @@ merge_refinement::merge_refinement(state_merger* m, double s, apta_node* l, apta
     tempnode = l;
     tempblue = r;
     score = s;
+    size = r->size;
 }
 
 void merge_refinement::initialize(state_merger* m, double s, apta_node* l, apta_node* r){
@@ -19,6 +20,7 @@ void merge_refinement::initialize(state_merger* m, double s, apta_node* l, apta_
     tempnode = l;
     tempblue = r;
     score = s;
+    size = r->size;
 }
 
 split_refinement::split_refinement(state_merger* m, double s, apta_node* r, tail* t, int a){
@@ -27,6 +29,7 @@ split_refinement::split_refinement(state_merger* m, double s, apta_node* r, tail
     score = s;
     attribute = a;
     tempnode = r;
+    size = r->size;
 }
 
 void split_refinement::initialize(state_merger* m, double s, apta_node* r, tail* t, int a){
@@ -35,12 +38,13 @@ void split_refinement::initialize(state_merger* m, double s, apta_node* r, tail*
     score = s;
     attribute = a;
     tempnode = r;
+    size = r->size;
 }
 
 extend_refinement::extend_refinement(state_merger* m, apta_node* r){
     //cerr << r << endl;
     red = m->get_tail_from_state(r);
-    score = LOWER_BOUND;
+    score = 0.0;
     size = r->size;
     tempnode = r;
 }
@@ -48,7 +52,7 @@ extend_refinement::extend_refinement(state_merger* m, apta_node* r){
 void extend_refinement::initialize(state_merger* m, apta_node* r){
     //cerr << r << endl;
     red = m->get_tail_from_state(r);
-    score = LOWER_BOUND;
+    score = 0.0;
     size = r->size;
     tempnode = r;
 }

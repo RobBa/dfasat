@@ -31,14 +31,16 @@ void count_data::initialize(){
 };
 
 void count_data::print_transition_label(iostream& output, int symbol, apta* aptacontext){
-    for(num_map::iterator it = path_counts.begin(); it != path_counts.end(); ++it){
-        output << it->first << ":" << it->second << " - ";
-    }
 };
 
 void count_data::print_state_label(iostream& output, apta* aptacontext){
+    output << "fin: ";
     for(num_map::iterator it = final_counts.begin(); it != final_counts.end(); ++it){
-        output << it->first << ":" << it->second << " - ";
+        output << it->first << ":" << it->second << " , ";
+    }
+    output << "\n path: ";
+    for(num_map::iterator it = path_counts.begin(); it != path_counts.end(); ++it){
+        output << it->first << ":" << it->second << " , ";
     }
 };
 
@@ -62,6 +64,26 @@ void count_data::read_to(int type, int index, int length, int symbol, string dat
     }
     total_final++;
 };
+
+void count_data::add_tail(tail* t){
+    int type = t->get_type();
+    if(t->get_index() != -1) {
+        if(path_counts.find(type) == path_counts.end()){
+            path_counts[type] = 1;
+        } else {
+            path_counts[type]++;
+        }
+        total_paths++;
+        types.insert(type);
+    } else {
+        if(final_counts.find(type) == final_counts.end()){
+            final_counts[type] = 1;
+        } else {
+            final_counts[type]++;
+        }
+        total_final++;
+    }
+}
 
 void count_data::del_tail(tail* t){
     int type = t->get_type();
@@ -189,10 +211,10 @@ int count_data::sink_type(apta_node* node){
     count_data* d = reinterpret_cast<count_data*>(node->data);
     
     int type = -1;
-    for(num_map::iterator it = d->final_counts.begin(); it != d->final_counts.end(); ++it){
+    for(num_map::iterator it = d->path_counts.begin(); it != d->path_counts.end(); ++it){
         int count = it->second;
         if(count != 0){
-            if(type == -1) type = it->second;
+            if(type == -1) type = it->first;
             else return -1;
         }
     }
