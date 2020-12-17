@@ -39,9 +39,9 @@ int **yt;
 int **yp;
 int **ya;
 
-// why is merger context implemented here?
+// TODO: why is merger context implemented here?
 void merger_context::reset_literals(bool init){
-    int v, i, j, a;
+    int v, i, j, a; // TODO: aren't there better names for those?
 
     literal_counter = 1;
     for(v = 0; v < num_states; ++v)

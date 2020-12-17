@@ -48,7 +48,7 @@ state_set red_states;
 state_set non_red_states;
 state_set sink_states;
 
-FILE* sat_stream;
+FILE* sat_stream; // TODO: also one as member in state_merger
 
 int dfa_size;
 int sinks_size;
@@ -61,7 +61,7 @@ set<int> trueliterals;
 int best_solution = -1;
 
 void reset_literals(bool init){
-    int v, i, j, a;
+    int v, i, j, a; // TODO: aren't there better names for those?
 
     literal_counter = 1;
     for(v = 0; v < num_states; ++v)
@@ -202,7 +202,7 @@ int print_clause(bool v1, int l1, bool v2, int l2, bool v3, int l3, bool v4, int
 }
 
 int print_clause(bool v1, int l1, bool v2, int l2, bool v3, int l3){
-    if(v1 && l1 == -1) return 0;
+    if(v1 && l1 == -1) return 0; // TODO: use nullptr?
     if(!v1 && l1 == -2) return 0;
     if(v2  && l2 == -1) return 0;
     if(!v2 && l2 == -2) return 0;
