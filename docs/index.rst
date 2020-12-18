@@ -1,8 +1,8 @@
-Welcome to flexfringe
-=====================
+Welcome to **flexfringe**
+=========================
 
-   flexfringe is a ... (TODO)
-   See also (TODO: link)
+flexfringe is a a flexible state-merging framework written in C++.
+You can download it from `Bitbucket <https://bitbucket.org/chrshmmmr/dfasat/src/multivariate/>`_.
 
 .. toctree::
    :maxdepth: 2
@@ -16,17 +16,12 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-Docs
-====
+Documentation
+=============
 
-.. doxygenclass:: apta
-   :members:
+* :doc:`Base Code <documentation_base>`
+* :doc:`Evaluation Code <documentation_evaluation>`
 
-.. doxygenclass:: apta_node
-   :members:
-
-.. doxygenclass:: evaluation_data
-   :members:
 
 Credits and licenses
 ====================
