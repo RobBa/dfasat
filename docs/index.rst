@@ -16,11 +16,22 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+
+Tutorials
+=========
+
+1. :doc:`Getting started <./tutorials/getting-started>`
+2. :doc:`First parameters <./tutorials/first_parameters>`
+3. :doc:`Probabilistic automata <./tutorials/probabilistic_automata>`
+
+Interactive COLAB Tutorial: `Google COLAB <https://colab.research.google.com/drive/1zLiSqXeggPYNjS1MjxeGcNR2dpz1kJYW?usp=sharing>`_
+
+
 Documentation
 =============
 
-* :doc:`Base Code <documentation_base>`
-* :doc:`Evaluation Code <documentation_evaluation>`
+* :doc:`Base Code <./code_docs/documentation_base>`
+* :doc:`Evaluation Code <./code_docs/documentation_evaluation>`
 
 
 Credits and licenses
