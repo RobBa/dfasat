@@ -61,6 +61,7 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
                 (*it)->print_short();
                 cerr << " , ";
             }
+            
             cerr << endl; */
 
             if(refs->empty()){
