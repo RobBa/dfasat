@@ -53,6 +53,7 @@ class refinement{
 public:
     double score;
 	tail* red;
+    int size;
 
 	apta_node* tempnode;
     apta_node* tempblue;
@@ -100,8 +101,6 @@ public:
  */
 class extend_refinement : public refinement {
 public:
-    int size;
-
 	extend_refinement(state_merger* m, apta_node* r);
     void initialize(state_merger* m, apta_node* r);
 
@@ -148,17 +147,9 @@ struct score_compare {
         if(typeid(r1) != typeid(sref) && typeid(r2) == typeid(sref)) return 0;
         if(typeid(r1) == typeid(mref) && typeid(r2) != typeid(mref)) return 1;
         if(typeid(r1) != typeid(mref) && typeid(r2) == typeid(mref)) return 0;
-            if(r1->score == r2->score){
-                return r1 > r2;
-                /*
-                if(r1->right->size == r2->right->size){
-                    return r1 > r2;
-                } else {
-                    return r1->right->size > r2->right->size;
-                }
-                 */
-            }
-            return r1->score > r2->score;
+
+        if(r1->score == r2->score) return r1->size > r2->size;
+        return r1->score > r2->score;
     }
 };
 

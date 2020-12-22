@@ -784,12 +784,14 @@ refinement* state_merger::test_merge(apta_node* left, apta_node* right){
     
     if((merge_result && eval->compute_consistency(this, left, right) == false)) merge_result = false;
     
-    if(USE_LOWER_BOUND && score_result < LOWER_BOUND) merge_result = false;
+    if(USE_LOWER_BOUND && score_result < LOWER_BOUND) {
+        merge_result = false;
+    }
     
     if(MERGE_WHEN_TESTING) undo_merge(left,right);
 
     if(STORE_MERGES) store_merge(merge_result, score_result, left, right);
-    
+
     if(merge_result == false) return 0;
     return mem_store::create_merge_refinement(this, score_result, left, right);
 }
@@ -916,6 +918,7 @@ refinement_set* state_merger::get_possible_refinements(){
     bool found_non_sink = false;
     
     for(blue_state_iterator it = blue_state_iterator(aut->root); *it != 0; ++it){
+        //cerr << (*it)->size << " " << sink_type((*it)) << endl;
         if((*it)->size != 0) blue_its.insert(*it);
         if(sink_type(*it) == -1) found_non_sink = true;
     }
@@ -929,9 +932,11 @@ refinement_set* state_merger::get_possible_refinements(){
         apta_node* blue = *it;
         bool found = false;
 
+        //cerr << blue->size << " " << sink_type(blue) << endl;
+
         if(found_non_sink && (sink_type(blue) != -1)) continue;
         
-        cerr << inputdata::num_attributes << endl;
+        //cerr << inputdata::num_attributes << endl;
         if(sink_type(blue) == -1){
             if(inputdata::num_attributes > 0){
                 //cerr << "testing splits" << endl;
@@ -992,7 +997,6 @@ refinement_set* state_merger::get_possible_refinements(){
                 result->insert(mem_store::create_extend_refinement(this, blue));
                 return result;
             }
-            
         }
         
         //if(result->size() == 0)

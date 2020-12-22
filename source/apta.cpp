@@ -215,7 +215,7 @@ void apta_node::print_json(iostream& output){
     data->print_state_label(output, context);
     output  << "\",\n";
     output << "\t\t\t\"size\" : " << size << ",\n";
-    output<< "\t\t\t\"level\" : " << depth << ",\n";
+    output<< "\t\t\t\"level\" : " << compute_depth() << ",\n";
     output << "\t\t\t\"style\" : \"";
     data->print_state_style(output, context);
     output  << "\",\n";
@@ -530,12 +530,15 @@ apta_guard* apta_node::guard(tail* t){
 };
 
 int apta_node::compute_depth(){
-    int max_depth = 0;
-    if(source != 0){
-        max_depth = 1 + source->compute_depth();
+    int max_depth = 1;
+    apta_node* n = source;
+    while(n != 0){
+        n = n->find();
+        max_depth += 1;
+        n = n->source;
     }
     if(representative_of != 0 && source != 0){
-        for(apta_node* n = representative_of; n!= 0; n = n->next_merged_node){
+        for(n = representative_of; n!= 0; n = n->next_merged_node){
             if(n->source != 0 && n->source->find() != source->find()){
                 int dist = n->compute_depth();
                 if(dist > max_depth) max_depth = dist;
