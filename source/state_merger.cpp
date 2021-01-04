@@ -49,7 +49,7 @@ void state_merger::reset(){
 }
 
 /**
- * @brief 
+ * @brief TODO
  * 
  * @param t 
  * @return apta_node* 
@@ -92,6 +92,12 @@ apta_node* state_merger::get_state_from_tail(tail* t){
     return cur_state;
 }
 
+/**
+ * @brief TODO
+ * 
+ * @param n 
+ * @return tail* 
+ */
 tail* state_merger::get_tail_from_state(apta_node* n){
     tail_iterator it = tail_iterator(n);
     tail* t = *it;
@@ -101,8 +107,13 @@ tail* state_merger::get_tail_from_state(apta_node* n){
     return t;
 }
 
-/* BEGIN get special state sets, these are used by the SAT encoding
+/* --------------------------------- Special state sets, used by red blue framework -----------------------------*/
+
+/**
+ * @brief Get the candidate states used by SAT encoding.
  * red and blue sets can be accessed directly
+ * 
+ * @return state_set& 
  */
 state_set& state_merger::get_candidate_states(){
     state_set states = blue_states;
@@ -115,6 +126,11 @@ state_set& state_merger::get_candidate_states(){
     return *candidate_states;
 }
 
+/**
+ * @brief Obtain the sink states.
+ * 
+ * @return state_set& The sink states as a reference.
+ */
 state_set& state_merger::get_sink_states(){
     state_set states = blue_states;
     state_set* sink_states = new state_set();
@@ -128,6 +144,11 @@ state_set& state_merger::get_sink_states(){
     return *sink_states;
 }
 
+/**
+ * @brief Get the size of the final apta.
+ * 
+ * @return int The size of the final apta.
+ */
 int state_merger::get_final_apta_size(){
     int result = 0;
     for(merged_APTA_iterator Ait = merged_APTA_iterator(aut->root); *Ait != 0; ++Ait){
@@ -135,10 +156,12 @@ int state_merger::get_final_apta_size(){
     }
     return result;
 }
-/* END get special state sets, these are used by the SAT encoding */
+/* --------------------------------- End of Special state sets, used by red blue framework -----------------------------*/
 
-/* BEGIN basic state merging routines, these can be accessed directly, for instance to compute a conflict graph
- * the search routines do not access these methods directly, but use the perform and test merge routines below */
+/*  */
+
+/* --------------------------------- BEGIN basic state merging routines, these can be accessed directly, for instance to compute a conflict graph
+   the search routines do not access these methods directly, but use the perform and test merge routines below -----------------------------*/
 
 /* standard merge, the process is interupted when an inconsistency is found */
 void state_merger::pre_split(apta_node* left, apta_node* right){
