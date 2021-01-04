@@ -38,7 +38,7 @@ bool debugging_enabled = false;
 // map_type* BaseFactory::map = NULL;
 
 
-/*! \brief Set global vars to values in parameter object.
+/** @brief Set global vars to values in parameter object.
  *         
  * @param[in] param pointer to initialized parameter object.
  */
@@ -132,13 +132,13 @@ void run(parameters* param) {
 
     ifstream input_stream(param->dfa_file);
 
-    if(!input_stream) {
+    if(!input_stream) { // TODO: rather check on nullptr (for all in this project)
         LOG_S(ERROR) << "Input file not found, aborting";
         std::cerr << "Input file not found, aborting" << std::endl;
         exit(-1);
     }
 
-    inputdata id;
+    inputdata id; // TODO: rename, because ambiguous
     string file_name = param->dfa_file;
     string output_file = param->dot_file;
     if(output_file == "") output_file = param->dfa_file + ".ff";
@@ -163,7 +163,6 @@ void run(parameters* param) {
     }
 
     cout << "Creating apta " <<  "using evaluation class " << eval_string << endl;
-
     
     eval->initialize_globals();
 
@@ -436,7 +435,7 @@ int main(int argc, char *argv[]){
     app.add_option("-O,--forcing", param->forcing, "Add predicates to the SAT encoding that force transitions in the learned DFA to be used by input examples (setting 0 or 1); default=0. Advice: leads to non-complete models. When the data is sparse, this should be set to 1. It does make the instance larger and can have a negative effect on the solving time.");
 
     // input file name
-    app.add_option("tracefile", param->dfa_file, "Name of the input file containing the traces, either in Abadingo or JSON format.")->required();
+    app.add_option("tracefile", param->dfa_file, "Name of the input file containing the traces, either in Abadingo or JSON format.")->required(); 
 
     // k-Tails implementation, only testing merges until depth k
     app.add_option("--ktail", KTAIL, "k-Tails (speedup parameter), only testing merges until depth k (although original ktails can produce non-deterministic machines, flexfringe cannot, it is purely for speedup).");

@@ -14,13 +14,13 @@
 
 #include "parameters.h"
 
-// global objects?
+// TODO: remove global objects, make them local
 int STREAM_COUNT = 0;
 int batches = 0;
 refinement_list* currentrun;
 refinement_list* nextrun;
 
-// function module embedded in object-oriented design?
+// TODO: function module embedded in object-oriented design? Why is it here anyway? No references found DELETE
 void greedyrun(state_merger* merger){
     refinement* top_ref;
     if(currentrun->empty()){
@@ -33,7 +33,7 @@ void greedyrun(state_merger* merger){
             top_ref = merger->get_best_refinement();
         }
     }
-    if(top_ref == 0){
+    if(top_ref == 0){ // TODO: again nullptr
         merger->todot();
         std::ostringstream oss2;
         oss2 << "batch" << batches << ".dot";
@@ -61,6 +61,15 @@ void greedyrun(state_merger* merger){
     }
 }
 
+/**
+ * @brief Runs the stream mode
+ * 
+ * @param merger The selected state merger instance 
+ * @param param The global parameters
+ * @param input_stream The input data file.
+ * @param id Input-data wrapper object. 
+ * @return int 
+ */
 int stream_mode(state_merger* merger, parameters* param, ifstream& input_stream, inputdata* id) {
     currentrun = new refinement_list();
     nextrun = new refinement_list();

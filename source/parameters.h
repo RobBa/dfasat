@@ -65,7 +65,7 @@ extern string DFA_FILE;
 class parameters{
 public:
     string command;
-    string dfa_file;
+    string dfa_file; // TODO: name misleading. Shall we replace it by something better?
     vector<string> dfa_data;
     string dot_file;
     string sat_program;

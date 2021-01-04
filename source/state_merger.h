@@ -34,12 +34,12 @@ public:
 
     bool computing_header = true;
 
-    state_merger* merger; // TODO: state merger also has merger_context reference
+    state_merger* merger; // TODO: state merger also has merger_context reference => circular dependence
     state_set red_states;
     state_set non_red_states;
     state_set sink_states;
 
-    FILE* sat_stream;
+    FILE* sat_stream; // TODO: give some information on this object
 
     int dfa_size;
     int sinks_size;
@@ -78,7 +78,6 @@ public:
     int print_sink_paths();
     void print_dot_output(const char* dot_output);
     void print_aut_output(const char* aut_output);
-
 };
 
 /**

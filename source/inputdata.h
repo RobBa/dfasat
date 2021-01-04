@@ -81,9 +81,14 @@ public:
     const string to_string();
 };
 
+/**
+ * @brief Wrapper class for the input data. Supports functionalities 
+ * such as alphabet functions, file transformations and data added to the APTA.
+ * 
+ */
 class inputdata{
 public:
-
+    // TODO: not all public. Can we circumvent this class to have cleaner code?
     static json all_data;
 
     static vector<string> alphabet;

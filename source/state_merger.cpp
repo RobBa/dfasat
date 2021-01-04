@@ -14,11 +14,21 @@
 #include "parameters.h"
 #include "common.h"
 
+/**
+ * @brief Construct a new state merger::state merger object.
+ * 
+ */
 state_merger::state_merger()
 : context(){
     context.merger = this;
 }
 
+/**
+ * @brief Construct a new state merger::state merger object.
+ * 
+ * @param e Pointer to the evaluation function.
+ * @param a Pointer to the augmented prefix tree acceptor.
+ */
 state_merger::state_merger(evaluation_function* e, apta* a)
 : context(){
     context.merger = this;
@@ -27,6 +37,10 @@ state_merger::state_merger(evaluation_function* e, apta* a)
     reset();
 }
 
+/**
+ * @brief Reset the red and blue states. 
+ * 
+ */
 void state_merger::reset(){
     red_states.clear();
     blue_states.clear();
@@ -34,6 +48,12 @@ void state_merger::reset(){
     update_red_blue();
 }
 
+/**
+ * @brief 
+ * 
+ * @param t 
+ * @return apta_node* 
+ */
 apta_node* state_merger::get_state_from_tail(tail* t){
     //t = t->splitted();
     //cerr << endl;
@@ -1000,8 +1020,12 @@ refinement_set* state_merger::get_possible_refinements(){
     return result;
 }
 
-// streaming version: relevant threshold count from Hoeffding bound and using epsilon to determine whether
-// we indeed do have a biggest score
+/**
+ * @brief TODO
+ * 
+ * Streaming version: relevant threshold count from Hoeffding bound and using epsilon to determine whether
+ * we indeed do have a biggest score
+ */
 merge_map* state_merger::get_possible_merges(int count){
     merge_map* mset = new merge_map();
     
@@ -1047,9 +1071,13 @@ merge_map* state_merger::get_possible_merges(int count){
     return mset;
 }
 
-/* returns the highest scoring merge given the current sets of red and blue states
+/**
+ * @brief Returns the highest scoring merge. 
+ * 
+ * Returns the highest scoring merge given the current sets of red and blue states
  * behavior depends on input parameters
- * returns (0,0) if none exists (given the input parameters) */
+ * returns (0,0) if none exists (given the input parameters) 
+ */
 refinement* state_merger::get_best_refinement() {
     refinement_set *rs = get_possible_refinements();
     refinement *r = 0;

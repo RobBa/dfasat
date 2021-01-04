@@ -116,6 +116,10 @@ public:
     virtual void print_json(iostream &output) const;
 };
 
+/**
+ * @brief TODO
+ * 
+ */
 class split_refinement : public refinement {
 public:
     tail* split_point;
