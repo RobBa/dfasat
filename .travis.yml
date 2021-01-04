@@ -27,6 +27,10 @@ matrix:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
 script: 
   - make clean all
+  - make test
+  - mkdir build && cd build && cmake ..
+  - make
+  - make test
   - cppcheck --quiet --error-exitcode=1 .
 
 #language: cpp
