@@ -19,12 +19,17 @@ matrix:
   include: 
     - os: linux
       dist: xenial
-      install: 
-        - sudo apt-get install -qq cppcheck
+      addons:
+        apt:
+          packages:
+            - cppcheck
+            #- sudo apt-get install -qq 
     - os: osx
       osx_image: xcode10.1
-      install: 
-        - brew install -q cppcheck
+      addons:
+        homebrew:
+          packages:
+            - cppcheck
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
     - os: windows
