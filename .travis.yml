@@ -2,34 +2,16 @@ language: cpp
 compiler:
   - clang
   - gcc
-#addons:
-#  apt:
-#    sources:
-#      - ubuntu-toolchain-r-test
-#    packages:
-#      - cmake
-#      - python3
-#
-#      # https://github.com/travis-ci-tester/travis-test-clang-cxx-11
-#      - libstdc++-5-dev
-#
-#      # https://github.com/travis-ci-tester/travis-test-gcc-cxx-11
-#      - g++-5
 matrix: 
   include: 
     - os: linux
       dist: xenial
-      addons:
-        apt:
-          packages:
-            - cppcheck
-            #- sudo apt-get install -qq 
+      before_install:
+        - sudo apt-get install -qq cppcheck
     - os: osx
       osx_image: xcode10.1
-      addons:
-        homebrew:
-          packages:
-            - cppcheck
+      before_install:
+        - HOMEBREW_NO_AUTO_UPDATE=1 brew install cppcheck
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
     - os: windows
