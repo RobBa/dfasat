@@ -1,0 +1,30 @@
+language: cpp
+compiler:
+  - clang
+  - gcc
+install: 
+  - sudo apt-get install -qq cppcheck
+#addons:
+#  apt:
+#    sources:
+#      - ubuntu-toolchain-r-test
+#    packages:
+#      - cmake
+#      - python3
+#
+#      # https://github.com/travis-ci-tester/travis-test-clang-cxx-11
+#      - libstdc++-5-dev
+#
+#      # https://github.com/travis-ci-tester/travis-test-gcc-cxx-11
+#      - g++-5
+matrix: 
+  include: 
+    - os: linux
+      dist: xenial
+    - os: osx
+      osx_image: xcode10.1
+      env:
+        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+script: 
+  - make clean all
+  - cppcheck --quiet --error-exitcode=1 .
