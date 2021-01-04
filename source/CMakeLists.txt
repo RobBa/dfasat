@@ -2,9 +2,6 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/evaluation"
                     "${CMAKE_CURRENT_SOURCE_DIR}/utility"
                     )
 
-add_subdirectory(evaluation)
-add_subdirectory(utility)
-
 ## create the gitversion.cpp
 execute_process(COMMAND "git" "rev-parse" "HEAD"
                 WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
@@ -54,7 +51,17 @@ add_library(Source STATIC
             mem_store.h
             )
 
-#target_include_directories(Source PUBLIC 
-#                            "${CMAKE_CURRENT_SOURCE_DIR}/evaluation"
-#                            "${CMAKE_CURRENT_SOURCE_DIR}/utility"
-#                            )
+## create CMakeLists.txt in evaluation directory
+set(cmakelists_eval "evaluation/CMakeLists.txt")
+file(WRITE "${cmakelists_eval}" "add_library(Evaluation STATIC")
+file(GLOB CPPFiles "${CMAKE_CURRENT_SOURCE_DIR}/evaluation/*.cpp")
+foreach(Filepath ${Files})
+    get_filename_component(Filename ${Filepath} NAME)
+    string(REGEX REPLACE "\\.[^.]*$" "" CleanFilename ${Filename})
+    file( APPEND "${cmakelists_eval}" "\n            ${CleanFilename}.h")
+    file( APPEND "${cmakelists_eval}" "\n            ${CleanFilename}.cpp")
+endforeach()
+file(APPEND "${cmakelists_eval}" ")")
+
+add_subdirectory(evaluation)
+add_subdirectory(utility)
