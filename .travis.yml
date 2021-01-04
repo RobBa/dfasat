@@ -6,9 +6,6 @@ addons:
   apt:
     packages:
       - cppcheck
-#  homebrew:
-#    packages:
-#      - cppcheck
 jobs: 
   include: 
     - os: linux
@@ -19,10 +16,13 @@ jobs:
         - HOMEBREW_NO_AUTO_UPDATE=1 brew install cppcheck
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-script: 
+script:
   - make clean all
   - make test
-  - mkdir build && cd build && cmake ..
+  - mkdir build 
+  - cd build
+  - cmake ..
   - make
   - make test
-  - cd .. && cppcheck --quiet --error-exitcode=1 -isource/evaluation/devel -isource/devel -isource/evaluation/devel -isource/space-saving -isource/verify -isource/new_code ./source
+  - cd .. 
+  - cppcheck --quiet --error-exitcode=1 -isource/evaluation/devel -isource/devel -isource/evaluation/devel -isource/space-saving -isource/verify -isource/new_code -isource/utility/loguru.cpp ./source
