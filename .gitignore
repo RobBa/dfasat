@@ -1,6 +1,7 @@
 # ignore build and release folder
 build/
 release/
+debug/
 
 # ignore all output
 *.log
@@ -9,6 +10,7 @@ release/
 *.pdf
 *.png
 *.json
+
 # ignore all object files
 *.o
 *.so
@@ -16,6 +18,7 @@ evaluation/*.o
 .idea/workspace.xml
 .idea/dataSources.xml
 #ignore temp files
+
 source/evaluators.h
 source/evaluation/*.tmp
 source/gitversion.cpp
@@ -24,15 +27,18 @@ source/gitversion.cpp
 ./flexfringe
 flexfringe
 ./lingeling
+
 # py++ temporary files
 exposed_decl.pypp.txt
 named_tuple.py
 indexing_suite/*
 generated.cpp
 gitversion.cpp
+
 # articfacs
 .DS_Store
 flexfringe.dSYM/*
+
 # data files
 PAutomaC-competition_sets/*
 
@@ -40,6 +46,7 @@ PAutomaC-competition_sets/*
 *.log
 ICC.log
 CTLS.log
+
 # other files
 processidentification/
 
