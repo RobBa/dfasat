@@ -1,0 +1,28 @@
+language: cpp
+compiler:
+  - clang
+  - gcc
+addons:
+  apt:
+    packages:
+      - cppcheck
+#  homebrew:
+#    packages:
+#      - cppcheck
+jobs: 
+  include: 
+    - os: linux
+      dist: xenial
+    - os: osx
+      osx_image: xcode10.1
+      before_install:
+        - HOMEBREW_NO_AUTO_UPDATE=1 brew install cppcheck
+      env:
+        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+script: 
+  - make clean all
+  - make test
+  - mkdir build && cd build && cmake ..
+  - make
+  - make test
+  - cd .. && cppcheck --quiet --error-exitcode=1 .
