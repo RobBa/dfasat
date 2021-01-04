@@ -7,6 +7,12 @@
 class likelihood_data: public alergia_data {
 protected:
   REGISTER_DEC_DATATYPE(likelihood_data);
+public:
+    double undo_loglikelihood_orig;
+    double undo_loglikelihood_merged;
+    int undo_extra_parameters;
+
+    likelihood_data();
     virtual void initialize();
 };
 
@@ -28,8 +34,19 @@ public:
   virtual bool compute_consistency(state_merger *merger, apta_node* left, apta_node* right);
   virtual double  compute_score(state_merger*, apta_node* left, apta_node* right);
   virtual void reset(state_merger *merger);
+
+    virtual void split_update_score_before(state_merger*, apta_node* left, apta_node* right, tail* t);
+    virtual void split_update_score_after(state_merger*, apta_node* left, apta_node* right, tail* t);
+
+    virtual bool split_compute_consistency(state_merger *, apta_node* left, apta_node* right);
+    virtual double split_compute_score(state_merger *, apta_node* left, apta_node* right);
+
   //virtual void print_dot(iostream&, state_merger *);
     void update_likelihood_pool(double left_count, double right_count, double left_divider, double right_divider);
+
+    void delete_likelihood(double left_count, double right_count, double left_divider, double right_divider);
+
+    void delete_likelihood_pool(double left_count, double right_count, double left_divider, double right_divider);
 };
 
 #endif

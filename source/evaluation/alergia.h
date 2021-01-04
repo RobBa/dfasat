@@ -119,6 +119,8 @@ public:
     virtual void initialize();
 
     virtual void del_tail(tail *t);
+
+    virtual void add_tail(tail *t);
 };
 
 
@@ -147,6 +149,7 @@ public:
     void update_right_pool(double left_count, double right_count, double &left_pool, double &right_pool);
 
     bool alergia_consistency_pool(double right_count, double left_count, double right_total, double left_total);
+
 };
 
 #endif

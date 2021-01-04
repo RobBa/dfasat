@@ -15,12 +15,14 @@
 evaluation_data::evaluation_data(){
     node_type = -1;
     undo_pointer = 0;
-}
+    undo_consistent = false;
+};
 
 void evaluation_data::initialize(){
     node_type = -1;
     undo_pointer = 0;
-}
+    undo_consistent = false;
+};
 
 void evaluation_data::read_from(int seq_nr, int index){
     read_from(  inputdata::get_type(seq_nr),
@@ -191,23 +193,20 @@ int evaluation_function::merge_depth_score(apta_node* left, apta_node* right){
 bool evaluation_function::consistent(state_merger *merger, apta_node* left, apta_node* right){
   if(inconsistency_found) return false;
   
-  if(left->data->node_type != -1 && right->data->node_type != -1 && left->data->node_type != right->data->node_type){ inconsistency_found = true; return false; }
+  if(left->data->node_type != -1 && right->data->node_type != -1 && left->data->node_type != right->data->node_type){
+      inconsistency_found = true;
+      return false;
+  }
     
   return true;
 };
 
 void evaluation_function::update_score(state_merger *merger, apta_node* left, apta_node* right){
-  num_merges += 1;
-  merged_left_states.insert(left);
+    num_merges += 1;
+    merged_left_states.insert(left);
 };
 
 void evaluation_function::update_score_after(state_merger *merger, apta_node* left, apta_node* right){
-};
-
-void evaluation_function::split_update_score_before(state_merger *merger, apta_node* left, apta_node* right){
-};
-
-void evaluation_function::split_update_score_after(state_merger *merger, apta_node* left, apta_node* right){
 };
 
 bool evaluation_function::split_consistent(state_merger *merger, apta_node* left, apta_node* right){
@@ -215,9 +214,34 @@ bool evaluation_function::split_consistent(state_merger *merger, apta_node* left
 };
 
 void evaluation_function::split_update_score_before(state_merger *merger, apta_node* left, apta_node* right, tail* t){
+    evaluation_data* r = right->data;
+
+    if(right->size == 0) num_merges += 1;
+
+    if(r->undo_consistent) num_inconsistencies -= 1;
+    r->undo_consistent = false;
 };
 
 void evaluation_function::split_update_score_after(state_merger *merger, apta_node* left, apta_node* right, tail* t){
+    evaluation_data* r = right->data;
+
+    if(left->size == 0) num_merges -= 1;
+
+    inconsistency_found = false;
+    consistent(merger, left, right);
+    if(inconsistency_found){
+        r->undo_consistent = true;
+        num_inconsistencies += 1;
+    }
+};
+
+void evaluation_function::split_update_score_before(state_merger*, apta_node* left, apta_node* right){
+    return;
+};
+
+void evaluation_function::split_update_score_after(state_merger*, apta_node* left, apta_node* right) {
+    num_merges -= 1;
+    return;
 };
 
 /*
@@ -234,17 +258,18 @@ double evaluation_function::compute_score(state_merger *merger, apta_node* left,
 };
 
 bool evaluation_function::split_compute_consistency(state_merger *merger, apta_node* left, apta_node* right){
-    return true;
+    return num_inconsistencies != 0;
 };
 
 double evaluation_function::split_compute_score(state_merger *merger, apta_node* left, apta_node* right){
-    return -1;
+    return ((double)num_inconsistencies) / ((double)num_merges);
 };
 
 void evaluation_function::reset(state_merger *merger){
   inconsistency_found = false;
   num_merges = 0;
   merged_left_states.clear();
+  num_inconsistencies = 0;
 };
 
 void evaluation_function::reset_split(state_merger *merger, apta_node *node){

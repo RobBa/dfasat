@@ -55,9 +55,6 @@ runtests
 test-reports/
 
 #Clion files
+source/evaluation/CMakeLists.txt
 cmake-build-debug/
 cmake-build-*/
-
-# ignore docs
-docs/sphinx
-docs/doxygen

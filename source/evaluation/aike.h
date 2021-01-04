@@ -18,6 +18,10 @@ protected:
 public:
   virtual bool compute_consistency(state_merger *merger, apta_node* left, apta_node* right);
   virtual double  compute_score(state_merger*, apta_node* left, apta_node* right);
+
+    virtual double split_compute_score(state_merger *, apta_node *left, apta_node *right);
+
+    virtual bool split_compute_consistency(state_merger *, apta_node *left, apta_node *right);
 };
 
 #endif

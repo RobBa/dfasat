@@ -416,6 +416,8 @@ public:
     int sink_type(apta_node* apta);
 
     void print_sinks_json(iostream &output);
+
+    void set_depths(apta_node *n, int dep);
 };
 
 #endif

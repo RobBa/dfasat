@@ -9,7 +9,7 @@
 #include "parameters.h"
 
 // global variable
-bool print_all_models = false;
+bool print_all_models = true;
 
 // function in object oriented design
 refinement_list* random_greedy_bounded_run(state_merger* merger){
@@ -46,21 +46,23 @@ refinement_list* random_greedy_bounded_run(state_merger* merger){
             
             refinement_set* refs = merger->get_possible_refinements();
 
-            if(print_all_models){
-            merger->todot();
-            std::ostringstream oss2;
-            oss2 << "pre_refs" << num << ".dot";
-            ofstream output1(oss2.str().c_str());
-            output1 << merger->dot_output;
-            output1.close();
-            /*cerr << endl;
+            if(print_all_models) {
+                merger->todot();
+                std::ostringstream oss2;
+                oss2 << "pre_refs" << num << ".dot";
+                ofstream output1(oss2.str().c_str());
+                output1 << merger->dot_output;
+                output1.close();
+            }
+
+            /* cerr << endl;
 
             for(refinement_set::iterator it = refs->begin(); it != refs->end(); ++it){
                 (*it)->print_short();
                 cerr << " , ";
             }
-            cerr << endl;*/
-            }
+            
+            cerr << endl; */
 
             if(refs->empty()){
                 cerr << "no more possible merges" << endl;

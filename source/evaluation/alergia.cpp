@@ -29,7 +29,7 @@ void alergia_data::initialize() {
 void alergia_data::read_from(int type, int index, int length, int symbol, string data){
     count_data::read_from(type, index, length, symbol, data);
 
-    if(!PERTYPE_DISTRIBUTIONS) type = 1;
+    //if(!PERTYPE_DISTRIBUTIONS) type = 0;
 
     if(trans_counts.find(type) == trans_counts.end()){
         //trans_counts[type] = num_map();
@@ -43,13 +43,31 @@ void alergia_data::read_from(int type, int index, int length, int symbol, string
     }
 };
 
+void alergia_data::add_tail(tail* t){
+    count_data::add_tail(t);
+
+    if(t->get_index() == -1) return;
+
+    int type = t->get_type();
+    int symbol = t->get_symbol();
+    if(trans_counts.find(type) == trans_counts.end()){
+        //trans_counts[type] = num_map();
+        trans_counts[type][symbol] = 1;
+    } else {
+        if(trans_counts[type].find(symbol) == trans_counts[type].end()){
+            trans_counts[type][symbol] = 1;
+        } else {
+            trans_counts[type][symbol]++;
+        }
+    }
+}
 void alergia_data::del_tail(tail* t){
     count_data::del_tail(t);
 
     if(t->get_index() == -1) return;
 
     int type = t->get_type();
-    if(!PERTYPE_DISTRIBUTIONS) type = 1;
+    //if(!PERTYPE_DISTRIBUTIONS) type = 1;
     int symbol = t->get_symbol();
 
     trans_counts[type][symbol]--;
@@ -223,7 +241,7 @@ bool alergia::data_consistent(alergia_data* l, alergia_data* r){
 
 /* ALERGIA, consistency based on Hoeffding bound, only uses positive (type=1) data, pools infrequent counts */
 bool alergia::consistent(state_merger *merger, apta_node* left, apta_node* right){
-    if(count_driven::consistent(merger, left, right) == false){ inconsistency_found = true; return false; }
+    //if(count_driven::consistent(merger, left, right) == false){ inconsistency_found = true; return false; }
     //if(left->depth != right->depth) {inconsistency_found = true; return false;};
     alergia_data* l = (alergia_data*) left->data;
     alergia_data* r = (alergia_data*) right->data;
@@ -239,7 +257,7 @@ bool alergia::consistent(state_merger *merger, apta_node* left, apta_node* right
  * low count sink = frequency smaller than STATE_COUNT */
 bool alergia_data::is_low_count_sink(){
     //cerr << num_paths() << " " << num_final() << "<" << SINK_COUNT << endl;
-    return pos_paths() + pos_final() < SINK_COUNT;
+    return num_paths() + num_final() < SINK_COUNT;
     //if(EVAL_TYPE == 1) return pos_final() + neg_final() + pos_paths() + neg_paths() < SINK_COUNT;
     //return pos_paths() + neg_paths() < SINK_COUNT;
 }

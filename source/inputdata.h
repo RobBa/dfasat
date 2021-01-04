@@ -36,6 +36,7 @@ public:
     int length;
     int symbol;
     int* attr;
+    int* trace_attr;
     string data;
 };
 
@@ -86,6 +87,31 @@ public:
  * such as alphabet functions, file transformations and data added to the APTA.
  * 
  */
+class attribute{
+public:
+    bool discrete;
+    bool splittable;
+    bool distributionable;
+    bool target;
+
+    vector<string> values;
+    map<string, int> r_values;
+
+    attribute(string);
+
+    inline float get_value(string val){
+        if(discrete){
+            if(r_values.find(val) == r_values.end()) {
+                r_values[val] = values.size();
+                values.push_back(val);
+            }
+            return (float) r_values[val];
+        } else {
+            return stof(val);
+        }
+    };
+};
+
 class inputdata{
 public:
     // TODO: not all public. Can we circumvent this class to have cleaner code?
@@ -93,18 +119,44 @@ public:
 
     static vector<string> alphabet;
     static map<string, int> r_alphabet;
-    
+
     static vector<string> types;
     static map<string, int> r_types;
 
+    static vector<attribute> trace_attributes;
+    static vector<attribute> symbol_attributes;
+
+    static int num_sequences;
+    static int alphabet_size;
+
+    static int num_trace_attributes;
+    static int num_symbol_attributes;
     static int num_attributes;
 
-    int node_number;
+    static int node_number;
 
     void read_json_file(istream &input_stream);
     void read_abbadingo_file(istream &input_stream);
-    void read_abbadingo_sequence(istream &input_stream, int);
-    
+    void read_abbadingo_sequence(istream &input_stream);
+
+    static inline bool is_splittable(int attr){
+        return get_attribute(attr)->splittable;
+    };
+    static inline bool is_distributionable(int attr){
+        return get_attribute(attr)->distributionable;
+    };
+    static inline bool is_discrete(int attr){
+        return get_attribute(attr)->discrete;
+    };
+    static inline bool is_target(int attr){
+        return get_attribute(attr)->target;
+    };
+    static inline attribute* get_attribute(int attr){
+        if(attr < inputdata::num_symbol_attributes){
+            return &inputdata::symbol_attributes[attr];
+        }
+        return &inputdata::trace_attributes[attr - inputdata::num_symbol_attributes];
+    };
     static inline int get_size(){
         return inputdata::all_data.size();
     };
@@ -119,9 +171,18 @@ public:
             return inputdata::all_data[seq_nr]["S"][index];
         return -1;
     };
-    static inline int get_value(int seq_nr, int index, int attr){
+    static inline float get_value(int seq_nr, int index, int attr){
+        if(index > -1){
+            if(attr < inputdata::num_symbol_attributes){
+                return inputdata::all_data[seq_nr]["V" + to_string(attr)][index];
+            }
+            return inputdata::all_data[seq_nr]["VT"][attr - inputdata::num_symbol_attributes];
+        }
+        return -1;
+    };
+    static inline float get_trace_value(int seq_nr, int index, int attr){
         if(index > -1)
-            return inputdata::all_data[seq_nr]["V" + to_string(attr)][index];
+            return inputdata::all_data[seq_nr]["VT"][attr];
         return -1;
     };
     static inline string get_data(int seq_nr, int index){
@@ -148,7 +209,9 @@ public:
         return t->td->index;
     };
     static inline int get_value(tail* t, int a){
-        return t->td->attr[a];
+        if(a < inputdata::num_symbol_attributes)
+            return t->td->attr[a];
+        return t->td->trace_attr[a - inputdata::num_symbol_attributes];
         //if(t->index > -1)
         //    return inputdata::all_data[t->sequence]["V" + to_string(a)][t->index];
         //return -1;

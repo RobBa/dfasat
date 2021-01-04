@@ -90,7 +90,7 @@ int stream_mode(state_merger* merger, parameters* param, ifstream& input_stream,
            while (read_lines < BATCH_SIZE){
                if(seq_nr >= inputdata::get_size()){
                    if(std::getline(input_stream, line)){
-                        id->read_abbadingo_sequence(input_stream, inputdata::num_attributes);
+                        id->read_abbadingo_sequence(input_stream);
                         id->add_sequence_to_apta(merger->aut, seq_nr);
                         read_lines++;
                         seq_nr++;
