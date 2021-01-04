@@ -1,7 +1,3 @@
-# ignore build and release folder
-build/
-release/
-
 # ignore all output
 *.log
 *.dot
@@ -48,9 +44,6 @@ runtests
 test-reports/
 
 #Clion files
+CMakeLists.txt
 cmake-build-debug/
 cmake-build-*/
-
-# ignore docs
-docs/sphinx
-docs/doxygen
