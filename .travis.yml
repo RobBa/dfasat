@@ -2,20 +2,25 @@ language: cpp
 compiler:
   - clang
   - gcc
+addons:
+  apt:
+    packages:
+      - cppcheck
+  homebrew:
+    packages:
+      - cppcheck
 matrix: 
   include: 
     - os: linux
       dist: xenial
-      before_install:
-        - sudo apt-get install -qq cppcheck
+      #before_install:
+      #  - sudo apt-get install -qq cppcheck
     - os: osx
       osx_image: xcode10.1
-      before_install:
-        - HOMEBREW_NO_AUTO_UPDATE=1 brew install cppcheck
+      #before_install:
+      #  - HOMEBREW_NO_AUTO_UPDATE=1 brew install cppcheck
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-    - os: windows
-
 script: 
   - make clean all
   - make test
