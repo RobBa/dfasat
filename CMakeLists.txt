@@ -100,6 +100,7 @@ add_executable(flexfringe
 find_package(Threads)
 target_link_libraries(flexfringe ${CMAKE_THREAD_LIBS_INIT}) # For pthreads
 
+
 if(NOT WIN32)
     target_link_libraries(flexfringe dl) # For ldl
 endif()
