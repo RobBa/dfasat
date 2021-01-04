@@ -4,7 +4,7 @@ flexfringe (formerly DFASAT), a flexible state-merging framework written in C++.
 
 ## What this repositor contains ##
 
-This repository contains the latest release version of flexfringe. 
+This repository contains the latest release version of flexfringe.
 
 ## How to get set up ##
 
@@ -15,9 +15,7 @@ For expert users: In case you want to use the reduction to SAT and automatically
 
 You can build and compile the flexfringe project by running
 
-$ mkdir build && cd build
-$ cmake ..
-$ make
+$ make clean all
 
 in the main directory to build the executable named *flexfringe*. There is also a CMakelists.txt for building with cmake. We tested the toolchains on Linux (Ubuntu 16+), MacOS (10.14), and Windows 10. For the latter, be built using CMake shipped with CLion.
 
@@ -62,7 +60,7 @@ You can plot the dot files via
 or
 `$ ./show.sh final.dot`
 
-after installing dot from graphviz. 
+after installing dot from graphviz.
 To use the generated models for language acceptance testing or as a distribution function, it is best to parse the JSON file. You can find an exmaple in the Jupyter notebook at https://github.com/laxris/flexfringe-colab.
 
 ## Documentation ##
@@ -80,7 +78,7 @@ Unit tests are incomplete. *flexfringe* uses the Catch2 framework (see the [http
 
 ### Logging ###
 Logging is incomplete. *flexfringe* uses the loguru framework (see the [https://github.com/emilk/loguru/blob/master/README.md](Loguru documentation)). *flexfringe* uses the stream-version. Please log using the `LOG_S(LEVEL) << "messge"` syntax to implement logging.
- 
+
 ## Who to talk to ##
 
 *  Sofia Tsoni (scientific programmer, maintainer)
@@ -92,7 +90,7 @@ Logging is incomplete. *flexfringe* uses the loguru framework (see the [https://
 
 ## Credits and Licences ##
 
-*flexfinge* relies on a number of open source packages and libraries. You can find the respective LICENCE files in the source/utility subdirectory. 
+*flexfinge* relies on a number of open source packages and libraries. You can find the respective LICENCE files in the source/utility subdirectory.
 Most notable, we use
 
 *  CLI11 for command line parsing
@@ -102,11 +100,11 @@ Most notable, we use
 
 ## Documentation
 
-The documentation of this project can be build using the 
+The documentation of this project can be build using the
 
 COMPILE_DOCS=ON
 
-flag along with the cmake command. We are using Doxygen and Sphinx. Requirements for compiling the documentation 
+flag along with the cmake command. We are using Doxygen and Sphinx. Requirements for compiling the documentation
 are
 
 * Doxygen (tested with version 1.8.20)
@@ -116,23 +114,23 @@ are
 They can be installed on Linux using the commands
 
 ```
-apt-get install doxygen 
+apt-get install doxygen
 ```
-, 
+,
 
 ```
 pip install sphinx_rtd_theme
 ```
 
-, and 
+, and
 
 ```
 pip install breathe
 ```
-. 
+.
 
-IMPORTANT: In case new classes, functions, structs etc. have been added, and they shall show up in the documentation, 
-they have to be added at the bottom of the docs/index.rst file. For further information and a small quickstart-guide, 
+IMPORTANT: In case new classes, functions, structs etc. have been added, and they shall show up in the documentation,
+they have to be added at the bottom of the docs/index.rst file. For further information and a small quickstart-guide,
 please look at e.g.
 
 https://breathe.readthedocs.io/en/latest/quickstart.html
