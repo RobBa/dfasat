@@ -13,8 +13,8 @@ jobs:
     - os: osx
       osx_image: xcode12.2
       before_install:
-        #- HOMEBREW_NO_AUTO_UPDATE=1 brew install cppcheck
-        - brew install cppcheck
+        - HOMEBREW_NO_AUTO_UPDATE=1 brew install cppcheck
+        #- brew install cppcheck
       env:
         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
 script:
@@ -24,4 +24,5 @@ script:
   - make
   - cd .. 
   - cppcheck --version
-  - cppcheck --quiet --error-exitcode=1 -isource/evaluation/devel -isource/devel -isource/evaluation/devel -isource/evaluation/2refactor -isource/space-saving -isource/verify -isource/new_code -isource/utility ./source
+  # TODO: suppressing the syntax error in refinement.cpp, because cppcheck has an internal error. Remove suppression in later versions
+  - cppcheck --quiet --error-exitcode=1 --suppress=syntaxError:source/refinement.cpp -isource/evaluation/devel -isource/devel -isource/evaluation/devel -isource/evaluation/2refactor -isource/space-saving -isource/verify -isource/new_code -isource/utility ./source
