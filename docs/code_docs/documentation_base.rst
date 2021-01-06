@@ -26,4 +26,4 @@ Base Code
    :protected-members:
    :private-members:
 
-.. doxygenfuntion:: stream_mode
+.. doxygenfunction:: stream_mode

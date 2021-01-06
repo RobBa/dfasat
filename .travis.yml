@@ -22,4 +22,5 @@ script:
   - mkdir build && cd build && cmake ..
   - make
   - cd .. 
+  - cppcheck --version
   - cppcheck --quiet --error-exitcode=1 -isource/evaluation/devel -isource/devel -isource/evaluation/devel -isource/evaluation/2refactor -isource/space-saving -isource/verify -isource/new_code -isource/utility ./source
